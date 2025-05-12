@@ -1,0 +1,174 @@
+﻿@model AliMartinCv.DataLayer.Entities.Blog
+@{
+    ViewData["Title"] = "CreateNewBlog";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<h4>Blog</h4>
+<hr />
+
+
+
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="card shadow  mx-5 mb-4 col-md-7">
+            <div class="p-5">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="BlogTitle" class="control-label"></label>
+                            <input asp-for="BlogTitle" class="form-control" />
+                            <span asp-validation-for="BlogTitle" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BlogShortDescription" class="control-label"></label>
+                            <input asp-for="BlogShortDescription" class="form-control" />
+                            <span asp-validation-for="BlogShortDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BlogDescription" class="control-label"></label>
+                            <textarea id="BlogDescription" asp-for="BlogDescription" class="form-control" rows="40"></textarea>
+                            <span asp-validation-for="BlogDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Tags" class="control-label"></label>
+                            <input asp-for="Tags" class="form-control" />
+                            <span asp-validation-for="Tags" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary btn-block btn-user" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="card shadow mx-3 mb-4 col-md-4 h-75 ">
+            <div class="p-5">
+                <div class="row">
+                    <div class="col-md-12 h-50">
+                        <img class="w-100 h-50" id="BlogThumbnail" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BlogThumbnail" class="control-label"></label>
+                        <input id="SelectPicture" name="SelectPicture" type="file" class="form-control" />
+                        <span asp-validation-for="BlogThumbnail" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12 h-50 mt-3">
+                        <div class="form-group">
+                            <label asp-for="BlogGroupId" class="control-label"></label>
+                            <select id="BlogGroups" asp-for="BlogGroupId" asp-items="@ViewBag.Maingroups as List<SelectListItem>" class="form-control">
+                            </select>
+                            <span asp-validation-for="BlogGroupId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <select id="SubGroups" asp-for="BlogSubGroupId" asp-items="@ViewBag.SubGroups as List<SelectListItem>" class="form-control">
+                            </select>
+                            <span asp-validation-for="BlogSubGroupId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <script>
+        function showImage(src, target) {
+            var fr = new FileReader();
+            fr.onload = function (e) { target.src = this.result; };
+            src.addEventListener("change", function () {
+                fr.readAsDataURL(src.files[0]);
+            });
+        }
+
+        var src = document.getElementById("SelectPicture");
+        var target = document.getElementById("BlogThumbnail");
+        showImage(src, target);
+    </script>
+    <script>
+        $("#BlogGroups").change(function () {
+            $("#SubGroups").empty();
+            $.getJSON("/Admin/Blogs/GetSubGroups/" + $("#BlogGroups").val(),
+                function (data) {
+                    $.each(data,
+                        function () {
+                            $("#SubGroups").append('<option value=' + this.value + '>' + this.text + '</option>');
+                        });
+                });
+        });
+    </script>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+
+        CKEDITOR.replace('BlogDescription', {
+            customConfig: '/js/Config.js'
+        });
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-upload@2.4.0/dist/jquery.simple-upload.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#SelectPicture').simpleUpload({
+                // Drop zone selector (optional, set this if you have a drop zone)
+                dropZone: '#basic_drop_zone',
+
+                // Progress bar selector (optional, set this if you have a progress bar)
+                progress: '#basic_progress',
+
+                // URL to send the data (replace with your actual server endpoint)
+                url: '/upload',
+
+                // Submit method (default is 'post')
+                method: 'post',
+
+                // Parameters to send with the upload request
+                params: {
+                    'KEY': 'VALUE'
+                },
+
+                // AJAX settings
+                ajax: {
+                    headers: {
+                        'HEADER_KEY': 'HEADER_VALUE'
+                    },
+                    dataType: 'json', // Response data type
+                    timeout: 0,       // AJAX request timeout in milliseconds, 0 means no timeout
+                    async: true       // Asynchronous request (default is true)
+                },
+
+                // Callback function when the upload is successful
+                success: function (data) {
+                    console.log('Upload successful:', data);
+                    // Optionally handle success response here
+                },
+
+                // Callback function when the upload fails
+                error: function (error) {
+                    console.error('Upload error:', error);
+                    // Optionally handle error response here
+                }
+            });
+        });
+    </script>
+
+}

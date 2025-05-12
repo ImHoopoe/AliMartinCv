@@ -1,0 +1,93 @@
+﻿@model AliMartinCv.DataLayer.Entities.Blog
+@{
+    ViewData["Title"] = "DeleteBlog";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="card shadow  mx-5 mb-4 col-md-7">
+            <div class="p-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input asp-for="BlogThumbnail" hidden="hidden" />
+                        <input asp-for="BlogGroupId" hidden="hidden" />
+                        <input asp-for="BlogSubGroupId" hidden="hidden" />
+                        <input asp-for="BlogId" hidden="hidden" />
+                        <input asp-for="Visit" hidden="hidden" />
+                        <input asp-for="BlogPublishDate" hidden="hidden" />
+                        <input asp-for="Tags" hidden="hidden" />
+                        <input asp-for="BlogTitle" hidden="hidden" />
+                        <input asp-for="BlogShortDescription" hidden="hidden" />
+                        <input asp-for="BlogDescription" hidden="hidden" />
+
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="BlogTitle" class="control-label"></label>
+                            <input asp-for="BlogTitle" disabled="disabled" class="form-control" />
+                            <span asp-validation-for="BlogTitle" class="text-danger" ></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BlogShortDescription" class="control-label"></label>
+                            <input asp-for="BlogShortDescription" disabled="disabled" class="form-control" />
+                            <span asp-validation-for="BlogShortDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BlogDescription" class="control-label"></label>
+                            <textarea id="BlogDescription" disabled="disabled" asp-for="BlogDescription" class="form-control" rows="40"></textarea>
+                            <span asp-validation-for="BlogDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Tags" class="control-label"></label>
+                            <input asp-for="Tags" disabled="disabled" class="form-control" />
+                            <span asp-validation-for="Tags" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-block btn-user" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="card shadow mx-3 mb-4 col-md-4 h-75 ">
+            <div class="p-5">
+                <div class="row">
+                    <div class="col-md-12 h-50">
+                        <img class="w-100 h-50" src="/Blog/ThumnailsImage/@Model.BlogThumbnail" id="BlogThumbnail" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BlogThumbnail" class="control-label"></label>
+                        <input id="SelectPicture" disabled="disabled" name="SelectPicture" type="file" class="form-control" />
+                        <span asp-validation-for="BlogThumbnail" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12 h-50 mt-3">
+                        <div class="form-group">
+                            <label asp-for="BlogGroupId" class="control-label"></label>
+                            <select id="BlogGroups" asp-for="BlogGroupId" disabled="disabled" asp-items="@ViewBag.Maingroups as List<SelectListItem>" class="form-control">
+                            </select>
+                            <span asp-validation-for="BlogGroupId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <select id="SubGroups" asp-for="BlogSubGroupId" disabled="disabled" asp-items="@ViewBag.SubGroups as List<SelectListItem>" class="form-control">
+                            </select>
+                            <span asp-validation-for="BlogSubGroupId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

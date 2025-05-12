@@ -1,0 +1,918 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ali Martin</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Poppins (modern font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="/css/site.css">
+
+</head>
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Ali Martin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#skills">Skills</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#experience">Experience</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#portfolio">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="hero-section d-flex align-items-center" data-observe>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title animate__animated animate__fadeInDown">Hi, I'm <span class="text-warning">Ali Martin</span></h1>
+                <p class="hero-subtitle animate__animated animate__fadeInDown animate__delay-1s" style="height: 30px;">
+                    <span id="typed-text"></span>
+                </p>
+                <div class="animate__animated animate__fadeInUp animate__delay-2s">
+                    <a href="#contact" class="btn btn-custom me-3">Hire Me</a>
+                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#portfolioModal">View Portfolio</button>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 d-none d-lg-block animate__animated animate__fadeInRight animate__delay-1s">
+                <img src="img/AliMartin.jpg" alt="AliMartin-Profile" class="img-fluid glass-card" style="width: 80%;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section" data-observe>
+    <div class="container">
+        <h2 class="text-center section-title">About Me</h2>
+        <div class="row">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="glass-card p-4 h-100">
+                    <h3 class="mb-4">Who am I?</h3>
+                    <p>I'm a dedicated Full Stack Developer and Software Programming Instructor with over 5 years of experience building scalable web applications using C#, .NET, and ASP.NET Core. My front-end knowledge spans HTML, CSS, Bootstrap, Tailwind, and jQuery.</p>
+                    <p>With 5000+ hours of teaching experience, I blend technical depth with a passion for mentoring. I develop clean, maintainable code and also enjoy creating educational content that empowers aspiring developers to succeed.</p>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <p><strong>Name:</strong> Ali Martin</p>
+                            <p><strong>Email:</strong> ali.martin.dev@gmail.com</p>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Experience:</strong> 5+ Years</p>
+                            <p><strong>Location:</strong> Tehran, Iran</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-4 h-100">
+                    <h3 class="mb-4">My Ability</h3>
+                    <p>I bring a unique combination of technical skills and creative vision to every project:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Full Stack Development (C#, .NET, ASP.NET Core)</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Front-end Development (HTML, CSS, jQuery, Bootstrap, Tailwind)</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Database Management (SQL Server)</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Teaching & Mentoring (5000+ hours experience)</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Curriculum Development & Educational Design</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Python Application Development (with Kivy)</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> UI/UX Fundamentals & Cross-browser Compatibility</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Leadership in Software Projects & Regional Competitions</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="skills-section py-5" data-observe>
+<div class="container">
+<h2 class="text-center section-title mb-5" style="color: var(--primary-color);">My Skills</h2>
+<div class="row">
+<!-- ستون چپ -->
+<div class="col-lg-6">
+
+    <!-- HTML5 -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fab fa-html5 me-2 text-danger"></i>HTML5</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="95"></div>
+        </div>
+    </div>
+
+    <!-- CSS3 -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fab fa-css3-alt me-2 text-primary"></i>CSS3</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="90"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fab fa-bootstrap me-2 text-purple"></i>Bootstrap</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="85"></div>
+        </div>
+    </div>
+
+    <!-- Tailwind CSS -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-wind me-2 text-info"></i>Tailwind CSS</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="80"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fab fa-js me-2 text-warning"></i>JavaScript</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="85"></div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-code me-2 text-secondary"></i>jQuery</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="80"></div>
+        </div>
+    </div>
+
+    <!-- Git & GitHub -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fab fa-github me-2"></i>Git & GitHub</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="85"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ستون راست -->
+<div class="col-lg-6">
+
+    <!-- C# -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-code me-2 text-dark"></i>C#</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="90"></div>
+        </div>
+    </div>
+
+    <!-- ASP.NET Core -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-globe me-2 text-primary"></i>ASP.NET Core</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="85"></div>
+        </div>
+    </div>
+
+    <!-- Blazor -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-fire-alt me-2 text-danger"></i>Blazor</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="75"></div>
+        </div>
+    </div>
+
+    <!-- WPF -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-desktop me-2 text-info"></i>WPF</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="80"></div>
+        </div>
+    </div>
+
+    <!-- Windows Forms -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-window-maximize me-2 text-secondary"></i>Windows Forms</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="80"></div>
+        </div>
+    </div>
+
+    <!-- SQL Server -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-database me-2 text-warning"></i>SQL Server</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="85"></div>
+        </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="skill-item mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-search me-2 text-success"></i>SEO</span>
+            <span class="skill-percent">0%</span>
+        </div>
+        <div class="progress bg-light">
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 0; background-color: var(--primary-color);"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 data-target="80"></div>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+
+
+<section id="experience" class="experience-section section" data-observe>
+    <div class="container">
+        <h2 class="text-center section-title">My Experience</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="timeline">
+
+                    <div class="timeline-item">
+                        <h4 class="timeline-date">2023 – 2025</h4>
+                        <h3>Advanced C# & ASP.NET MVC Instructor</h3>
+                        <h5>Allameh Helli 2 Technical High School</h5>
+                        <p>
+                            Conducted professional-level training in structured software development using C# and ASP.NET MVC. 
+                            Guided students through the architecture of scalable web applications, emphasizing clean code principles and design patterns.
+                            Led the design and development of a multi-application platform called <strong>Samro</strong>, affiliated with the Ministry of Sports of Iran, integrating educational, administrative, and interactive modules.
+                        </p>
+
+
+
+                        <h3>Introductory C# & Algorithm Instructor</h3>
+                        <h5>Mehr Aeen Girls' High School</h5>
+                        <p>
+                            Taught the fundamentals of C# programming along with core concepts in algorithms and programming structures. 
+                            Helped students develop computational thinking and build structured programs using real-world examples and practice exercises.
+                        </p>
+
+                        <h3>Scratch Junior Instructor</h3>
+                        <h5>Danesh Student Research Center</h5>
+                        <p>
+                            Taught basic programming principles using Scratch Junior to elementary-level students, encouraging creative problem-solving and algorithmic thinking through interactive visual storytelling.
+                        </p>
+
+                        <h3>Python Instructor</h3>
+                        <h5>Andisheh Student Research Center</h5>
+                        <p>
+                            Delivered introductory Python programming courses with a focus on syntax fundamentals, logic building, and real-world mini projects for high school students.
+                        </p>
+
+
+                    </div>
+
+
+                    <div class="timeline-item">
+                        <h4 class="timeline-date">2021 – 2023</h4>
+                        <h3>Programming Instructor & Project Mentor</h3>
+                        <h5>Dr. Kazemi Ashtiani Research Center (under Ministry of Education)</h5>
+                        <p>
+                            Taught ASP.NET, .NET, and C# to high school students, focusing on real-world application development. 
+                            Designed and developed the official website of the research center. 
+                            Supervised and mentored student projects that achieved 2nd and 3rd place in national competitions, emphasizing creativity and software engineering best practices.
+                        </p>
+
+                        <h3>Computer Programming & Stop-Motion Instructor</h3>
+                        <h5>Allameh Helli 10 High School (Tizhooshan)</h5>
+                        <p>
+                            Conducted engaging courses in computer programming and stop-motion animation, fostering both technical and artistic skills in gifted students.
+                            Encouraged interdisciplinary learning and hands-on experimentation through creative projects.
+                        </p>
+
+                        <h3>Introductory Programming & Algorithms Instructor</h3>
+                        <h5>Abdali Public Board-Governed High School</h5>
+
+                        <p>
+                            Taught foundational programming concepts, algorithms, and flowcharts to high school students. 
+                            Focused on building logical thinking and problem-solving skills through visual tools and hands-on exercises.
+                        </p>
+
+                        <h3>Python Instructor (Beginner to Advanced)</h3>
+                        <h5>Ministry of Defense, Iran</h5>
+                        <p>
+                            Conducted comprehensive Python programming courses for staff and technical trainees, covering both beginner and advanced topics including object-oriented programming, data processing, automation, and script development for operational tasks.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="timeline-date">2019 – 2021</h4>
+                        <h3>Software Development Intern</h3>
+                        <h5>Software Company under Islamic Republic of Iran Railways</h5>
+                        <p>Worked as an intern in a software firm affiliated with the national railway organization. Gained hands-on experience in enterprise software development and learned about large-scale systems used in the transportation sector.</p>
+                        <h3>Programming Instructor</h3>
+                        <h5>Dr. Kazemi Ashtiani Research Center (under Ministry of Education)</h5>
+                        <p>Taught foundational programming and algorithmic thinking to talented students, promoting interest in computer science through project-based learning.</p>
+                        <h5>Institute for the Intellectual Development of Children and Young Adults</h5>
+                        <p>Introduced programming concepts to teenagers in an engaging and creative environment, using games and visual tools to foster logical thinking and problem-solving skills.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Blog Section -->
+
+
+<!-- Portfolio Carousel Section -->
+<section id="portfolio" class="portfolio-section" data-observe>
+    <div class="container">
+        <h2 class="text-center section-title">My Work</h2>
+        <div id="portfolioCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="portfolio-item">
+                                <img src="https://via.placeholder.com/800x600" class="portfolio-img img-fluid" alt="Project 1">
+                                <div class="portfolio-overlay">
+                                    <h3>E-commerce Website</h3>
+                                    <p>React, Node.js, MongoDB</p>
+                                    <button class="btn btn-light mt-2" data-bs-toggle="modal" data-bs-target="#projectModal1">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="portfolio-item">
+                                <img src="https://via.placeholder.com/800x600" class="portfolio-img img-fluid" alt="Project 2">
+                                <div class="portfolio-overlay">
+                                    <h3>Dashboard UI</h3>
+                                    <p>Vue.js, Chart.js, Sass</p>
+                                    <button class="btn btn-light mt-2" data-bs-toggle="modal" data-bs-target="#projectModal2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="portfolio-item">
+                                <img src="https://via.placeholder.com/800x600" class="portfolio-img img-fluid" alt="Project 3">
+                                <div class="portfolio-overlay">
+                                    <h3>Mobile App Design</h3>
+                                    <p>Figma, Adobe XD</p>
+                                    <button class="btn btn-light mt-2" data-bs-toggle="modal" data-bs-target="#projectModal3">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="portfolio-item">
+                                <img src="https://via.placeholder.com/800x600" class="portfolio-img img-fluid" alt="Project 4">
+                                <div class="portfolio-overlay">
+                                    <h3>Landing Page</h3>
+                                    <p>HTML, CSS, JavaScript</p>
+                                    <button class="btn btn-light mt-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="portfolio-item">
+                                <img src="https://via.placeholder.com/800x600" class="portfolio-img img-fluid" alt="Project 5">
+                                <div class="portfolio-overlay">
+                                    <h3>Blog Platform</h3>
+                                    <p>WordPress, PHP, MySQL</p>
+                                    <button class="btn btn-light mt-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="portfolio-item">
+                                <img src="https://via.placeholder.com/800x600" class="portfolio-img img-fluid" alt="Project 6">
+                                <div class="portfolio-overlay">
+                                    <h3>API Integration</h3>
+                                    <p>Node.js, Express, REST</p>
+                                    <button class="btn btn-light mt-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<section id="blogs" class="blogs-section section" data-observe>
+    <div class="container">
+        <h2 class="text-center section-title">Latest Blog Posts</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="glass-card p-3 blog-item">
+                    <img src="https://via.placeholder.com/600x400" class="img-fluid rounded mb-3" alt="Blog 1">
+                    <h5>Understanding ASP.NET Core Middleware</h5>
+                    <p>Learn how middleware works in the ASP.NET Core pipeline and how to write your own.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="glass-card p-3 blog-item">
+                    <img src="https://via.placeholder.com/600x400" class="img-fluid rounded mb-3" alt="Blog 2">
+                    <h5>Top 10 VS Code Extensions for Developers</h5>
+                    <p>Boost your productivity with these essential VS Code extensions.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="glass-card p-3 blog-item">
+                    <img src="https://via.placeholder.com/600x400" class="img-fluid rounded mb-3" alt="Blog 3">
+                    <h5>Mastering Git Commands</h5>
+                    <p>A quick guide to using Git effectively from the command line.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Counter Section -->
+<section class="counter-section section" data-observe>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 mb-5 mb-md-0">
+                <div class="counter-item">
+                    <div class="counter-number" data-count="23">0</div>
+                    <div class="counter-text">Projects Completed</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-5 mb-md-0">
+                <div class="counter-item">
+                    <div class="counter-number" data-count="6700">6236</div>
+                    <div class="counter-text">Happy Students</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-item">
+                    <div class="counter-number" data-count="6">0</div>
+                    <div class="counter-text">Years Experience</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-item">
+                    <div class="counter-number" data-count="15">0</div>
+                    <div class="counter-text">Awards Won</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section section" data-observe>
+    <div class="container">
+        <h2 class="text-center section-title">Contact Me</h2>
+        <div class="row">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="glass-card p-4 h-100">
+                    <h3 class="mb-4">Get In Touch</h3>
+                    <p>Have a project in mind or want to discuss potential opportunities? Feel free to reach out!</p>
+                    <div class="contact-info mt-4">
+                        <p><i class="fas fa-map-marker-alt me-3 text-primary"></i> 123 Street, San Francisco, CA</p>
+                        <p><i class="fas fa-envelope me-3 text-primary"></i> john@example.com</p>
+                        <p><i class="fas fa-phone me-3 text-primary"></i> (123) 456-7890</p>
+                    </div>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form class="contact-form glass-card p-4">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Subject">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer with Animated Wave -->
+<footer class="footer">
+    <svg class="wave" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f5f7fa"></path>
+        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f5f7fa"></path>
+        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f5f7fa"></path>
+    </svg>
+    <div class="container text-center">
+        <p class="mb-4">© 2023 Ali Martin. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Portfolio Modal -->
+<div class="modal fade" id="portfolioModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">My Portfolio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Here's an overview of my recent work and projects. You can find more details by clicking on individual projects in the portfolio section.</p>
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-4">
+                        <div class="portfolio-item">
+                            <img src="https://via.placeholder.com/400x300" class="img-fluid rounded" alt="Project">
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="portfolio-item">
+                            <img src="https://via.placeholder.com/400x300" class="img-fluid rounded" alt="Project">
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="portfolio-item">
+                            <img src="https://via.placeholder.com/400x300" class="img-fluid rounded" alt="Project">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="#portfolio" class="btn btn-primary">View Full Portfolio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Project Modals -->
+<div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">E-commerce Website</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="https://via.placeholder.com/800x500" class="img-fluid rounded mb-4" alt="Project">
+                <p>This e-commerce platform was built with React for the frontend and Node.js for the backend. It features product listings, shopping cart functionality, user authentication, and payment processing.</p>
+                <h6>Technologies Used:</h6>
+                <ul>
+                    <li>React.js</li>
+                    <li>Redux for state management</li>
+                    <li>Node.js with Express</li>
+                    <li>MongoDB database</li>
+                    <li>Stripe API for payments</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="#" class="btn btn-primary">Visit Website</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+@RenderBody()
+<!-- Bootstrap 5.3 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Counter Animation -->
+    <!-- Bootstrap 5.3 JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/Scripts.js"></script>
+<!-- Custom Scripts -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observedSections = document.querySelectorAll('[data-observe]');
+      const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+      // IntersectionObserver تنظیم
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+
+            // ✳️ شمارنده‌ها
+            if (entry.target.classList.contains('counter-section')) {
+              const counters = entry.target.querySelectorAll('.counter-number');
+              counters.forEach(counter => {
+                counter.innerText = '0';
+                const updateCount = () => {
+                  const target = +counter.getAttribute('data-count');
+                  const count = +counter.innerText;
+                  const increment = target / 200;
+                  if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                  } else {
+                    counter.innerText =  '+ ' + target ;
+                  }
+                };
+                updateCount();
+              });
+            }
+
+            // ✳️ نوار مهارت‌ها
+            if (entry.target.id === 'skills') {
+              const bars = entry.target.querySelectorAll('.progress-bar');
+              const duration = 1000;
+
+              function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+              }
+
+              bars.forEach(bar => {
+                const target = parseInt(bar.dataset.target, 10);
+                const label = bar.closest('.skill-item').querySelector('.skill-percent');
+                let startTime = null;
+
+                function animate(time) {
+                  if (!startTime) startTime = time;
+                  const elapsed = time - startTime;
+                  const progress = Math.min(elapsed / duration, 1);
+                  const eased = easeInOutQuad(progress);
+                  const currentValue = Math.floor(eased * target);
+                  bar.style.width = currentValue + '%';
+                  bar.setAttribute('aria-valuenow', currentValue);
+                  if (label) label.textContent = currentValue + '%';
+
+                  if (elapsed < duration) {
+                    requestAnimationFrame(animate);
+                  } else {
+                    bar.style.width = target + '%';
+                    bar.setAttribute('aria-valuenow', target);
+                    if (label) label.textContent = target + '%';
+                  }
+                }
+
+                requestAnimationFrame(animate);
+              });
+            }
+
+            observer.unobserve(entry.target); // فقط یک بار اجرا شود
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      observedSections.forEach(section => observer.observe(section));
+
+      // 🔹 اسکرول نرم برای منوها
+      navLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').slice(1);
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // 🔹 اسکرول اسپای
+      const scrollSections = document.querySelectorAll('section[id]');
+      window.addEventListener('scroll', () => {
+        const scrollPos = window.scrollY + 200;
+        scrollSections.forEach(sec => {
+          const top = sec.offsetTop;
+          const bottom = top + sec.offsetHeight;
+          const id = sec.getAttribute('id');
+          const link = document.querySelector(`.nav-link[href="#${id}"]`);
+          if (scrollPos >= top && scrollPos < bottom) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            if (link) link.classList.add('active');
+          }
+        });
+      });
+    });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const texts = [
+            'Software Programming Instructor',
+            'Full Stack Developer',
+            'C# & .NET Specialist',
+            'UI/UX Enthusiast',
+            'Mentor & Code Reviewer'
+          ];
+
+          const typingElement = document.getElementById('typed-text');
+          const typingSpeed = 80;   // سرعت تایپ
+          const erasingSpeed = 40;  // سرعت حذف
+          const delayBetweenTexts = 1500; // مکث بین جملات
+
+          let textIndex = 0;
+          let charIndex = 0;
+          let isDeleting = false;
+
+          function type() {
+            const currentText = texts[textIndex];
+            if (isDeleting) {
+              typingElement.textContent = currentText.substring(0, charIndex--);
+              if (charIndex < 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                setTimeout(type, 500);
+              } else {
+                setTimeout(type, erasingSpeed);
+              }
+            } else {
+              typingElement.textContent = currentText.substring(0, charIndex++);
+              if (charIndex > currentText.length) {
+                isDeleting = true;
+                setTimeout(type, delayBetweenTexts);
+              } else {
+                setTimeout(type, typingSpeed);
+              }
+            }
+          }
+
+          type(); // شروع تایپ
+        });
+        </script>
+
+</html>
+
