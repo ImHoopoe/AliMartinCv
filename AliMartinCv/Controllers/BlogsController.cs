@@ -50,5 +50,35 @@ namespace AliMartinCv.Controllers
 
             return View(viewModel);
         }
+        public async Task<IActionResult> Blog(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            return NotFound();
+        }
+
+        // فرضاً یه متد برای گرفتن بلاگ داریم
+        var blog = await _blogService.GetBlogByTitle(id.Replace("-", " "));
+        if (blog == null)
+        {
+            return NotFound();
+        }
+
+        // افزایش تعداد بازدید
+        blog.Visit++;
+        await _blogService.UpdateBlog(blog);
+        var showBlog = new ShowBlogsViewModel()
+        {
+            BlogTitle = blog.BlogTitle,
+            BlogThumbnail = blog.BlogThumbnail,
+            BlogShortDescription = blog.BlogShortDescription,
+            BlogDescription = blog.BlogDescription,
+            Visit = blog.Visit.Value,
+            BlogGroupTitle = blog.BlogTitle,
+            BlogPublishDate = blog.BlogPublishDate,
+
+        };
+        return View(showBlog);
+    }
     }
 }

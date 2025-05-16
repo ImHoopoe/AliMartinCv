@@ -1,0 +1,64 @@
+﻿@model AliMartinCv.Core.DTOS.BlogViewModels.ShowBlogsViewModel
+
+<section id="blog-details" class="blog-details-section section py-5 mt-5" aria-labelledby="blog-title">
+    <div class="container">
+        <!-- عنوان بلاگ -->
+        <header class="text-center mb-5">
+            <h1 id="blog-title" class="section-title">@Model.BlogTitle</h1>
+            <div class="blog-meta d-flex justify-content-center gap-4 text-muted small mt-3">
+                <span>
+                    <i class="far fa-calendar-alt me-1" aria-hidden="true"></i>
+                    @Model.BlogPublishDate.ToString("MMM dd, yyyy")
+                </span>
+                <span>
+                    <i class="far fa-eye me-1" aria-hidden="true"></i>
+                    @Model.Visit Views
+                </span>
+            </div>
+        </header>
+
+        <!-- تصویر اصلی بلاگ -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-12 col-lg-8">
+                <img src="/Blog/ThumnailsImage/@Model.BlogThumbnail"
+                     class="img-fluid rounded w-100 rounded"
+                     alt="@Model.BlogTitle thumbnail"
+                     loading="lazy">
+            </div>
+        </div>
+
+        <!-- توضیحات کوتاه -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 col-lg-8">
+                <div class="d-flex align-items-center border-start   ps-3 glass-card">
+
+                    <p id="Abstract" class="lead mb-0">
+                        @Model.BlogShortDescription
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- محتوای اصلی بلاگ -->
+        <div id="content" class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <article class="blog-content p-4">
+                    @Html.Raw(Model.BlogDescription)
+                </article>
+            </div>
+        </div>
+
+        <!-- دکمه بازگشت -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-auto">
+                <a href="/blogs"
+                   class="btn btn-primary btn-lg d-inline-flex align-items-center"
+                   aria-label="Back to all blog posts">
+                    <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                    Back to Blogs
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

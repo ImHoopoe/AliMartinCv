@@ -57,6 +57,9 @@ namespace AliMartinCv.Core.Sevices.Services
 
         public async Task<Blog> GetBlogById(Guid id)
             => await Context.Blogs.FindAsync(id);
+        
+        public async Task<Blog> GetBlogByTitle(string id)
+            => await Context.Blogs.SingleAsync(blog=> blog.BlogTitle== id);
 
         public async Task<bool> CreateNewBlog(Blog blog, IFormFile? file)
         {
@@ -124,6 +127,15 @@ namespace AliMartinCv.Core.Sevices.Services
 
                 ImageConvertor.ResizeAndSaveImage(bannerPath, thumbPath, 150, 150);
             }
+
+            Context.Update(blog);
+            await Context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateBlog(Blog blog)
+        {
+            
 
             Context.Update(blog);
             await Context.SaveChangesAsync();

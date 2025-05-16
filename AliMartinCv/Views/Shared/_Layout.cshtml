@@ -20,7 +20,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Ali Martin</a>
+            <a class="navbar-brand" href="/">Ali Martin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -59,12 +59,16 @@
             <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f5f7fa"></path>
         </svg>
         <div class="container text-center">
-            <p class="mb-4">© 2023 Ali Martin. All rights reserved.</p>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <p class="mb-4 text-center">© @DateTime.Now.Year Ali Martin. All rights reserved.</p>
+                </div>
+            </div>
             <div class="social-icons">
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/ImHoopoe"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/ali-martin-imhoopoe"><i class="fab fa-linkedin"></i></a>
+                <a href="https://x.com/imHoopoe"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/alimartintheprogrammer/"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </footer>
@@ -74,28 +78,17 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">My Portfolio</h5>
+                    <h5 class="modal-title">Ali Martin</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p>Here's an overview of my recent work and projects. You can find more details by clicking on individual projects in the portfolio section.</p>
-                    <div class="row mt-4">
-                        <div class="col-md-4 mb-4">
-                            <div class="portfolio-item">
-                                <img src="https://via.placeholder.com/400x300" class="img-fluid rounded" alt="Project">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="portfolio-item">
-                                <img src="https://via.placeholder.com/400x300" class="img-fluid rounded" alt="Project">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="portfolio-item">
-                                <img src="https://via.placeholder.com/400x300" class="img-fluid rounded" alt="Project">
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-body text-center">
+                    <p>Download Portfolio File</p>
+
+                    <a href="/Files/AliMartinCv.pdf"
+                       class="btn btn-outline-primary"
+                       download="AliMartinCv.pdf">
+                        <i class="fas fa-download me-2"></i>Download Portfolio
+                    </a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -104,6 +97,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Project Modals -->
     <div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
@@ -266,14 +260,15 @@
     const fabOptions = document.getElementById('fabOptions');
     const fabMain = document.getElementById('fabMain');
 
-    const buttons = [
-      { icon: '🏠', title: 'خانه', href: "#" },
-      { icon: '🔍', title: 'جستجو', href: "/search" },
-      { icon: '⚙️', title: 'تنظیمات', href: "/settings" },
-      { icon: '📞', title: 'تماس', href: "#contact" },
-      { icon: '📧', title: 'ایمیل', href: "mailto:ali.martin.dev@gmail.com" },
-      { icon: '⭐️', title: 'علاقه‌مندی', href: "/favorites" }
+      const buttons = [
+      { icon: '🏠',  title: 'Home',       href: "/#home" },
+      { icon: 'ℹ️',  title: 'About',      href: "/#about" },
+      { icon: '🛠️', title: 'Skills',     href: "/#skills" },
+      { icon: '📈',  title: 'Experience', href: "/#experience" },
+      { icon: '🖼️', title: 'Portfolio',   href: "/#portfolio" },
+      { icon: '✉️',  title: 'Contact',    href: "/#contact" },
     ];
+
 
     function createArcButtons() {
       const radius = 100;
@@ -317,49 +312,49 @@
 
 
 <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          const texts = [
-            'Software Programming Instructor',
-            'Full Stack Developer',
-            'C# & .NET Specialist',
-            'UI/UX Enthusiast',
-            'Mentor & Code Reviewer'
-          ];
-        
-          const typingElement = document.getElementById('typed-text');
-          const typingSpeed = 80;   // سرعت تایپ
-          const erasingSpeed = 40;  // سرعت حذف
-          const delayBetweenTexts = 1500; // مکث بین جملات
-        
-          let textIndex = 0;
-          let charIndex = 0;
-          let isDeleting = false;
-        
-          function type() {
-            const currentText = texts[textIndex];
-            if (isDeleting) {
-              typingElement.textContent = currentText.substring(0, charIndex--);
-              if (charIndex < 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                setTimeout(type, 500);
-              } else {
-                setTimeout(type, erasingSpeed);
-              }
-            } else {
-              typingElement.textContent = currentText.substring(0, charIndex++);
-              if (charIndex > currentText.length) {
-                isDeleting = true;
-                setTimeout(type, delayBetweenTexts);
-              } else {
-                setTimeout(type, typingSpeed);
-              }
-            }
+    document.addEventListener('DOMContentLoaded', () => {
+      const texts = [
+        'Software Programming Instructor',
+        'Full Stack Developer',
+        'C# & .NET Specialist',
+        'UI/UX Enthusiast',
+        'Mentor & Code Reviewer'
+      ];
+
+      const typingElement = document.getElementById('typed-text');
+      const typingSpeed = 80;   // سرعت تایپ
+      const erasingSpeed = 40;  // سرعت حذف
+      const delayBetweenTexts = 1500; // مکث بین جملات
+
+      let textIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const currentText = texts[textIndex];
+        if (isDeleting) {
+          typingElement.textContent = currentText.substring(0, charIndex--);
+          if (charIndex < 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            setTimeout(type, 500);
+          } else {
+            setTimeout(type, erasingSpeed);
           }
-        
-          type(); // شروع تایپ
-        });
-        </script>
+        } else {
+          typingElement.textContent = currentText.substring(0, charIndex++);
+          if (charIndex > currentText.length) {
+            isDeleting = true;
+            setTimeout(type, delayBetweenTexts);
+          } else {
+            setTimeout(type, typingSpeed);
+          }
+        }
+      }
+
+      type(); // شروع تایپ
+    });
+</script>
 
 </html>
 

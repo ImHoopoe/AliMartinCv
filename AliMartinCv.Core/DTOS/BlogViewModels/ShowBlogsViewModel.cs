@@ -25,7 +25,7 @@ namespace AliMartinCv.Core.DTOS.BlogViewModels
         public int Visit { get; set; }
 
         public bool BlogIsDeleted { get; set; }
-
+        public string BlogDescription { get; set; }
         public string BlogGroupTitle { get; set; }
         public string? BlogSubGroupTitle { get; set; }
 

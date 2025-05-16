@@ -15,8 +15,9 @@ namespace AliMartinCv.Core.Sevices.Interfaces
         Task<Blog> GetBlogById(Guid id);
         Task<bool> CreateNewBlog(Blog blog,IFormFile File);
         Task<bool> UpdateBlog(Blog blog,IFormFile File);
+        Task<bool> UpdateBlog(Blog blog);
         Task<bool> DeleteBlog(Blog blog);
-
+        Task<Blog> GetBlogByTitle(string id);
         #region AdminPanelIndex
         Task<int> BlogsCount();
         Task<int> VisitsCount();

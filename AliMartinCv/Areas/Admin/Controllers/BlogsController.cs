@@ -45,14 +45,14 @@ namespace AliMartinCv.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBlog(Blog blog, IFormFile? SelectPicture)
+        public async Task<IActionResult> CreateBlog(Blog blog, IFormFile? SelectPicture)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            _blogServices.CreateNewBlog(blog, SelectPicture);
+            await _blogServices.CreateNewBlog(blog, SelectPicture);
             return Redirect("/Admin/Blogs/Index/");
         }
 
