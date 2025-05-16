@@ -1,21 +1,24 @@
 using AliMartinCv.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using AliMartinCv.Core.Sevices.Interfaces;
 
 namespace AliMartinCv.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IBlog _blogServices;
+        public HomeController(ILogger<HomeController> logger, IBlog blogServices)
         {
             _logger = logger;
+            _blogServices = blogServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var blogs = await _blogServices.GetLastBlogs();
+            return View(blogs);
         }
 
         public IActionResult Privacy()

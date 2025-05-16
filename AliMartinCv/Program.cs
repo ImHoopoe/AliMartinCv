@@ -9,14 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 #region Context
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AliMartinCvContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("AliMartinCvDataBase")));
 
 #endregion
 #region IOC
-builder.Services.AddTransient<IBlogGroup,BlogGroupServices>();
-builder.Services.AddTransient<IBlog,BlogServices>();
+builder.Services.AddScoped<IBlogGroup,BlogGroupServices>();
+builder.Services.AddScoped<IBlog,BlogServices>();
 
 #endregion
 

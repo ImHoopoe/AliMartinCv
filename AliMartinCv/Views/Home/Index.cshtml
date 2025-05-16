@@ -1,8 +1,28 @@
-﻿@{
+﻿@model List<AliMartinCv.Core.DTOS.BlogViewModels.ShowBlogsViewModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<partial name="_HeroPartial" />
+
+<!-- About Section -->
+<partial name="_AboutPartial" />
+
+<!-- Skills Section -->
+<partial name="_SkillsPartial" />
+
+<!-- Expriences Section -->
+<partial name="_ExpriencesPartial" />
+
+<!-- Blog Section -->
+<partial name="_ProjectsPartial" model="Model" />
+
+<!-- Portfolio Carousel Section -->
+<partial name="_BlogsPartial" />
+
+<!-- Counter Section -->
+<partial name="_CounterPartial" />
+
+<!-- Contact Section -->
+<partial name="_ContactPartial" />

@@ -2,157 +2,172 @@
 using AliMartinCv.Core.Tools;
 using AliMartinCv.DataLayer.context;
 using AliMartinCv.DataLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
 using AliMartinCv.Core.DTOS.BlogViewModels;
-using Microsoft.AspNetCore.Http;
-using System.Drawing;
 using AliMartinCv.Core.Convertors;
 using AliMartinCv.Core.Security;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AliMartinCv.Core.Sevices.Services
 {
     public class BlogServices : IBlog
     {
-        private readonly AliMartinCvContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BlogServices(AliMartinCvContext context)
+        public BlogServices(IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public int VisitsCount()
+        // هر دفعه کانتکست را از همان scope جاری می‌گیریم:
+        private AliMartinCvContext Context =>
+            _httpContextAccessor.HttpContext!
+                .RequestServices
+                .GetRequiredService<AliMartinCvContext>();
+
+        public async Task<List<ShowBlogsViewModel>> GetAllBlogs()
         {
-            int visits = 0;
-            int[] BlogVisits = GetAllBlogs().Select(b => b.Visit).ToArray();
-            foreach (var visit in BlogVisits)
-            {
-                visits += visit;
-            }
-            return visits;
+            return await Context.Blogs
+                .Select(b => new ShowBlogsViewModel
+                {
+                    BlogShortDescription = b.BlogShortDescription,
+                    BlogIsDeleted = b.BlogIsDeleted,
+                    BlogTitle = b.BlogTitle,
+                    BlogThumbnail = b.BlogThumbnail,
+                    Visit = b.Visit ?? 0,
+                    BlogPublishDate = b.BlogPublishDate,
+                    BlogId = b.BlogId,
+                    BlogGroupTitle = Context.BlogGroups
+                                             .Where(g => g.BlogGroupId == b.BlogGroupId)
+                                             .Select(g => g.BlogGroupTitle)
+                                             .SingleOrDefault(),
+                    BlogSubGroupTitle = Context.BlogGroups
+                                             .Where(g => g.BlogGroupId == b.BlogSubGroupId)
+                                             .Select(g => g.BlogGroupTitle)
+                                             .SingleOrDefault(),
+                })
+                .ToListAsync();
         }
 
-        public Guid CreateNewBlog(Blog blog, IFormFile? File)
+        public async Task<Blog> GetBlogById(Guid id)
+            => await Context.Blogs.FindAsync(id);
+
+        public async Task<bool> CreateNewBlog(Blog blog, IFormFile? file)
         {
             blog.BlogThumbnail = "Default.png";
-            if (File != null && File.IsImage())
-            {
 
-                blog.BlogThumbnail = Guid.NewGuid() + Path.GetExtension(File.FileName);
-                string BannerPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Blog/ThumnailsImage/", blog.BlogThumbnail);
-                using (FileStream fs = new FileStream(BannerPath, FileMode.Create))
+            if (file != null)
+            {
+                await using var memoryStream = new MemoryStream();
+                await file.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+
+                if (memoryStream.IsImage())
                 {
-                    File.CopyTo(fs);
+                    blog.BlogThumbnail = Guid.NewGuid().ToString("N") + Path.GetExtension(file.FileName);
+
+                    string uploadsRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Blog");
+                    string bannerPath = Path.Combine(uploadsRoot, "ThumnailsImage", blog.BlogThumbnail);
+                    string thumbPath = Path.Combine(uploadsRoot, "Thumbs", blog.BlogThumbnail);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(bannerPath)!);
+                    Directory.CreateDirectory(Path.GetDirectoryName(thumbPath)!);
+
+                    await using (var fs = new FileStream(bannerPath, FileMode.Create))
+                    {
+                        memoryStream.Position = 0;
+                        await memoryStream.CopyToAsync(fs);
+                    }
+
+                    ImageConvertor.ResizeAndSaveImage(bannerPath, thumbPath, 150, 150);
                 }
-                string ThumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Blog/Thumbs/", blog.BlogThumbnail);
-
-                ImageConvertor.ResizeAndSaveImage(BannerPath, ThumbPath, 150, 150);
-
-
             }
 
-
-
-            if (blog.BlogSubGroupId == Guid.Parse("00000000-0000-0000-0000-000000000000"))
-            {
+            if (blog.BlogSubGroupId == Guid.Empty)
                 blog.BlogSubGroupId = null;
-            }
+
             blog.BlogId = Tools.Tools.UniqNameMaker();
             blog.Visit = 0;
             blog.BlogPublishDate = DateTime.Now;
-            _context.Add(blog);
-            _context.SaveChanges();
-            return blog.BlogId;
+
+            await Context.Blogs.AddAsync(blog);
+            await Context.SaveChangesAsync();
+            return true;
         }
 
-        public void DeleteBlog(Blog blog)
+        public async Task<bool> UpdateBlog(Blog blog, IFormFile? file)
+        {
+            if (file != null)
+            {
+                DeleteExistingImages(blog.BlogThumbnail);
+
+                var newName = Guid.NewGuid().ToString("N") + Path.GetExtension(file.FileName);
+                blog.BlogThumbnail = newName;
+
+                string uploadsRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Blog");
+                string bannerPath = Path.Combine(uploadsRoot, "ThumnailsImage", newName);
+                string thumbPath = Path.Combine(uploadsRoot, "Thumbs", newName);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(bannerPath)!);
+                Directory.CreateDirectory(Path.GetDirectoryName(thumbPath)!);
+
+                await using (var fs = new FileStream(bannerPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fs);
+                }
+
+                ImageConvertor.ResizeAndSaveImage(bannerPath, thumbPath, 150, 150);
+            }
+
+            Context.Update(blog);
+            await Context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteBlog(Blog blog)
         {
             blog.BlogIsDeleted = true;
-            _context.Update(blog);
-            _context.SaveChanges();
+            Context.Update(blog);
+            await Context.SaveChangesAsync();
+            return true;
         }
 
-        public IList<ShowBlogsViewModel> GetAllBlogs()
+        public async Task<List<ShowBlogsViewModel>> GetLastBlogs(int take = 3)
         {
-            return _context.Blogs.Select(b => new ShowBlogsViewModel()
-            {
-
-                BlogShortDescription = b.BlogShortDescription,
-                BlogIsDeleted = b.BlogIsDeleted,
-                BlogTitle = b.BlogTitle,
-                BlogThumbnail = b.BlogThumbnail,
-                Visit = b.Visit.Value,
-                BlogPublishDate = b.BlogPublishDate,
-                BlogId = b.BlogId,
-                BlogGroupTitle = _context.BlogGroups
-                    .Where(g => g.BlogGroupId == b.BlogGroupId)
-                    .Select(g => g.BlogGroupTitle)
-                    .SingleOrDefault(),
-                BlogSubGroupTitle = _context.BlogGroups
-                    .Where(g => g.BlogGroupId == b.BlogSubGroupId)
-                    .Select(g => g.BlogGroupTitle)
-                    .SingleOrDefault(),
-            }).ToList();
-        }
-
-        public Blog GetBlogById(Guid id)
-        {
-            return _context.Blogs.Find(id);
-        }
-
-        public void UpdateBlog(Blog blog,IFormFile File)
-        {
-            if (File != null && File.IsImage())
-            {
-                string BannerPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Blog/ThumnailsImage/", blog.BlogThumbnail);
-                string DeleteThumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Blog/Thumbs/", blog.BlogThumbnail);
-
-                if (System.IO.File.Exists(BannerPath))
-                {
-                    System.IO.File.Delete(BannerPath);
-                    
-                }
-                if (System.IO.File.Exists(DeleteThumbPath))
-                {
-                    System.IO.File.Delete(DeleteThumbPath);
-                    
-                }
-
-                blog.BlogThumbnail = Guid.NewGuid() + Path.GetExtension(File.FileName);
-                using (FileStream fs = new FileStream(BannerPath, FileMode.Create))
-                {
-                    File.CopyTo(fs);
-                }
-                string ThumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Blog/Thumbs/", blog.BlogThumbnail);
-
-                ImageConvertor.ResizeAndSaveImage(BannerPath, ThumbPath, 150, 150);
-
-
-            }
-            _context.Update(blog);
-            _context.SaveChanges();
-        }
-
-        public int BlogsCount()
-        {
-            return _context.Blogs.Count();
-        }
-
-        public List<ShowLastBlogsViewModel> GetLastBlogs()
-        {
-           return _context.Blogs.OrderBy(b => b.BlogPublishDate).Take(5).Select(b =>
-                new ShowLastBlogsViewModel()
+            return await Context.Blogs
+                .OrderByDescending(b => b.BlogPublishDate)
+                .Take(take)
+                .Select(b => new ShowBlogsViewModel
                 {
                     BlogId = b.BlogId,
                     BlogTitle = b.BlogTitle,
-                    BlogImage = b.BlogThumbnail,
-                    BlogShortDesciption = b.BlogShortDescription,
-                    Visits = b.Visit.Value
-                }).ToList();
+                    BlogThumbnail = b.BlogThumbnail,
+                    BlogShortDescription = b.BlogShortDescription,
+                    Visit = b.Visit ?? 0
+                })
+                .ToListAsync();
+        }
+
+        public async Task<int> VisitsCount()
+            => await Context.Blogs.SumAsync(b => b.Visit ?? 0);
+
+        public async Task<int> BlogsCount()
+            => await Context.Blogs.CountAsync();
+
+        private void DeleteExistingImages(string fileName)
+        {
+            var basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Blog");
+            var oldBanner = Path.Combine(basePath, "ThumnailsImage", fileName);
+            var oldThumb = Path.Combine(basePath, "Thumbs", fileName);
+
+            if (File.Exists(oldBanner)) File.Delete(oldBanner);
+            if (File.Exists(oldThumb)) File.Delete(oldThumb);
         }
     }
 }

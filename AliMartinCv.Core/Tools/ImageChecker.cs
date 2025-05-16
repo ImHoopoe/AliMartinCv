@@ -9,19 +9,18 @@ namespace AliMartinCv.Core.Security
 {
     public static class ImageChecker
     {
-
-        public static bool IsImage(this IFormFile file)
+        public static bool IsImage(this Stream stream)
         {
-			try
-			{
-				var img = System.Drawing.Image.FromStream(file.OpenReadStream());
-				return true;
-			}
-			catch
-			{
-
-				return false;
-			}
+            try
+            {
+                using var img = System.Drawing.Image.FromStream(stream);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
+
 }

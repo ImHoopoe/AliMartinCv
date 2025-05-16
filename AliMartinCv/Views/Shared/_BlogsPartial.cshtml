@@ -1,0 +1,53 @@
+﻿@model List<AliMartinCv.Core.DTOS.BlogViewModels.ShowBlogsViewModel>
+
+<section id="blogs" class="blogs-section section py-5" data-observe aria-labelledby="blogs-title">
+    <div class="container">
+        <h2 id="blogs-title" class="text-center section-title mb-4">Latest Blog Posts</h2>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var blog in Model)
+            {
+                <div class="col">
+                    <article class="glass-card p-3 blog-item h-100 d-flex flex-column">
+                        <img src="/Blog/Thumbs/@blog.BlogThumbnail"
+                             class="img-fluid rounded mb-3 w-100"
+                             alt="@blog.BlogTitle thumbnail"
+                             loading="lazy">
+
+                        <h5 class="card-title text-truncate">@blog.BlogTitle</h5>
+                        <p class="card-text text-truncate">@blog.BlogShortDescription</p>
+
+                        <!-- بخش زمان انتشار و بازدید -->
+                        <div class="blog-meta d-flex justify-content-between align-items-center mb-3 text-muted small">
+                            <span>
+                                <i class="far fa-calendar-alt me-1" aria-hidden="true"></i>
+                                @blog.BlogPublishDate.ToString("MMM dd, yyyy")
+                            </span>
+                            <span>
+                                <i class="far fa-eye me-1" aria-hidden="true"></i>
+                                @blog.Visit Views
+                            </span>
+                        </div>
+
+                        <a href="/blogs/Blog/@blog.BlogTitle.Replace(" ", "-")"
+                           class="btn btn-sm btn-outline-primary mt-auto"
+                           aria-label="Read more about @blog.BlogTitle">
+                            Read More
+                        </a>
+                    </article>
+                </div>
+            }
+        </div>
+
+        <div class="row justify-content-start mt-5">
+            <div class="col-auto">
+                <a href="/blogs"
+                   class="btn btn-primary btn-lg d-inline-flex align-items-center"
+                   aria-label="View all blog posts">
+                    All Blogs
+                    <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

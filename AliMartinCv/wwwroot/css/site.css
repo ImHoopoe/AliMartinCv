@@ -293,8 +293,53 @@ body {
     border-radius: 15px;
 }
 
+.text-justified {
+    text-align: justify;
+}
+
+p {
+    text-align: justify;
+}
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+
+input {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+textarea {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    
+}
+
+@media (min-width: 1000px) {
+    .fab-main {
+        display: none;
+    }
+}
+
+    
+
+@media (max-width: 1000px) {
+    .navbar {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+
     .hero-title {
         font-size: 2.5rem;
     }
@@ -377,4 +422,72 @@ body {
     100% {
         transform: translateX(0);
     }
+}
+
+
+.fab-container {
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+}
+
+.fab-main {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(78, 84, 200, .8);
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 10;
+    transition: transform 0.3s;
+}
+
+.fab-options {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.fab-option {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(78, 84, 200, .4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(20px);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px var(--secondary-color);
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) translate(0, 0);
+    text-decoration: none;
+}
+
+@keyframes moveFromCenter {
+    0% {
+        transform: translate(-50%, -50%) translate(0, 0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: var(--final-transform);
+        opacity: 1;
+    }
+}
+
+.fab-container.open .fab-option {
+    animation: moveFromCenter 0.5s ease forwards;
+    pointer-events: auto;
 }

@@ -11,16 +11,16 @@ namespace AliMartinCv.Core.Sevices.Interfaces
 {
     public interface IBlog
     {
-        IList<ShowBlogsViewModel> GetAllBlogs();
-        Blog GetBlogById(Guid id);
-        Guid CreateNewBlog(Blog blog,IFormFile File);
-        void UpdateBlog(Blog blog,IFormFile File);
-        void DeleteBlog(Blog blog);
+        Task<List<ShowBlogsViewModel>> GetAllBlogs();
+        Task<Blog> GetBlogById(Guid id);
+        Task<bool> CreateNewBlog(Blog blog,IFormFile File);
+        Task<bool> UpdateBlog(Blog blog,IFormFile File);
+        Task<bool> DeleteBlog(Blog blog);
 
         #region AdminPanelIndex
-        int BlogsCount();
-        int VisitsCount();
-        List<ShowLastBlogsViewModel> GetLastBlogs();
+        Task<int> BlogsCount();
+        Task<int> VisitsCount();
+        Task<List<ShowBlogsViewModel>> GetLastBlogs(int take = 3);
 
 
         #endregion

@@ -30,7 +30,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\Blog\BlogImages\" />
     <Folder Include="wwwroot\Blog\ThumnailsImage\" />
-    <Folder Include="wwwroot\Blog\Thumbs\" />
     <Folder Include="wwwroot\file-upload\" />
   </ItemGroup>
 

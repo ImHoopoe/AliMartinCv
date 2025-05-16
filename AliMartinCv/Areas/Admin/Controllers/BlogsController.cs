@@ -17,10 +17,10 @@ namespace AliMartinCv.Areas.Admin.Controllers
             _blogGroupServices = blogGroupServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            return View(_blogServices.GetAllBlogs().ToList());
+            return View(await _blogServices.GetAllBlogs());
         }
 
         public IActionResult CreateBlog()
@@ -57,7 +57,7 @@ namespace AliMartinCv.Areas.Admin.Controllers
         }
 
 
-        public IActionResult EditBlog(Guid id)
+        public async Task<IActionResult> EditBlog(Guid id)
         {
             var mainGroups = _blogGroupServices.GetAllMainGroups();
             ViewBag.Maingroups = mainGroups;
@@ -75,7 +75,7 @@ namespace AliMartinCv.Areas.Admin.Controllers
             ViewBag.SubGroups = subGroups;
 
 
-            return View(_blogServices.GetBlogById(id));
+            return View(await _blogServices.GetBlogById(id));
         }
 
         [HttpPost]
@@ -90,7 +90,7 @@ namespace AliMartinCv.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult DeleteBlog(Guid id)
+        public async Task<IActionResult> DeleteBlog(Guid id)
         {
             var mainGroups = _blogGroupServices.GetAllMainGroups();
             ViewBag.Maingroups = mainGroups;
@@ -106,7 +106,7 @@ namespace AliMartinCv.Areas.Admin.Controllers
             subGroups.AddRange(_blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value)));
             _blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value));
             ViewBag.SubGroups = subGroups;
-            return View(_blogServices.GetBlogById(id));
+            return View(await _blogServices.GetBlogById(id));
         }
 
         [HttpPost]

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Speed Dial - آرک ربع دایره</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #f0f0f0;
+      font-family: sans-serif;
+    }
+
+    .fab-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .fab-main {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 10;
+      transition: transform 0.3s;
+    }
+
+    .fab-options {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .fab-option {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #6c757d;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      font-size: 22px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) translate(0, 0);
+    }
+
+    @keyframes moveFromCenter {
+      0% {
+        transform: translate(-50%, -50%) translate(0, 0);
+        opacity: 0;
+      }
+      100% {
+        transform: var(--final-transform);
+        opacity: 1;
+      }
+    }
+
+    .fab-container.open .fab-option {
+      animation: moveFromCenter 0.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+
+<div class="fab-container" id="fabContainer">
+  <div class="fab-options" id="fabOptions"></div>
+  <button class="fab-main" id="fabMain">＋</button>
+</div>
+
+<script>
+  const fabContainer = document.getElementById('fabContainer');
+  const fabOptions = document.getElementById('fabOptions');
+  const fabMain = document.getElementById('fabMain');
+
+  const buttons = [
+    { icon: '🏠', title: 'خانه' },
+    { icon: '🔍', title: 'جستجو' },
+    { icon: '⚙️', title: 'تنظیمات' },
+    { icon: '📞', title: 'تماس' },
+    { icon: '📧', title: 'ایمیل' },
+    { icon: '⭐️', title: 'علاقه‌مندی' }
+  ];
+
+  function createArcButtons() {
+    const radius = 200;
+    const startAngle = 0;
+    const endAngle = 105;
+    const angleStep = (endAngle - startAngle) / (buttons.length - 1);
+
+    buttons.forEach((btn, index) => {
+      const angle = startAngle + angleStep * index;
+      const rad = angle * Math.PI / 180;
+      const x = Math.cos(rad) * radius;
+      const y = Math.sin(rad) * radius;
+
+      const btnEl = document.createElement('button');
+      btnEl.className = 'fab-option';
+      btnEl.title = btn.title;
+      btnEl.innerText = btn.icon;
+
+      const finalTransform = `translate(-50%, -50%) translate(${-x}px, ${-y}px)`;
+      btnEl.style.setProperty('--final-transform', finalTransform);
+      btnEl.style.animationDelay = `${index * 0.1}s`;
+
+      fabOptions.appendChild(btnEl);
+    });
+  }
+
+  function toggleFab() {
+    const open = fabContainer.classList.toggle('open');
+    fabMain.style.transform = open ? 'rotate(45deg)' : 'rotate(0deg)';
+
+    // اگر در حال بسته‌شدن است، دکمه‌ها را حذف و دوباره بساز
+    if (!open) {
+      fabOptions.innerHTML = '';
+    } else {
+      createArcButtons();
+    }
+  }
+
+  fabMain.addEventListener('click', toggleFab);
+</script>
+
+</body>
+</html>
