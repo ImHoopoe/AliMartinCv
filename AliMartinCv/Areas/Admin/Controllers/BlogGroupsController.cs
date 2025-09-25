@@ -1,10 +1,12 @@
 ﻿using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.DataLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AliMartinCv.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class BlogGroupsController : Controller
     {
         private readonly IBlogGroup _BlogServices;

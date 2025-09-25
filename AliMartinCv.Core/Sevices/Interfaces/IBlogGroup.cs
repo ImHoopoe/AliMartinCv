@@ -18,13 +18,13 @@ namespace AliMartinCv.Core.Sevices.Interfaces
         void UpdateBlogGroup(BlogGroup blogGroup);
         void DeleteBlogGroup(BlogGroup blogGroup);
         List<SelectListItem> GetAllSubGroups(Guid id);
-        IList<SelectListItem> GetAllMainGroups();
-        IList<SelectListItem> GetSubGroups(Guid id);
+        Task<IList<SelectListItem>> GetAllMainGroups();
+        Task<IList<SelectListItem>> GetSubGroups(Guid id);
 
         #region AdminIndex
 
-        int GroupsCount();
-        int SubGroupCounts();
+        Task<int> GroupsCount();
+        Task<int> SubGroupCounts();
 
 
         #endregion

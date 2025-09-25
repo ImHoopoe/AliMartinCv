@@ -1,13 +1,26 @@
-﻿using AliMartinCv.Core.Sevices.Interfaces;
+﻿using AliMartinCv.Core.Services.Services;
+using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.Core.Sevices.Services;
 using AliMartinCv.DataLayer.context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.LogoutPath = "/Logout";
+        options.AccessDeniedPath = "/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromHours(3);
+    });
+
+builder.Services.AddAuthorization();
 #region Context
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AliMartinCvContext>(options =>
@@ -18,6 +31,9 @@ builder.Services.AddDbContext<AliMartinCvContext>(options =>
 #region IOC
 builder.Services.AddScoped<IBlogGroup,BlogGroupServices>();
 builder.Services.AddScoped<IBlog,BlogServices>();
+builder.Services.AddScoped<ISchool,SchoolServices>();
+builder.Services.AddScoped<IClass,ClassService>();
+builder.Services.AddScoped<IStudent,StudentServices>();
 
 #endregion
 

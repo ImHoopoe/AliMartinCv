@@ -1,0 +1,208 @@
+﻿<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observedSections = document.querySelectorAll('[data-observe]');
+      const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+      // IntersectionObserver تنظیم
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+
+            // ✳️ شمارنده‌ها
+            if (entry.target.classList.contains('counter-section')) {
+              const counters = entry.target.querySelectorAll('.counter-number');
+              counters.forEach(counter => {
+                counter.innerText = '0';
+                const updateCount = () => {
+                  const target = +counter.getAttribute('data-count');
+                  const count = +counter.innerText;
+                  const increment = target / 200;
+                  if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                  } else {
+                    counter.innerText =  '+ ' + target ;
+                  }
+                };
+                updateCount();
+              });
+            }
+
+            // ✳️ نوار مهارت‌ها
+            if (entry.target.id === 'skills') {
+              const bars = entry.target.querySelectorAll('.progress-bar');
+              const duration = 1000;
+
+              function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+              }
+
+              bars.forEach(bar => {
+                const target = parseInt(bar.dataset.target, 10);
+                const label = bar.closest('.skill-item').querySelector('.skill-percent');
+                let startTime = null;
+
+                function animate(time) {
+                  if (!startTime) startTime = time;
+                  const elapsed = time - startTime;
+                  const progress = Math.min(elapsed / duration, 1);
+                  const eased = easeInOutQuad(progress);
+                  const currentValue = Math.floor(eased * target);
+                  bar.style.width = currentValue + '%';
+                  bar.setAttribute('aria-valuenow', currentValue);
+                  if (label) label.textContent = currentValue + '%';
+
+                  if (elapsed < duration) {
+                    requestAnimationFrame(animate);
+                  } else {
+                    bar.style.width = target + '%';
+                    bar.setAttribute('aria-valuenow', target);
+                    if (label) label.textContent = target + '%';
+                  }
+                }
+
+                requestAnimationFrame(animate);
+              });
+            }
+
+            observer.unobserve(entry.target); // فقط یک بار اجرا شود
+          }
+        });
+      }, {
+        threshold: 0
+      });
+
+      observedSections.forEach(section => observer.observe(section));
+
+      // 🔹 اسکرول نرم برای منوها
+      navLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').slice(1);
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // 🔹 اسکرول اسپای
+      const scrollSections = document.querySelectorAll('section[id]');
+      window.addEventListener('scroll', () => {
+        const scrollPos = window.scrollY + 200;
+        scrollSections.forEach(sec => {
+          const top = sec.offsetTop;
+          const bottom = top + sec.offsetHeight;
+          const id = sec.getAttribute('id');
+          const link = document.querySelector(`.nav-link[href="#${id}"]`);
+          if (scrollPos >= top && scrollPos < bottom) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            if (link) link.classList.add('active');
+          }
+        });
+      });
+    });
+</script>
+
+
+<script>
+           const fabContainer = document.getElementById('fabContainer');
+    const fabOptions = document.getElementById('fabOptions');
+    const fabMain = document.getElementById('fabMain');
+
+      const buttons = [
+      { icon: '🏠',  title: 'Home',       href: "/#home" },
+      { icon: 'ℹ️',  title: 'About',      href: "/#about" },
+      { icon: '🛠️', title: 'Skills',     href: "/#skills" },
+      { icon: '📈',  title: 'Experience', href: "/#experience" },
+      { icon: '🖼️', title: 'Portfolio',   href: "/#portfolio" },
+      { icon: '✉️',  title: 'Contact',    href: "/#contact" },
+    ];
+
+
+    function createArcButtons() {
+      const radius = 100;
+      const startAngle = 0;
+      const endAngle = 105;
+      const angleStep = (endAngle - startAngle) / (buttons.length - 1);
+
+      buttons.forEach((link, index) => {
+        const angle = startAngle + angleStep * index;
+        const rad = angle * Math.PI / 180;
+        const x = Math.cos(rad) * radius;
+        const y = Math.sin(rad) * radius;
+
+        const linkEl = document.createElement('a');
+        linkEl.className = 'fab-option';
+        linkEl.title = link.title;
+        linkEl.innerText = link.icon;
+        linkEl.href = link.href || '#';
+
+        const finalTransform = `translate(-50%, -50%) translate(${-x}px, ${-y}px)`;
+        linkEl.style.setProperty('--final-transform', finalTransform);
+        linkEl.style.animationDelay = `${index * 0.1}s`;
+
+        fabOptions.appendChild(linkEl);
+      });
+    }
+
+    function toggleFab() {
+      const open = fabContainer.classList.toggle('open');
+      fabMain.style.transform = open ? 'rotate(45deg)' : 'rotate(0deg)';
+
+      if (!open) {
+        fabOptions.innerHTML = '';
+      } else {
+        createArcButtons();
+      }
+    }
+
+    fabMain.addEventListener('click', toggleFab);
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const texts = [
+        'Software Programming Instructor',
+        'Full Stack Developer',
+        'C# & .NET Specialist',
+        'UI/UX Enthusiast',
+        'Mentor & Code Reviewer'
+      ];
+
+      const typingElement = document.getElementById('typed-text');
+      const typingSpeed = 80;   // سرعت تایپ
+      const erasingSpeed = 40;  // سرعت حذف
+      const delayBetweenTexts = 1500; // مکث بین جملات
+
+      let textIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const currentText = texts[textIndex];
+        if (isDeleting) {
+          typingElement.textContent = currentText.substring(0, charIndex--);
+          if (charIndex < 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            setTimeout(type, 500);
+          } else {
+            setTimeout(type, erasingSpeed);
+          }
+        } else {
+          typingElement.textContent = currentText.substring(0, charIndex++);
+          if (charIndex > currentText.length) {
+            isDeleting = true;
+            setTimeout(type, delayBetweenTexts);
+          } else {
+            setTimeout(type, typingSpeed);
+          }
+        }
+      }
+
+      type(); // شروع تایپ
+    });
+</script>

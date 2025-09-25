@@ -13,130 +13,135 @@
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/css/site.css">
-    <link rel="stylesheet" href="/css/site.css">
 
 </head>
+
 <body data-bs-spy="scroll" data-bs-target=".navbar">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Ali Martin</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#skills">Skills</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#experience">Experience</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#portfolio">Portfolio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    @RenderBody()
-
-    <!-- Footer with Animated Wave -->
-    <footer class="footer">
-        <svg class="wave" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f5f7fa"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f5f7fa"></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f5f7fa"></path>
-        </svg>
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <p class="mb-4 text-center">© @DateTime.Now.Year Ali Martin. All rights reserved.</p>
-                </div>
-            </div>
-            <div class="social-icons">
-                <a href="https://github.com/ImHoopoe"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/ali-martin-imhoopoe"><i class="fab fa-linkedin"></i></a>
-                <a href="https://x.com/imHoopoe"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/alimartintheprogrammer/"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Portfolio Modal -->
-    <div class="modal fade" id="portfolioModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ali Martin</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Download Portfolio File</p>
-
-                    <a href="/Files/AliMartinCv.pdf"
-                       class="btn btn-outline-primary"
-                       download="AliMartinCv.pdf">
-                        <i class="fas fa-download me-2"></i>Download Portfolio
-                    </a>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="#portfolio" class="btn btn-primary">View Full Portfolio</a>
-                </div>
-            </div>
-        </div>
+    <div id="loader">
+        <img src="/favicon.ico" alt="Loading…">
     </div>
-
-
-    <!-- Project Modals -->
-    <div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Super Application</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="/img/SamroLogo.png" class="img-fluid rounded mb-4" alt="Project">
-                    <p>
-                        The Sports Event Management System is a digital platform designed for organizing and managing sports events and competitions.
-
-                        It enables registration, scheduling, and result tracking for organizers and participants.
-
-                        Its goal is to streamline processes and enhance efficiency in hosting sports events.
-                    </p>
-                    <h6>Technologies Used:</h6>
-                    <ul>
-                        <li>Asp.net</li>
-                        <li>Signal Js</li>
-                        <li>Bootstrap 5.2</li>
-                        <li>Sql Server</li>
+  
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="/">Ali Martin</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#skills">Skills</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#experience">Experience</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#portfolio">Portfolio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
                     </ul>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="#" class="btn btn-primary">Visit Website</a>
+            </div>
+        </nav>
+
+        @RenderBody()
+
+        <!-- Footer with Animated Wave -->
+        <footer class="footer">
+            <svg class="wave" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f5f7fa"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f5f7fa"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f5f7fa"></path>
+            </svg>
+            <div class="container text-center">
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <p class="mb-4 text-center">© @DateTime.Now.Year Ali Martin. All rights reserved.</p>
+                    </div>
+                </div>
+                <div class="social-icons">
+                    <a href="https://github.com/ImHoopoe"><i class="fab fa-github text-white"></i></a>
+                <a href="https://www.linkedin.com/in/ali-martin-imhoopoe"><i class="fab fa-linkedin text-white"></i></a>
+                <a href="https://x.com/imHoopoe"><i class="fab fa-twitter text-white"></i></a>
+                <a href="https://www.instagram.com/alimartintheprogrammer/"><i class="fab fa-instagram text-white"></i></a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Portfolio Modal -->
+        <div class="modal fade" id="portfolioModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ali Martin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Download Portfolio File</p>
+
+                        <a href="/Files/AliMartinCv.pdf"
+                           class="btn btn-outline-primary"
+                           download="AliMartinCv.pdf">
+                            <i class="fas fa-download me-2"></i>Download Portfolio
+                        </a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="#portfolio" class="btn btn-primary">View Full Portfolio</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="fab-container" id="fabContainer">
-        <div class="fab-options" id="fabOptions"></div>
-        <button class="fab-main" id="fabMain">＋</button>
-    </div>
 
+        <!-- Project Modals -->
+        <div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Super Application</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="/img/SamroLogo.png" class="img-fluid rounded mb-4" alt="Project">
+                        <p>
+                            The Sports Event Management System is a digital platform designed for organizing and managing sports events and competitions.
+
+                            It enables registration, scheduling, and result tracking for organizers and participants.
+
+                            Its goal is to streamline processes and enhance efficiency in hosting sports events.
+                        </p>
+                        <h6>Technologies Used:</h6>
+                        <ul>
+                            <li>Asp.net</li>
+                            <li>Signal Js</li>
+                            <li>Bootstrap 5.2</li>
+                            <li>Sql Server</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="#" class="btn btn-primary">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fab-container" id="fabContainer">
+            <div class="fab-options" id="fabOptions"></div>
+            <button class="fab-main" id="fabMain">＋</button>
+        </div>
+   
 </body>
 
 
@@ -145,216 +150,15 @@
 <!-- Counter Animation -->
 <!-- Bootstrap 5.3 JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/Scripts"></script>
 <!-- Custom Scripts -->
+<partial name="Scripts" />
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const observedSections = document.querySelectorAll('[data-observe]');
-      const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-
-      // IntersectionObserver تنظیم
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-
-            // ✳️ شمارنده‌ها
-            if (entry.target.classList.contains('counter-section')) {
-              const counters = entry.target.querySelectorAll('.counter-number');
-              counters.forEach(counter => {
-                counter.innerText = '0';
-                const updateCount = () => {
-                  const target = +counter.getAttribute('data-count');
-                  const count = +counter.innerText;
-                  const increment = target / 200;
-                  if (count < target) {
-                    counter.innerText = Math.ceil(count + increment);
-                    setTimeout(updateCount, 10);
-                  } else {
-                    counter.innerText =  '+ ' + target ;
-                  }
-                };
-                updateCount();
-              });
-            }
-
-            // ✳️ نوار مهارت‌ها
-            if (entry.target.id === 'skills') {
-              const bars = entry.target.querySelectorAll('.progress-bar');
-              const duration = 1000;
-
-              function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-              }
-
-              bars.forEach(bar => {
-                const target = parseInt(bar.dataset.target, 10);
-                const label = bar.closest('.skill-item').querySelector('.skill-percent');
-                let startTime = null;
-
-                function animate(time) {
-                  if (!startTime) startTime = time;
-                  const elapsed = time - startTime;
-                  const progress = Math.min(elapsed / duration, 1);
-                  const eased = easeInOutQuad(progress);
-                  const currentValue = Math.floor(eased * target);
-                  bar.style.width = currentValue + '%';
-                  bar.setAttribute('aria-valuenow', currentValue);
-                  if (label) label.textContent = currentValue + '%';
-
-                  if (elapsed < duration) {
-                    requestAnimationFrame(animate);
-                  } else {
-                    bar.style.width = target + '%';
-                    bar.setAttribute('aria-valuenow', target);
-                    if (label) label.textContent = target + '%';
-                  }
-                }
-
-                requestAnimationFrame(animate);
-              });
-            }
-
-            observer.unobserve(entry.target); // فقط یک بار اجرا شود
-          }
-        });
-      }, {
-        threshold: 0.2
-      });
-
-      observedSections.forEach(section => observer.observe(section));
-
-      // 🔹 اسکرول نرم برای منوها
-      navLinks.forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').slice(1);
-          const targetEl = document.getElementById(targetId);
-          if (targetEl) {
-            targetEl.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      });
-
-      // 🔹 اسکرول اسپای
-      const scrollSections = document.querySelectorAll('section[id]');
-      window.addEventListener('scroll', () => {
-        const scrollPos = window.scrollY + 200;
-        scrollSections.forEach(sec => {
-          const top = sec.offsetTop;
-          const bottom = top + sec.offsetHeight;
-          const id = sec.getAttribute('id');
-          const link = document.querySelector(`.nav-link[href="#${id}"]`);
-          if (scrollPos >= top && scrollPos < bottom) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            if (link) link.classList.add('active');
-          }
-        });
-      });
+    // وقتی صفحه کامل بارگذاری شد:
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      loader.parentNode.removeChild(loader);
+      
     });
 </script>
-
-
-<script>
-           const fabContainer = document.getElementById('fabContainer');
-    const fabOptions = document.getElementById('fabOptions');
-    const fabMain = document.getElementById('fabMain');
-
-      const buttons = [
-      { icon: '🏠',  title: 'Home',       href: "/#home" },
-      { icon: 'ℹ️',  title: 'About',      href: "/#about" },
-      { icon: '🛠️', title: 'Skills',     href: "/#skills" },
-      { icon: '📈',  title: 'Experience', href: "/#experience" },
-      { icon: '🖼️', title: 'Portfolio',   href: "/#portfolio" },
-      { icon: '✉️',  title: 'Contact',    href: "/#contact" },
-    ];
-
-
-    function createArcButtons() {
-      const radius = 100;
-      const startAngle = 0;
-      const endAngle = 105;
-      const angleStep = (endAngle - startAngle) / (buttons.length - 1);
-
-      buttons.forEach((link, index) => {
-        const angle = startAngle + angleStep * index;
-        const rad = angle * Math.PI / 180;
-        const x = Math.cos(rad) * radius;
-        const y = Math.sin(rad) * radius;
-
-        const linkEl = document.createElement('a');
-        linkEl.className = 'fab-option';
-        linkEl.title = link.title;
-        linkEl.innerText = link.icon;
-        linkEl.href = link.href || '#';
-
-        const finalTransform = `translate(-50%, -50%) translate(${-x}px, ${-y}px)`;
-        linkEl.style.setProperty('--final-transform', finalTransform);
-        linkEl.style.animationDelay = `${index * 0.1}s`;
-
-        fabOptions.appendChild(linkEl);
-      });
-    }
-
-    function toggleFab() {
-      const open = fabContainer.classList.toggle('open');
-      fabMain.style.transform = open ? 'rotate(45deg)' : 'rotate(0deg)';
-
-      if (!open) {
-        fabOptions.innerHTML = '';
-      } else {
-        createArcButtons();
-      }
-    }
-
-    fabMain.addEventListener('click', toggleFab);
-</script>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const texts = [
-        'Software Programming Instructor',
-        'Full Stack Developer',
-        'C# & .NET Specialist',
-        'UI/UX Enthusiast',
-        'Mentor & Code Reviewer'
-      ];
-
-      const typingElement = document.getElementById('typed-text');
-      const typingSpeed = 80;   // سرعت تایپ
-      const erasingSpeed = 40;  // سرعت حذف
-      const delayBetweenTexts = 1500; // مکث بین جملات
-
-      let textIndex = 0;
-      let charIndex = 0;
-      let isDeleting = false;
-
-      function type() {
-        const currentText = texts[textIndex];
-        if (isDeleting) {
-          typingElement.textContent = currentText.substring(0, charIndex--);
-          if (charIndex < 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % texts.length;
-            setTimeout(type, 500);
-          } else {
-            setTimeout(type, erasingSpeed);
-          }
-        } else {
-          typingElement.textContent = currentText.substring(0, charIndex++);
-          if (charIndex > currentText.length) {
-            isDeleting = true;
-            setTimeout(type, delayBetweenTexts);
-          } else {
-            setTimeout(type, typingSpeed);
-          }
-        }
-      }
-
-      type(); // شروع تایپ
-    });
-</script>
-
 </html>
 

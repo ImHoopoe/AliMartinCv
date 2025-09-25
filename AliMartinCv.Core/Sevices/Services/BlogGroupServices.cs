@@ -1,71 +1,85 @@
-﻿using AliMartinCv.Core.Sevices.Interfaces;
+﻿
+using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.Core.Tools;
 using AliMartinCv.DataLayer.context;
 using AliMartinCv.DataLayer.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-namespace AliMartinCv.Core.Sevices.Services
-{
 
+namespace AliMartinCv.Core.Services.Services
+{
     public class BlogGroupServices : IBlogGroup
     {
         private readonly AliMartinCvContext _context;
+
         public BlogGroupServices(AliMartinCvContext context)
         {
             _context = context;
         }
 
-
-
-
-
-
-
-        #region Index
-
         public Guid CreateNewBlogGroup(BlogGroup blogGroup)
         {
             blogGroup.BlogGroupId = Tools.Tools.UniqNameMaker();
-            _context.Add(blogGroup);
+            _context.BlogGroups.Add(blogGroup);
             _context.SaveChanges();
             return blogGroup.BlogGroupId;
         }
 
         public void DeleteBlogGroup(BlogGroup blogGroup)
         {
-            var blogSubGroups = _context.BlogGroups.Where(b => b.BlogGroupParentId == blogGroup.BlogGroupId).ToList();
-            foreach (var blogSubGroup in blogSubGroups)
+            // Soft-delete all children
+            var subGroups = _context.BlogGroups
+                .Where(g => g.BlogGroupParentId == blogGroup.BlogGroupId)
+                .ToList();
+
+            foreach (var sg in subGroups)
             {
-                blogSubGroup.IsDeleted = true;
+                sg.IsDeleted = true;
             }
+
             blogGroup.IsDeleted = true;
             UpdateBlogGroup(blogGroup);
         }
 
-        public IList<SelectListItem> GetAllMainGroups()
+        public async Task<IList<SelectListItem>> GetAllMainGroups()
         {
-            return _context.BlogGroups.Where(g => g.BlogGroupParentId == null)
-                .Select(g => new SelectListItem()
+            return await _context.BlogGroups
+                .Where(g => g.BlogGroupParentId == null && !g.IsDeleted)
+                .Select(g => new SelectListItem
                 {
-                    Text = g.BlogGroupTitle,
-                    Value = g.BlogGroupId.ToString()
+                    Value = g.BlogGroupId.ToString(),
+                    Text = g.BlogGroupTitle
                 })
-                .ToList();
+                .ToListAsync();
+        }
+
+        public async Task<IList<SelectListItem>> GetSubGroups(Guid id)
+        {
+            return await _context.BlogGroups
+                .Where(g => g.BlogGroupParentId == id && !g.IsDeleted)
+                .Select(g => new SelectListItem
+                {
+                    Value = g.BlogGroupId.ToString(),
+                    Text = g.BlogGroupTitle
+                })
+                .ToListAsync();
         }
 
         public List<SelectListItem> GetAllSubGroups(Guid id)
         {
-            return _context.BlogGroups.Where(g => g.BlogGroupParentId == id).Select(sg => new SelectListItem()
-            {
-                Value = sg.BlogGroupId.ToString(),
-                Text = sg.BlogGroupTitle.ToString()
-
-            }).ToList();
+            // Legacy sync method, but you might consider deprecating this
+            return _context.BlogGroups
+                .Where(g => g.BlogGroupParentId == id && !g.IsDeleted)
+                .Select(g => new SelectListItem
+                {
+                    Value = g.BlogGroupId.ToString(),
+                    Text = g.BlogGroupTitle
+                })
+                .ToList();
         }
 
         public BlogGroup GetBlogGroupById(Guid id)
@@ -75,41 +89,33 @@ namespace AliMartinCv.Core.Sevices.Services
 
         public List<BlogGroup> GetBlogGroups()
         {
-            return _context.BlogGroups.ToList();
+            return _context.BlogGroups.AsNoTracking().ToList();
         }
 
         public string GetGroupTitleById(Guid id)
         {
-            return _context.BlogGroups.Find(id).BlogGroupTitle;
+            var grp = _context.BlogGroups
+                .AsNoTracking()
+                .FirstOrDefault(g => g.BlogGroupId == id);
+            return grp?.BlogGroupTitle;
         }
 
-        public IList<SelectListItem> GetSubGroups(Guid id)
+        public async Task<int> GroupsCount()
         {
-           return _context.BlogGroups.Where(g=> g.BlogGroupParentId== id)
-               .Select(sg=>new SelectListItem()
-               {
-                   Text = sg.BlogGroupTitle,
-                   Value = sg.BlogGroupId.ToString()
-               }).ToList();
+            return await _context.BlogGroups
+                .CountAsync(g => g.BlogGroupParentId == null && !g.IsDeleted);
         }
 
-        public int GroupsCount()
+        public async Task<int> SubGroupCounts()
         {
-           return GetAllMainGroups().Count();
-        }
-
-        public int SubGroupCounts()
-        {
-            return _context.BlogGroups.Where(g => g.BlogGroupParentId != null).ToList().Count();
+            return await _context.BlogGroups
+                .CountAsync(g => g.BlogGroupParentId != null && !g.IsDeleted);
         }
 
         public void UpdateBlogGroup(BlogGroup blogGroup)
         {
-            _context.Update(blogGroup);
+            _context.BlogGroups.Update(blogGroup);
             _context.SaveChanges();
         }
-
-
-        #endregion
     }
 }

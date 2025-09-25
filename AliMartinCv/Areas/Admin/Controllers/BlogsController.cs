@@ -1,11 +1,19 @@
 ﻿using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.DataLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AliMartinCv.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class BlogsController : Controller
     {
         private readonly IBlog _blogServices;
@@ -19,28 +27,32 @@ namespace AliMartinCv.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-
-            return View(await _blogServices.GetAllBlogs());
+            var blogs = await _blogServices.GetAllBlogs();
+            return View(blogs);
         }
 
-        public IActionResult CreateBlog()
+        public async Task<IActionResult> CreateBlog()
         {
-            var mainGroups = _blogGroupServices.GetAllMainGroups();
+            var mainGroups = await _blogGroupServices.GetAllMainGroups();
             ViewBag.Maingroups = mainGroups;
 
-            var subGroups = new List<SelectListItem>()
+            var firstGroupId = mainGroups.FirstOrDefault()?.Value;
+            var subGroups = new List<SelectListItem>
             {
-                new SelectListItem()
+                new SelectListItem
                 {
                     Text = "_Choose_",
-                    Value = "00000000-0000-0000-0000-000000000000"
+                    Value = Guid.Empty.ToString()
                 }
             };
 
-            subGroups.AddRange(_blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value)));
+            if (Guid.TryParse(firstGroupId, out var parsedId))
+            {
+                subGroups.AddRange(await _blogGroupServices.GetSubGroups(parsedId));
+            }
 
-            _blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value));
             ViewBag.SubGroups = subGroups;
+
             return View();
         }
 
@@ -49,121 +61,114 @@ namespace AliMartinCv.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                var mainGroups = await _blogGroupServices.GetAllMainGroups();
+                ViewBag.Maingroups = mainGroups;
+
+                ViewBag.SubGroups = new List<SelectListItem>
+                {
+                    new SelectListItem
+                    {
+                        Text = "_Choose_",
+                        Value = Guid.Empty.ToString()
+                    }
+                };
+
+                return View(blog);
             }
 
             await _blogServices.CreateNewBlog(blog, SelectPicture);
-            return Redirect("/Admin/Blogs/Index/");
+            return RedirectToAction(nameof(Index));
         }
-
 
         public async Task<IActionResult> EditBlog(Guid id)
         {
-            var mainGroups = _blogGroupServices.GetAllMainGroups();
+            var blog = await _blogServices.GetBlogById(id);
+            if (blog == null) return NotFound();
+
+            var mainGroups = await _blogGroupServices.GetAllMainGroups();
             ViewBag.Maingroups = mainGroups;
 
-            var subGroups = new List<SelectListItem>()
+            var subGroups = new List<SelectListItem>
             {
-                new SelectListItem()
+                new SelectListItem
                 {
                     Text = "_Choose_",
-                    Value = "00000000-0000-0000-0000-000000000000"
+                    Value = Guid.Empty.ToString()
                 }
             };
-            subGroups.AddRange(_blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value)));
-            _blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value));
+
+            var firstGroupId = mainGroups.FirstOrDefault()?.Value;
+            if (Guid.TryParse(firstGroupId, out var parsedId))
+            {
+                subGroups.AddRange(await _blogGroupServices.GetSubGroups(parsedId));
+            }
+
             ViewBag.SubGroups = subGroups;
 
-
-            return View(await _blogServices.GetBlogById(id));
+            return View(blog);
         }
 
         [HttpPost]
-        public IActionResult EditBlog(Blog blog, IFormFile? SelectPicture)
+        public async Task<IActionResult> EditBlog(Blog blog, IFormFile? SelectPicture)
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(blog);
             }
-            _blogServices.UpdateBlog(blog, SelectPicture);
 
-            return View();
+            await _blogServices.UpdateBlog(blog, SelectPicture);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> DeleteBlog(Guid id)
         {
-            var mainGroups = _blogGroupServices.GetAllMainGroups();
-            ViewBag.Maingroups = mainGroups;
+            var blog = await _blogServices.GetBlogById(id);
+            if (blog == null) return NotFound();
 
-            var subGroups = new List<SelectListItem>()
-            {
-                new SelectListItem()
-                {
-                    Text = "_Choose_",
-                    Value = "00000000-0000-0000-0000-000000000000"
-                }
-            };
-            subGroups.AddRange(_blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value)));
-            _blogGroupServices.GetSubGroups(Guid.Parse(mainGroups.First().Value));
-            ViewBag.SubGroups = subGroups;
-            return View(await _blogServices.GetBlogById(id));
+            return View(blog);
         }
 
         [HttpPost]
-        public IActionResult DeleteBlog(Blog blog)
+        public async Task<IActionResult> DeleteBlog(Blog blog)
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(blog);
             }
-            _blogServices.DeleteBlog(blog);
-            return Redirect("/Admin/Blogs/Index/");
-        }
 
+            await _blogServices.DeleteBlog(blog);
+            return RedirectToAction(nameof(Index));
+        }
 
         [HttpPost]
         [Route("file-upload")]
-        public IActionResult UploadImage(IFormFile upload, string CKEditorFuncNum, string CKEditor, string langCode)
+        public async Task<IActionResult> UploadImage(IFormFile upload, string CKEditorFuncNum, string CKEditor, string langCode)
         {
-            if (upload.Length <= 0) return null;
+            if (upload?.Length <= 0)
+                return BadRequest("Invalid file.");
 
-            var fileName = Guid.NewGuid() + Path.GetExtension(upload.FileName).ToLower();
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(upload.FileName).ToLower()}";
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Blog/BlogImages", fileName);
 
-
-
-            var path = Path.Combine(
-                Directory.GetCurrentDirectory(), "wwwroot/Blog/BlogImages",
-                fileName);
-
-            using (var stream = new FileStream(path, FileMode.Create))
+            await using (var stream = new FileStream(path, FileMode.Create))
             {
-                upload.CopyTo(stream);
-
+                await upload.CopyToAsync(stream);
             }
 
-
-
-            var url = $"{"/Blog/BlogImages/"}{fileName}";
-
-
+            var url = $"/Blog/BlogImages/{fileName}";
             return Json(new { uploaded = true, url });
         }
 
-
-        public IActionResult GetSubGroups(Guid id)
+        public async Task<IActionResult> GetSubGroups(Guid id)
         {
-
-            var subGroups = _blogGroupServices.GetAllSubGroups(id);
-            subGroups.Insert(0, new SelectListItem()
+            var subGroups =  _blogGroupServices.GetAllSubGroups(id);
+            subGroups.Insert(0, new SelectListItem
             {
                 Text = "_Choose_",
-                Value = "00000000-0000-0000-0000-000000000000"
+                Value = Guid.Empty.ToString()
             });
 
             return Json(new SelectList(subGroups, "Value", "Text"));
-
         }
-
-
     }
 }

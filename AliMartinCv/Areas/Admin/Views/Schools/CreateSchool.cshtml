@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AliMartinCv.DataLayer.DTos.AddSchoolViewModel
+@{
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Add School";
+}
+
+<form method="post">
+    <div class="card shadow mb-4">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Add New School</h1>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="SchoolName" type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Group Name...">
+            </div>
+            <button type="submit" class="btn btn-success btn-user btn-block">Add</button>
+            <hr>
+
+        </div>
+    </div>
+</form>

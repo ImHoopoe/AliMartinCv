@@ -57,9 +57,22 @@ namespace AliMartinCv.Core.Sevices.Services
 
         public async Task<Blog> GetBlogById(Guid id)
             => await Context.Blogs.FindAsync(id);
-        
+
         public async Task<Blog> GetBlogByTitle(string id)
-            => await Context.Blogs.SingleAsync(blog=> blog.BlogTitle== id);
+        {
+            var blogs = await Context.Blogs
+                .Where(b => b.BlogTitle == id)
+                .ToListAsync();
+
+            if (blogs.Count == 0)
+                throw new InvalidOperationException($"No blog found with title '{id}'.");
+
+            if (blogs.Count > 1)
+                throw new InvalidOperationException($"Multiple blogs found with title '{id}'.");
+
+            return blogs.Single(); // safe now
+        }
+
 
         public async Task<bool> CreateNewBlog(Blog blog, IFormFile? file)
         {

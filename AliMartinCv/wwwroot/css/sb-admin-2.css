@@ -83,7 +83,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     margin-bottom: 0.5rem;
     color: red !important;
-    animation: pop-in 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: pop-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 p {
@@ -4723,7 +4723,7 @@ input[type="button"].btn-block {
     background-clip: border-box;
     border: 1px solid #e3e6f0;
     border-radius: 0.35rem;
-    animation: pop-in 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: pop-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 
@@ -12266,6 +12266,6 @@ body.sidebar-toggled footer.sticky-footer {
     animation: SlideIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-#content {
-    animation: fade-in 1s;
-}
+/*#content {
+    animation: fade-in 0.2s;
+}*/

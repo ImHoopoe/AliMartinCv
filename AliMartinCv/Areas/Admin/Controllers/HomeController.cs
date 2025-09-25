@@ -1,9 +1,11 @@
 ﻿using AliMartinCv.Core.Sevices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AliMartinCv.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private readonly IBlog _blogServices;
@@ -15,13 +17,13 @@ namespace AliMartinCv.Areas.Admin.Controllers
             _blogGroupServices = blogGroupServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewBag.BlogCount = _blogServices.BlogsCount();
-            ViewBag.BlogGroupsCount = _blogGroupServices.GroupsCount();
-            ViewBag.BlogSubGroupsCount = _blogGroupServices.SubGroupCounts();
-            ViewBag.VisitCount = _blogServices.VisitsCount();
-            ViewBag.LastBlogs = _blogServices.GetLastBlogs();
+            ViewBag.BlogCount = await _blogServices.BlogsCount();
+            ViewBag.BlogGroupsCount = await _blogGroupServices.GroupsCount();
+            ViewBag.BlogSubGroupsCount = await _blogGroupServices.SubGroupCounts();
+            ViewBag.VisitCount = await _blogServices.VisitsCount();
+            ViewBag.LastBlogs = await _blogServices.GetLastBlogs();
             return View();
         }
     }

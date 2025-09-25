@@ -4,6 +4,7 @@ using AliMartinCv.DataLayer.context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliMartinCv.DataLayer.Migrations
 {
     [DbContext(typeof(AliMartinCvContext))]
-    partial class AliMartinCvContextModelSnapshot : ModelSnapshot
+    [Migration("20250925085406_Add_id_Student_School_Class")]
+    partial class Add_id_Student_School_Class
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,7 +143,7 @@ namespace AliMartinCv.DataLayer.Migrations
 
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.Student", b =>
                 {
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid>("StdentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -155,7 +158,7 @@ namespace AliMartinCv.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StudentId");
+                    b.HasKey("StdentId");
 
                     b.HasIndex("ClassId");
 
