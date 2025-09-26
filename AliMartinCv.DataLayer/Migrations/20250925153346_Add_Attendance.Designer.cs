@@ -4,6 +4,7 @@ using AliMartinCv.DataLayer.context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliMartinCv.DataLayer.Migrations
 {
     [DbContext(typeof(AliMartinCvContext))]
-    partial class AliMartinCvContextModelSnapshot : ModelSnapshot
+    [Migration("20250925153346_Add_Attendance")]
+    partial class Add_Attendance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +52,7 @@ namespace AliMartinCv.DataLayer.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Attendances");
+                    b.ToTable("Attendance");
                 });
 
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.Blog", b =>

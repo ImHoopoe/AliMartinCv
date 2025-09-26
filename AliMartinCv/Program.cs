@@ -34,6 +34,7 @@ builder.Services.AddScoped<IBlog,BlogServices>();
 builder.Services.AddScoped<ISchool,SchoolServices>();
 builder.Services.AddScoped<IClass,ClassService>();
 builder.Services.AddScoped<IStudent,StudentServices>();
+builder.Services.AddScoped<IAttendance,AttendanceServices>();
 
 #endregion
 

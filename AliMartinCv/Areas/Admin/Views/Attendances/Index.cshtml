@@ -1,0 +1,289 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using AliMartinCv.DataLayer.Entities
+@using AliMartinCv.DataLayer.DTos
+@model AliMartinCv.DataLayer.DTos.CreateAttendanceViewModel
+@{
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Schools";
+}
+
+<style>
+    .attendance-cards-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .attendance-card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .card-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .card-header h4 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #343a40;
+        }
+
+    .attendance-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-success:disabled {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-primary:disabled {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+    .card-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .remarks, .attendance-type {
+        margin-top: 20px;
+        display: none;
+    }
+
+        .remarks label, .attendance-type label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .remarks textarea, .attendance-type select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+        }
+
+    .submit-button {
+        text-align: center;
+    }
+
+        .submit-button .btn-success {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+        }
+</style>
+
+<form method="post" id="attendance-form">
+    <div class="attendance-cards-container">
+        <div class="card-navigation">
+            <button type="button" id="prev" class="btn btn-primary" disabled>قبلی</button>
+            <button type="button" id="next" class="btn btn-primary" @(Model.Students?.Count() <= 1 ? "disabled" : "")>بعدی</button>
+        </div>
+        <div id="attendance-card-container" class="attendance-card-wrapper">
+            @{
+                var students = Model.Students?.ToList() ?? new List<Student>();
+                var attendanceRecords = Model.AttendanceRecords?.ToList() ?? new List<AttendanceRecord>();
+            }
+            @if (!students.Any())
+            {
+                <p>هیچ دانش‌آموزی یافت نشد.</p>
+            }
+            else
+            {
+                @for (var i = 0; i < students.Count; i++)
+                {
+                    var student = students[i];
+                    var attendanceRecord = attendanceRecords.FirstOrDefault(r => r.StudentId == student.StudentId);
+                    var isPresentChecked = (attendanceRecord != null ? attendanceRecord.IsPresent : true) ? "checked" : "";
+                    var isAbsentChecked = attendanceRecord != null && !attendanceRecord.IsPresent ? "checked" : "";
+
+                    <div class="attendance-card" style="display: @(i == 0 ? "block" : "none");">
+                        <div class="card-header">
+                            <h4>@student.Name @student.LastName</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="attendance-buttons">
+                                <!-- Hidden inputs for StudentId and Date -->
+                                <input type="hidden" name="AttendanceRecords[@i].StudentId" value="@student.StudentId" />
+                                <input type="hidden" name="AttendanceRecords[@i].Date" value="@(attendanceRecord?.Date.ToString("o") ?? DateTime.Now.ToString("o"))" />
+
+                                <!-- دکمه تیک برای حضور -->
+                                <label class="btn btn-success">
+                                    <input type="radio" name="AttendanceRecords[@i].IsPresent"
+                                           value="true" class="attendance-radio" @isPresentChecked />
+                                    حاضر
+                                </label>
+                                <!-- دکمه ضربدر برای غیاب -->
+                                <label class="btn btn-danger">
+                                    <input type="radio" name="AttendanceRecords[@i].IsPresent"
+                                           value="false" class="attendance-radio" @isAbsentChecked />
+                                    غایب
+                                </label>
+                            </div>
+
+                            <div class="remarks" id="remarks-container-@student.StudentId"
+                                 style="display: @(attendanceRecord != null && !attendanceRecord.IsPresent ? "block" : "none");">
+                                <label for="remarks-@student.StudentId">توضیحات:</label>
+                                <textarea name="AttendanceRecords[@i].Remarks"
+                                          id="remarks-@student.StudentId" rows="3">@attendanceRecord?.Remarks</textarea>
+                            </div>
+
+                            <!-- فیلد برای AttendanceType -->
+                            <div class="attendance-type" id="type-container-@student.StudentId"
+                                 style="display: @(attendanceRecord != null && !attendanceRecord.IsPresent ? "block" : "none");">
+                                <label for="type-@student.StudentId">نوع حضور:</label>
+                                <select name="AttendanceRecords[@i].Type" id="type-@student.StudentId">
+                                    @foreach (var type in Enum.GetValues(typeof(AliMartinCv.DataLayer.Entities.AttendanceType)))
+                                    {
+                                        <option value="@type" selected="@(attendanceRecord != null && attendanceRecord.Type == (AliMartinCv.DataLayer.Entities.AttendanceType)type || (attendanceRecord == null && type.ToString() == "Regular") ? "true" : "false")">@type</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        @if (students.Any())
+        {
+            <div class="submit-button">
+                <button type="submit" id="submit-btn" class="btn btn-success" disabled>ثبت حضور و غیاب</button>
+            </div>
+        }
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.attendance-card');
+        const totalCards = cards.length;
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const submitButton = document.getElementById('submit-btn');
+        const form = document.getElementById('attendance-form');
+        let currentIndex = 0;
+
+        // به‌روزرسانی وضعیت دکمه‌ها
+        function updateButtons() {
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === totalCards - 1;
+            submitButton.disabled = currentIndex !== totalCards - 1;
+        }
+
+        // نمایش کارت فعلی
+        function showCard(index) {
+            cards.forEach((card, i) => {
+                card.style.display = i === index ? 'block' : 'none';
+            });
+            updateButtons();
+        }
+
+        // نمایش اولین کارت
+        if (totalCards > 0) {
+            showCard(currentIndex);
+        }
+
+        // رویداد دکمه بعدی
+        nextButton.addEventListener('click', function () {
+            if (currentIndex < totalCards - 1) {
+                currentIndex++;
+                showCard(currentIndex);
+            }
+        });
+
+        // رویداد دکمه قبلی
+        prevButton.addEventListener('click', function () {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showCard(currentIndex);
+            }
+        });
+
+        // مدیریت نمایش توضیحات و نوع حضور بر اساس انتخاب دکمه‌های رادیویی
+        document.querySelectorAll('.attendance-radio').forEach(button => {
+            button.addEventListener('change', function () {
+                const studentId = this.closest('.attendance-card').querySelector('input[name$=".StudentId"]').value;
+                const remarksContainer = document.getElementById(`remarks-container-${studentId}`);
+                const typeContainer = document.getElementById(`type-container-${studentId}`);
+                if (this.value === 'false') {
+                    remarksContainer.style.display = 'block';
+                    typeContainer.style.display = 'block';
+                } else {
+                    remarksContainer.style.display = 'none';
+                    typeContainer.style.display = 'none';
+                    // تنظیم پیش‌فرض AttendanceType به Regular هنگام انتخاب حاضر
+                    const select = document.getElementById(`type-${studentId}`);
+                    select.value = 'Regular';
+                }
+            });
+        });
+
+        // اعتبارسنجی فرم قبل از ارسال
+        form.addEventListener('submit', function (event) {
+            let valid = true;
+            cards.forEach((card, index) => {
+                const selectedRadio = card.querySelector(`input[name="AttendanceRecords[${index}].IsPresent"]:checked`);
+                if (!selectedRadio) {
+                    valid = false;
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault();
+                alert('لطفاً وضعیت حضور و غیاب را برای همه دانش‌آموزان انتخاب کنید.');
+            }
+        });
+    });
+</script>

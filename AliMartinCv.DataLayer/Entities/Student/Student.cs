@@ -17,7 +17,7 @@ namespace AliMartinCv.DataLayer.Entities
 
         #region Relations
         public Class Class { get; set; }
-
+        public IEnumerable<Attendance> Attendances { get; set; }
         #endregion
 
 

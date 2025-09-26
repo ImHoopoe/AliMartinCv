@@ -95,10 +95,16 @@ namespace AliMartinCv.Core.Sevices.Services
             }
         }
 
-        public async Task<IEnumerable<Student>> GetAllStudents()
+        public async Task<IEnumerable<Student>> GetAllStudents(int? id)
         {
             try
             {
+                if (id!=null)
+                {
+                    return await _context.Students.Where(s=> s.ClassId==id)
+                        .Include(s => s.Class)
+                        .ToListAsync();
+                }
                 return await _context.Students
                                      .Include(s => s.Class)
                                      .ToListAsync();
