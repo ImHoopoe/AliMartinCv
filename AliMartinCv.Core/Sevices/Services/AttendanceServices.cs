@@ -8,6 +8,7 @@ using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.DataLayer.context;
 using AliMartinCv.DataLayer.DTos;
 using AliMartinCv.DataLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AliMartinCv.Core.Sevices.Services
 {
@@ -48,5 +49,34 @@ namespace AliMartinCv.Core.Sevices.Services
             }
         }
 
+        public Task<List<AttendanceRecord>> ShowClassAttendace(int classId)
+        {
+            return _context.Students.Where(s => s.ClassId == classId)
+                .SelectMany(a => a.Attendances)
+                .OrderBy(a => a.Date).Include(a=> a.Student).Select(a => new AttendanceRecord()
+                {
+                    Date = a.Date,
+                    IsPresent = a.IsPresent,
+                    Remarks = a.Remarks,
+                    StudentId = a.StudentId,
+                    Type = a.Type,
+                    Name = a.Student.Name,
+                    LastName = a.Student.LastName
+                    
+                }).ToListAsync();
+        }
+
+        public async void ReCheckAll()
+        {
+          var att =  _context.Attendances.Where(a => a.Type == AttendanceType.Late).ToList();
+          foreach (var VARIABLE in att)
+          {
+              VARIABLE.Type = AttendanceType.Present;
+              _context.Update(VARIABLE);
+          }
+
+          _context.SaveChanges();
+
+        }
     }
 }

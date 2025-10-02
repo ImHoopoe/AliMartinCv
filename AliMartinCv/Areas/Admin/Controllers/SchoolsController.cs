@@ -1,11 +1,13 @@
 ﻿using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.DataLayer.DTos;
 using AliMartinCv.DataLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AliMartinCv.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SchoolsController : Controller
     {
         private readonly ISchool _schoolServices;

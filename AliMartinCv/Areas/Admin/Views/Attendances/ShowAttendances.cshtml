@@ -1,0 +1,137 @@
+﻿@using AliMartinCv.DataLayer.Entities
+@using AliMartinCv.DataLayer.DTos
+@model List<AttendanceRecord>
+
+@{
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Attendance Overview";
+}
+
+<style>
+    .attendance-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .attendance-table th, .attendance-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .attendance-table th {
+            background-color: #f8f9fa;
+        }
+
+        .attendance-table td {
+            font-size: 1rem;
+        }
+
+    .present {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .absent {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .missing {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .student-name {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .month-header {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        background-color: #f1f1f1;
+    }
+</style>
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>هیچ داده‌ای برای نمایش وجود ندارد.</p>
+}
+else
+{
+    var months = new List<string> { "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند", "فروردین", "اردیبهشت", "خرداد" };
+    var daysOfWeek = new List<string> { "شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه" };
+    var totalWeeks = 4;
+
+    @foreach (var month in months)
+    {
+        var monthIndex = months.IndexOf(month) + 1;
+        if (monthIndex < 1 || monthIndex > 12) continue;
+
+        <h3 class="month-header">@month</h3>
+        <table class="attendance-table">
+            <thead>
+                <tr>
+                    <th>نام و نام خانوادگی</th>
+                    @for (int week = 1; week <= totalWeeks; week++)
+                    {
+                        <th colspan="7">هفته @week</th>
+                    }
+                </tr>
+                <tr>
+                    <th></th>
+                    @for (int week = 1; week <= totalWeeks; week++)
+                    {
+                        foreach (var day in daysOfWeek)
+                        {
+                            <th>@day</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.GroupBy(s => s.StudentId).Select(group => group.First()))
+                {
+                    <tr>
+                        <td class="student-name">@student.Name @student.LastName</td>
+                        @for (int week = 1; week <= totalWeeks; week++)
+                        {
+                            for (int dayIndex = 0; dayIndex < 7; dayIndex++)
+                            {
+                                var dayOfMonth = (week - 1) * 7 + dayIndex + 1;
+
+                                if (dayOfMonth > 31)
+                                {
+                                    <td class="missing">نامعتبر</td>
+                                    continue;
+                                }
+
+                                var attendanceForDay = Model
+                                .FirstOrDefault(r => r.StudentId == student.StudentId
+                                && r.Date != null
+                                && r.Date.Month == monthIndex
+                                && r.Date.Day == dayOfMonth);
+
+                                string cellClass = "missing";
+                                string cellText = "عدم حضور";
+
+                                if (attendanceForDay != null)
+                                {
+                                    cellClass = attendanceForDay.IsPresent ? "present" : "absent";
+                                    cellText = attendanceForDay.IsPresent ? "حاضر" : "غایب";
+                                }
+
+                                <td class="@cellClass">@cellText</td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

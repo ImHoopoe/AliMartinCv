@@ -1,11 +1,13 @@
 ﻿using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.Core.Sevices.Services;
 using AliMartinCv.DataLayer.DTos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AliMartinCv.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class StudentsController : Controller
     {
         private readonly IClass _classServieces;

@@ -71,7 +71,7 @@ namespace AliMartinCv.Core.Services.Services
 
         public List<SelectListItem> GetAllSubGroups(Guid id)
         {
-            // Legacy sync method, but you might consider deprecating this
+            
             return _context.BlogGroups
                 .Where(g => g.BlogGroupParentId == id && !g.IsDeleted)
                 .Select(g => new SelectListItem

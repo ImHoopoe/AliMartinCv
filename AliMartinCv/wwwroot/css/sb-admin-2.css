@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * Start Bootstrap - SB Admin 2 v4.1.3 (https://startbootstrap.com/theme/sb-admin-2)
  * Copyright 2013-2021 Start Bootstrap
  * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin-2/blob/master/LICENSE)
@@ -12269,3 +12269,83 @@ body.sidebar-toggled footer.sticky-footer {
 /*#content {
     animation: fade-in 0.2s;
 }*/
+.container-fluid {
+    padding: 20px;
+}
+
+.btn-user {
+    margin-right: 5px;
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+/* استایل‌های مودال فانتزی */
+.random-modal .modal-content {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.random-modal .modal-header {
+    border-bottom: none;
+}
+
+.random-modal .modal-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.random-modal .modal-body {
+    font-size: 1.5rem;
+}
+
+.countdown {
+    font-size: 8rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    animation: pulse 0.8s ease-in-out infinite;
+}
+
+.student-info {
+    display: none;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+.big-number {
+    font-size: 150px;
+}

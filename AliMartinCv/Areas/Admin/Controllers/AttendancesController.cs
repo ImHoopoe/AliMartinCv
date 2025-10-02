@@ -1,10 +1,12 @@
 ﻿using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.DataLayer.DTos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AliMartinCv.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AttendancesController : Controller
     {
         private readonly IAttendance _attendanceServices;
@@ -35,6 +37,14 @@ namespace AliMartinCv.Areas.Admin.Controllers
 
             await _attendanceServices.CreateAttendance(attendance);
             return Redirect("/admin/schools/");
+        }
+
+        public async Task<IActionResult> ShowAttendances(int id)
+        {
+            //_attendanceServices.ReCheckAll();
+            var attendances = await _attendanceServices.ShowClassAttendace(id);
+
+            return View(attendances);
         }
     }
 }
