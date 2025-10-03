@@ -4,6 +4,7 @@ using AliMartinCv.DataLayer.context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliMartinCv.DataLayer.Migrations
 {
     [DbContext(typeof(AliMartinCvContext))]
-    partial class AliMartinCvContextModelSnapshot : ModelSnapshot
+    [Migration("20251003163857_StudentsInformations2")]
+    partial class StudentsInformations2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

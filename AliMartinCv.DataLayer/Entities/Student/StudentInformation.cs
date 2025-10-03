@@ -1,79 +1,39 @@
-﻿using AliMartinCv.DataLayer.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FluentValidation;
-namespace AliMartinCv.DataLayer.DTos
+
+namespace AliMartinCv.DataLayer.Entities
 {
-    public class CreateStudentViewModel
+    public class StudentInformation
     {
-        public Guid StudentId { get; set; } = Guid.NewGuid();
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public int ClassId { get; set; }
-
-
-    }
-
-
-
-
-    public class StudentInformationViewModel
-    {
+        public Guid StudentInformationId { get; set; }
         public Guid StudentId { get; set; }
         // دسته‌بندی خانواده
-        [Required(ErrorMessage = "تاریخ تولد الزامی است")]
         public DateTime DateOfBirth { get; set; } // تاریخ تولد
-
-        [Required(ErrorMessage = "جنسیت الزامی است")]
         public string Gender { get; set; } // جنسیت
-
-        [Required(ErrorMessage = "وضعیت خانواده الزامی است")]
         public string FamilyStatus { get; set; } // وضعیت خانواده (طلاق، ازدواج مجدد، زندگی با پدر یا مادر، سرپرست قانونی)
-
-        [Required(ErrorMessage = "تعداد اعضای خانواده الزامی است")]
         public int FamilyMemberCount { get; set; } // تعداد اعضای خانواده
-
-        [Required(ErrorMessage = "تعداد خواهران و برادران الزامی است")]
         public int SiblingsCount { get; set; } // تعداد خواهران و برادران
-
-        [Required(ErrorMessage = "فرزند چندم خانواده الزامی است")]
         public int ChildOrder { get; set; } // فرزند چندم خانواده
-
-        [Required(ErrorMessage = "شغل پدر الزامی است")]
         public string FatherOccupation { get; set; } // شغل پدر
-
-        [Required(ErrorMessage = "آیا پدر شاغل است؟")]
         public bool IsFatherEmployed { get; set; } // آیا پدر شاغل است؟
-
-        [Required(ErrorMessage = "شغل مادر الزامی است")]
         public string MotherOccupation { get; set; } // شغل مادر
-
-        [Required(ErrorMessage = "آیا مادر شاغل است؟")]
         public bool IsMotherEmployed { get; set; } // آیا مادر شاغل است؟
-
-        [Required(ErrorMessage = "نوع مسکن الزامی است")]
         public string HousingType { get; set; } // نوع مسکن (خانه، آپارتمان، خوابگاه و...)
 
         // وضعیت زندگی با والدین
-        [Required(ErrorMessage = "آیا بچه فرزند طلاق است؟")]
         public bool IsDivorced { get; set; } // آیا بچه فرزند طلاق است؟
-
-        [Required(ErrorMessage = "با کدام والد زندگی می‌کند؟")]
         public string ParentWithWhomLiving { get; set; } // با کدام والد زندگی می‌کند (پدر یا مادر)
 
         // وضعیت فوت پدر یا مادر
         public bool IsFatherDeceased { get; set; } // آیا پدر فوت کرده است؟
-        public DateTime? FatherDeceasedDate { get; set; } // تاریخ فوت پدر
-
+        public DateTime? FatherDeceasedDate { get; set; } // تاریخ فوت پدر (در صورت موجود بودن)
         public bool IsMotherDeceased { get; set; } // آیا مادر فوت کرده است؟
-        public DateTime? MotherDeceasedDate { get; set; } // تاریخ فوت مادر
+        public DateTime? MotherDeceasedDate { get; set; } // تاریخ فوت مادر (در صورت موجود بودن)
 
         // دسته‌بندی وضعیت اقتصادی
-        [Required(ErrorMessage = "سطح درآمد خانواده الزامی است")]
         public decimal FamilyIncome { get; set; } // وضعیت اقتصادی خانواده (سطح درآمد)
 
         // دسته‌بندی وضعیت سلامت
@@ -135,6 +95,6 @@ namespace AliMartinCv.DataLayer.DTos
         // دسته‌بندی مشکلات اجتماعی یا جنایی گذشته
         public bool HasPastSocialOrLegalProblems { get; set; } // آیا مشکلات اجتماعی یا جنایی گذشته وجود دارد؟
         public string PastSocialOrLegalProblems { get; set; } // تجارب گذشته از مشکلات اجتماعی یا جنایی (اگر وجود دارد)
+        public bool IsCompeleted { get; set; } = false;
     }
-
 }

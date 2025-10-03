@@ -1,0 +1,1293 @@
+﻿@model AliMartinCv.DataLayer.DTos.StudentInformationViewModel
+@{
+    Layout = "/areas/student/views/shared/_StudentLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم اطلاعات دانش آموز</title>
+
+    
+
+
+    <style>
+        body {
+            font-family: Vazir, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .step-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+            .step-progress::before {
+                content: '';
+                position: absolute;
+                top: 15px;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background-color: #e9ecef;
+                z-index: 1;
+            }
+
+        .step-progress-bar {
+            position: absolute;
+            top: 15px;
+            right: 0;
+            height: 3px;
+            background-color: #0d6efd;
+            z-index: 2;
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            width: 100%;
+        }
+
+        .step-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: #6c757d;
+        }
+
+        .step.active .step-circle {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .step.completed .step-circle {
+            background-color: #198754;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .step.active .step-label {
+            color: #0d6efd;
+            font-weight: bold;
+        }
+
+        .step.completed .step-label {
+            color: #198754;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+            .form-step.active {
+                display: block;
+                animation: fadeIn 0.5s;
+            }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .conditional-field {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #0d6efd;
+        }
+
+            .conditional-field.active {
+                display: block;
+                animation: slideDown 0.3s;
+            }
+
+        @@keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .has-error .form-control {
+            border-color: #dc3545;
+        }
+
+        .has-error .error-message {
+            display: block;
+        }
+
+        .section-title {
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+
+        .disabled-field {
+            background-color: #e9ecef;
+            opacity: 0.6;
+        }
+
+        .income-input-group {
+            position: relative;
+        }
+
+        .income-suffix {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #e9ecef;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .date-input-group {
+            position: relative;
+        }
+
+        .date-picker-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-container">
+                    <h1 class="text-center mb-4">فرم اطلاعات دانش آموز</h1>
+
+                    <!-- Progress Steps -->
+                    <div class="step-progress">
+                        <div class="step-progress-bar" id="progressBar"></div>
+                        <div class="step active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <div class="step-label">اطلاعات خانواده</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-circle">2</div>
+                            <div class="step-label">وضعیت زندگی</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-circle">3</div>
+                            <div class="step-label">وضعیت اقتصادی</div>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-circle">4</div>
+                            <div class="step-label">وضعیت سلامت</div>
+                        </div>
+                        <div class="step" data-step="5">
+                            <div class="step-circle">5</div>
+                            <div class="step-label">بیماری‌ها و داروها</div>
+                        </div>
+                        <div class="step" data-step="6">
+                            <div class="step-circle">6</div>
+                            <div class="step-label">وضعیت روانی و اجتماعی</div>
+                        </div>
+                        <div class="step" data-step="7">
+                            <div class="step-circle">7</div>
+                            <div class="step-label">وضعیت تحصیلی</div>
+                        </div>
+                        <div class="step" data-step="8">
+                            <div class="step-circle">8</div>
+                            <div class="step-label">سایر اطلاعات</div>
+                        </div>
+                    </div>
+
+                    <form id="studentForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="StudentId" />
+
+                        <!-- Step 1: اطلاعات خانواده -->
+                        <div class="form-step active" id="step1">
+                            <h3 class="section-title">اطلاعات خانواده</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="DateOfBirth" class="form-label">تاریخ تولد</label>
+                                    <div class="date-input-group">
+                                        <input type="text" class="form-control" id="DateOfBirthPersian" readonly>
+                                        <i class="fas fa-calendar-alt date-picker-icon" id="datePickerTrigger1"></i>
+                                    </div>
+                                    <input type="hidden" asp-for="DateOfBirth" id="DateOfBirthGregorian" />
+                                    <div class="error-message">تاریخ تولد الزامی است</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Gender" class="form-label">جنسیت</label>
+                                    <select class="form-control" asp-for="Gender" required>
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="Male">پسر</option>
+                                        <option value="Female">دختر</option>
+                                    </select>
+                                    <div class="error-message">جنسیت الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="FamilyStatus" class="form-label">وضعیت خانواده</label>
+                                    <select class="form-control" asp-for="FamilyStatus" required>
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="طلاق">طلاق</option>
+                                        <option value="ازدواج مجدد">ازدواج مجدد</option>
+                                        <option value="زندگی با پدر">زندگی با پدر</option>
+                                        <option value="زندگی با مادر">زندگی با مادر</option>
+                                        <option value="سرپرست قانونی">سرپرست قانونی</option>
+                                    </select>
+                                    <div class="error-message">وضعیت خانواده الزامی است</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="FamilyMemberCount" class="form-label">تعداد اعضای خانواده</label>
+                                    <input type="number" class="form-control" asp-for="FamilyMemberCount" min="1" required>
+                                    <div class="error-message">تعداد اعضای خانواده الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="SiblingsCount" class="form-label">تعداد خواهران و برادران</label>
+                                    <input type="number" class="form-control" asp-for="SiblingsCount" min="0" required>
+                                    <div class="error-message">تعداد خواهران و برادران الزامی است</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="ChildOrder" class="form-label">فرزند چندم خانواده</label>
+                                    <input type="number" class="form-control" asp-for="ChildOrder" min="1" required>
+                                    <div class="error-message">فرزند چندم خانواده الزامی است</div>
+                                </div>
+                            </div>
+
+                            <!-- بخش پدر -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="IsFatherEmployed" class="form-label">آیا پدر شاغل است؟</label>
+                                    <select class="form-control" asp-for="IsFatherEmployed" required onchange="toggleFatherOccupation()">
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="true">بله</option>
+                                        <option value="false">خیر</option>
+                                    </select>
+                                    <div class="error-message">آیا پدر شاغل است؟</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="FatherOccupation" class="form-label">شغل پدر</label>
+                                    <input type="text" class="form-control disabled-field" asp-for="FatherOccupation" disabled>
+                                    <div class="error-message">شغل پدر الزامی است</div>
+                                </div>
+                            </div>
+
+                            <!-- بخش مادر -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="IsMotherEmployed" class="form-label">آیا مادر شاغل است؟</label>
+                                    <select class="form-control" asp-for="IsMotherEmployed" required onchange="toggleMotherOccupation()">
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="true">بله</option>
+                                        <option value="false">خیر</option>
+                                    </select>
+                                    <div class="error-message">آیا مادر شاغل است؟</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="MotherOccupation" class="form-label">شغل مادر</label>
+                                    <input type="text" class="form-control disabled-field" asp-for="MotherOccupation" disabled>
+                                    <div class="error-message">شغل مادر الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="HousingType" class="form-label">نوع مسکن</label>
+                                    <select class="form-control" asp-for="HousingType" required>
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="خانه">خانه</option>
+                                        <option value="آپارتمان">آپارتمان</option>
+                                        <option value="خوابگاه">خوابگاه</option>
+                                        <option value="سایر">سایر</option>
+                                    </select>
+                                    <div class="error-message">نوع مسکن الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div></div>
+                                <button type="button" class="btn btn-primary next-step" data-next="2">مرحله بعد</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: وضعیت زندگی با والدین -->
+                        <div class="form-step" id="step2">
+                            <h3 class="section-title">وضعیت زندگی با والدین</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="IsDivorced" class="form-label">آیا بچه فرزند طلاق است؟</label>
+                                    <select class="form-control" asp-for="IsDivorced" required>
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="true">بله</option>
+                                        <option value="false">خیر</option>
+                                    </select>
+                                    <div class="error-message">آیا بچه فرزند طلاق است؟</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="parentLivingField">
+                                    <label asp-for="ParentWithWhomLiving" class="form-label">با کدام والد زندگی می‌کند؟</label>
+                                    <select class="form-control" asp-for="ParentWithWhomLiving">
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="پدر">پدر</option>
+                                        <option value="مادر">مادر</option>
+                                        <option value="هر دو">هر دو</option>
+                                        <option value="سایر">سایر</option>
+                                    </select>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="IsFatherDeceased">
+                                        <label class="form-check-label" asp-for="IsFatherDeceased">آیا پدر فوت کرده است؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="fatherDeceasedField">
+                                    <label class="form-label">تاریخ فوت پدر</label>
+                                    <div class="date-input-group">
+                                        <input type="text" class="form-control" id="FatherDeceasedDatePersian" readonly>
+                                        <i class="fas fa-calendar-alt date-picker-icon" id="datePickerTrigger2"></i>
+                                    </div>
+                                    <input type="hidden" asp-for="FatherDeceasedDate" id="FatherDeceasedDateGregorian" />
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="IsMotherDeceased">
+                                        <label class="form-check-label" asp-for="IsMotherDeceased">آیا مادر فوت کرده است؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="motherDeceasedField">
+                                    <label class="form-label">تاریخ فوت مادر</label>
+                                    <div class="date-input-group">
+                                        <input type="text" class="form-control" id="MotherDeceasedDatePersian" readonly>
+                                        <i class="fas fa-calendar-alt date-picker-icon" id="datePickerTrigger3"></i>
+                                    </div>
+                                    <input type="hidden" asp-for="MotherDeceasedDate" id="MotherDeceasedDateGregorian" />
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-step" data-prev="1">مرحله قبل</button>
+                                <button type="button" class="btn btn-primary next-step" data-next="3">مرحله بعد</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: وضعیت اقتصادی -->
+                        <div class="form-step" id="step3">
+                            <h3 class="section-title">وضعیت اقتصادی</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="FamilyIncome" class="form-label">سطح درآمد خانواده (میلیون تومان)</label>
+                                    <div class="income-input-group">
+                                        <input type="number" class="form-control" id="FamilyIncomeMillion" min="0" step="0.1" required>
+                                        <span class="income-suffix">میلیون تومان</span>
+                                    </div>
+                                    <input type="hidden" asp-for="FamilyIncome" id="FamilyIncomeTomans" />
+                                    <div class="error-message">سطح درآمد خانواده الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-step" data-prev="2">مرحله قبل</button>
+                                <button type="button" class="btn btn-primary next-step" data-next="4">مرحله بعد</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: وضعیت سلامت -->
+                        <div class="form-step" id="step4">
+                            <h3 class="section-title">وضعیت سلامت</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasFamilyHealthStatus">
+                                        <label class="form-check-label" asp-for="HasFamilyHealthStatus">آیا وضعیت بیماری‌های خانواده موجود است؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="familyHealthStatusField">
+                                    <label asp-for="FamilyHealthStatus" class="form-label">وضعیت بیماری‌های جسمی یا روانی در خانواده</label>
+                                    <textarea class="form-control" asp-for="FamilyHealthStatus" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasStudentHealthStatus">
+                                        <label class="form-check-label" asp-for="HasStudentHealthStatus">آیا وضعیت بیماری‌های دانش‌آموز موجود است؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="studentHealthStatusField">
+                                    <label asp-for="StudentHealthStatus" class="form-label">وضعیت بیماری‌های مزمن یا خاص دانش‌آموز</label>
+                                    <textarea class="form-control" asp-for="StudentHealthStatus" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasPhysicalDisabilities">
+                                        <label class="form-check-label" asp-for="HasPhysicalDisabilities">آیا آسیب‌های جسمی یا اختلالات حرکتی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="physicalDisabilitiesField">
+                                    <label asp-for="PhysicalDisabilities" class="form-label">آسیب‌های جسمی یا اختلالات حرکتی</label>
+                                    <textarea class="form-control" asp-for="PhysicalDisabilities" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasHospitalizationHistory">
+                                        <label class="form-check-label" asp-for="HasHospitalizationHistory">آیا سابقه بستری در بیمارستان وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="hospitalizationHistoryField">
+                                    <label for="HospitalizationHistory" class="form-label">توضیحات سابقه بستری در بیمارستان</label>
+                                    <textarea class="form-control" id="HospitalizationHistory" name="HospitalizationHistory" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasSurgicalHistory">
+                                        <label class="form-check-label" asp-for="HasSurgicalHistory">آیا سابقه جراحی یا عمل‌های پزشکی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-3 conditional-field" id="surgicalHistoryField">
+                                    <label asp-for="SurgicalHistory" class="form-label">نوع جراحی‌ها یا عمل‌های پزشکی که دانش‌آموز تجربه کرده است</label>
+                                    <textarea class="form-control" asp-for="SurgicalHistory" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-step" data-prev="3">مرحله قبل</button>
+                                <button type="button" class="btn btn-primary next-step" data-next="5">مرحله بعد</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: بیماری‌ها و داروها -->
+                        <div class="form-step" id="step5">
+                            <h3 class="section-title">بیماری‌ها و داروها</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasCommonDiseases">
+                                        <label class="form-check-label" asp-for="HasCommonDiseases">آیا بیماری‌های رایج وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="commonDiseasesField">
+                                    <label asp-for="CommonDiseases" class="form-label">بیماری‌های رایج (مانند سرماخوردگی، آنفلوآنزا، آلرژی‌ها)</label>
+                                    <textarea class="form-control" asp-for="CommonDiseases" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasChronicDiseases">
+                                        <label class="form-check-label" asp-for="HasChronicDiseases">آیا بیماری‌های مزمن وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="chronicDiseasesField">
+                                    <label asp-for="ChronicDiseases" class="form-label">بیماری‌های مزمن (مانند دیابت، آسم، فشار خون بالا)</label>
+                                    <textarea class="form-control" asp-for="ChronicDiseases" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasMentalDisorders">
+                                        <label class="form-check-label" asp-for="HasMentalDisorders">آیا اختلالات روانی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="mentalDisordersField">
+                                    <label asp-for="MentalDisorders" class="form-label">اختلالات روانی (مانند اضطراب، افسردگی، ADHD)</label>
+                                    <textarea class="form-control" asp-for="MentalDisorders" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="UsesPrescriptionMedications">
+                                        <label class="form-check-label" asp-for="UsesPrescriptionMedications">آیا دانش‌آموز داروهای تجویزی مصرف می‌کند؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="medicationsField">
+                                    <label asp-for="Medications" class="form-label">داروهایی که دانش‌آموز مصرف می‌کند</label>
+                                    <textarea class="form-control" asp-for="Medications" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-step" data-prev="4">مرحله قبل</button>
+                                <button type="button" class="btn btn-primary next-step" data-next="6">مرحله بعد</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: وضعیت روانی و اجتماعی -->
+                        <div class="form-step" id="step6">
+                            <h3 class="section-title">وضعیت روانی و اجتماعی</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasPsychologicalStatus">
+                                        <label class="form-check-label" asp-for="HasPsychologicalStatus">آیا وضعیت روانی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="psychologicalStatusField">
+                                    <label asp-for="PsychologicalStatus" class="form-label">وضعیت ذهنی و روانی (اختلالات اضطرابی، افسردگی، اختلالات رفتاری)</label>
+                                    <textarea class="form-control" asp-for="PsychologicalStatus" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasSocialInteraction">
+                                        <label class="form-check-label" asp-for="HasSocialInteraction">آیا تعامل اجتماعی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="socialInteractionField">
+                                    <label asp-for="SocialInteraction" class="form-label">وضعیت اجتماعی و میزان تعامل با دوستان و همکلاسی‌ها</label>
+                                    <textarea class="form-control" asp-for="SocialInteraction" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasSocialSupport">
+                                        <label class="form-check-label" asp-for="HasSocialSupport">آیا حمایت اجتماعی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="socialSupportField">
+                                    <label asp-for="SocialSupport" class="form-label">میزان و نوع حمایت اجتماعی (پشتیبانی از طرف خانواده، دوستان، معلمان)</label>
+                                    <textarea class="form-control" asp-for="SocialSupport" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasSocialProblems">
+                                        <label class="form-check-label" asp-for="HasSocialProblems">آیا مشکلات اجتماعی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="socialProblemsField">
+                                    <label asp-for="SocialProblems" class="form-label">آسیب‌های اجتماعی مانند خشونت خانگی یا مشکلات اجتماعی</label>
+                                    <textarea class="form-control" asp-for="SocialProblems" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-step" data-prev="5">مرحله قبل</button>
+                                <button type="button" class="btn btn-primary next-step" data-next="7">مرحله بعد</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 7: وضعیت تحصیلی -->
+                        <div class="form-step" id="step7">
+                            <h3 class="section-title">وضعیت تحصیلی</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasAcademicHistory">
+                                        <label class="form-check-label" asp-for="HasAcademicHistory">آیا تاریخچه تحصیلی موجود است؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="academicHistoryField">
+                                    <label asp-for="AcademicHistory" class="form-label">وضعیت تحصیلی قبلی (نمرات، پیشرفت تحصیلی، افت تحصیلی)</label>
+                                    <textarea class="form-control" asp-for="AcademicHistory" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasRepeatedGrades">
+                                        <label class="form-check-label" asp-for="HasRepeatedGrades">آیا دانش‌آموز سابقه تجدید سال یا افت تحصیلی دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasLateArrivals">
+                                        <label class="form-check-label" asp-for="HasLateArrivals">آیا دانش‌آموز دیر به مدرسه می‌آید؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasAcceleratedLearning">
+                                        <label class="form-check-label" asp-for="HasAcceleratedLearning">آیا دانش‌آموز جهش تحصیلی کرده است؟</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-step" data-prev="6">مرحله قبل</button>
+                                <button type="button" class="btn btn-primary next-step" data-next="8">مرحله بعد</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 8: سایر اطلاعات -->
+                        <div class="form-step" id="step8">
+                            <h3 class="section-title">سایر اطلاعات</h3>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasSexualMaturity">
+                                        <label class="form-check-label" asp-for="HasSexualMaturity">آیا دانش‌آموز وارد بلوغ جنسی شده است؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="sexualMaturityField">
+                                    <label asp-for="SexualMaturityStatus" class="form-label">وضعیت بلوغ جنسی دانش‌آموز</label>
+                                    <textarea class="form-control" asp-for="SexualMaturityStatus" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasEducationalResources">
+                                        <label class="form-check-label" asp-for="HasEducationalResources">آیا توانایی خرید منابع مکمل آموزشی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="educationalResourcesField">
+                                    <label asp-for="EducationalResources" class="form-label">میزان دسترسی به منابع آموزشی (کتاب، اینترنت، کلاس‌های خصوصی)</label>
+                                    <textarea class="form-control" asp-for="EducationalResources" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasCognitiveAbilities">
+                                        <label class="form-check-label" asp-for="HasCognitiveAbilities">آیا توانایی‌های شناختی وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="cognitiveAbilitiesField">
+                                    <label asp-for="CognitiveAbilities" class="form-label">توانایی‌های شناختی (حل مسئله، توجه، حافظه و...)</label>
+                                    <textarea class="form-control" asp-for="CognitiveAbilities" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasAccessToTechnology">
+                                        <label class="form-check-label" asp-for="HasAccessToTechnology">آیا دسترسی به فناوری وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="accessToTechnologyField">
+                                    <label asp-for="AccessToTechnology" class="form-label">میزان دسترسی به امکانات رفاهی مانند اینترنت یا وسایل الکترونیکی</label>
+                                    <textarea class="form-control" asp-for="AccessToTechnology" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasTechnologyUsageHours">
+                                        <label class="form-check-label" asp-for="HasTechnologyUsageHours">آیا ساعات استفاده از فناوری مشخص است؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="technologyUsageHoursField">
+                                    <label asp-for="TechnologyUsageHours" class="form-label">ساعات استفاده از فناوری (گوشی، کامپیوتر، کنسول و...)</label>
+                                    <textarea class="form-control" asp-for="TechnologyUsageHours" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasPastSocialOrLegalProblems">
+                                        <label class="form-check-label" asp-for="HasPastSocialOrLegalProblems">آیا مشکلات اجتماعی یا جنایی گذشته وجود دارد؟</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 conditional-field" id="pastSocialOrLegalProblemsField">
+                                    <label asp-for="PastSocialOrLegalProblems" class="form-label">تجارب گذشته از مشکلات اجتماعی یا جنایی (اگر وجود دارد)</label>
+                                    <textarea class="form-control" asp-for="PastSocialOrLegalProblems" rows="3"></textarea>
+                                    <div class="error-message">این فیلد الزامی است</div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-step" data-prev="7">مرحله قبل</button>
+                                <button type="submit" class="btn btn-success">ثبت اطلاعات</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+    {
+        <!-- jQuery (آخرین نسخه موجود) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Bootstrap & jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Persian Date Picker -->
+        <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+        <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+        <!-- Bootstrap 5.3 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap RTL -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-rtl@5.0.0/dist/css/bootstrap-rtl.min.css">
+        <!-- Font Awesome for Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- Vazir Font -->
+        <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+        <!-- Persian Date Picker -->
+        <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+        <!-- Persian Datepicker CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.5.2/dist/css/persian-datepicker.min.css" rel="stylesheet">
+
+        <!-- jQuery (برای استفاده از persianDatepicker باید jQuery بارگذاری شده باشد) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Persian Datepicker JS -->
+        <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.5.2/dist/js/persian-datepicker.min.js"></script>
+        <script>
+
+            $(document).ready(function() {
+                // مدیریت نمایش فیلدهای شرطی
+                function toggleConditionalFields() {
+                    // وضعیت شغلی پدر
+                    if ($('#IsFatherEmployed').val() === 'true') {
+                        $('#FatherOccupation').prop('disabled', false).removeClass('disabled-field');
+                        $('#FatherOccupation').closest('.mb-3').find('.error-message').text('شغل پدر الزامی است');
+                    } else {
+                        $('#FatherOccupation').prop('disabled', true).addClass('disabled-field').val('');
+                        $('#FatherOccupation').closest('.mb-3').find('.error-message').text('');
+                        $('#FatherOccupation').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // وضعیت شغلی مادر
+                    if ($('#IsMotherEmployed').val() === 'true') {
+                        $('#MotherOccupation').prop('disabled', false).removeClass('disabled-field');
+                        $('#MotherOccupation').closest('.mb-3').find('.error-message').text('شغل مادر الزامی است');
+                    } else {
+                        $('#MotherOccupation').prop('disabled', true).addClass('disabled-field').val('');
+                        $('#MotherOccupation').closest('.mb-3').find('.error-message').text('');
+                        $('#MotherOccupation').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // وضعیت زندگی با والدین
+                    if ($('#IsDivorced').val() === 'true') {
+                        $('#parentLivingField').addClass('active');
+                    } else {
+                        $('#parentLivingField').removeClass('active');
+                        $('#ParentWithWhomLiving').val('');
+                        $('#ParentWithWhomLiving').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // وضعیت فوت پدر
+                    if ($('#IsFatherDeceased').is(':checked')) {
+                        $('#fatherDeceasedField').addClass('active');
+                    } else {
+                        $('#fatherDeceasedField').removeClass('active');
+                        $('#FatherDeceasedDateGregorian').val('');
+                        $('#FatherDeceasedDatePersian').val('');
+                        $('#FatherDeceasedDatePersian').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // وضعیت فوت مادر
+                    if ($('#IsMotherDeceased').is(':checked')) {
+                        $('#motherDeceasedField').addClass('active');
+                    } else {
+                        $('#motherDeceasedField').removeClass('active');
+                        $('#MotherDeceasedDateGregorian').val('');
+                        $('#MotherDeceasedDatePersian').val('');
+                        $('#MotherDeceasedDatePersian').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // وضعیت سلامت
+                    if ($('#HasFamilyHealthStatus').is(':checked')) {
+                        $('#familyHealthStatusField').addClass('active');
+                    } else {
+                        $('#familyHealthStatusField').removeClass('active');
+                        $('#FamilyHealthStatus').val('');
+                        $('#FamilyHealthStatus').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasStudentHealthStatus').is(':checked')) {
+                        $('#studentHealthStatusField').addClass('active');
+                    } else {
+                        $('#studentHealthStatusField').removeClass('active');
+                        $('#StudentHealthStatus').val('');
+                        $('#StudentHealthStatus').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasPhysicalDisabilities').is(':checked')) {
+                        $('#physicalDisabilitiesField').addClass('active');
+                    } else {
+                        $('#physicalDisabilitiesField').removeClass('active');
+                        $('#PhysicalDisabilities').val('');
+                        $('#PhysicalDisabilities').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasHospitalizationHistory').is(':checked')) {
+                        $('#hospitalizationHistoryField').addClass('active');
+                    } else {
+                        $('#hospitalizationHistoryField').removeClass('active');
+                        $('#HospitalizationHistory').val('');
+                        $('#HospitalizationHistory').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasSurgicalHistory').is(':checked')) {
+                        $('#surgicalHistoryField').addClass('active');
+                    } else {
+                        $('#surgicalHistoryField').removeClass('active');
+                        $('#SurgicalHistory').val('');
+                        $('#SurgicalHistory').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // بیماری‌ها و داروها
+                    if ($('#HasCommonDiseases').is(':checked')) {
+                        $('#commonDiseasesField').addClass('active');
+                    } else {
+                        $('#commonDiseasesField').removeClass('active');
+                        $('#CommonDiseases').val('');
+                        $('#CommonDiseases').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasChronicDiseases').is(':checked')) {
+                        $('#chronicDiseasesField').addClass('active');
+                    } else {
+                        $('#chronicDiseasesField').removeClass('active');
+                        $('#ChronicDiseases').val('');
+                        $('#ChronicDiseases').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasMentalDisorders').is(':checked')) {
+                        $('#mentalDisordersField').addClass('active');
+                    } else {
+                        $('#mentalDisordersField').removeClass('active');
+                        $('#MentalDisorders').val('');
+                        $('#MentalDisorders').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#UsesPrescriptionMedications').is(':checked')) {
+                        $('#medicationsField').addClass('active');
+                    } else {
+                        $('#medicationsField').removeClass('active');
+                        $('#Medications').val('');
+                        $('#Medications').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // وضعیت روانی و اجتماعی
+                    if ($('#HasPsychologicalStatus').is(':checked')) {
+                        $('#psychologicalStatusField').addClass('active');
+                    } else {
+                        $('#psychologicalStatusField').removeClass('active');
+                        $('#PsychologicalStatus').val('');
+                        $('#PsychologicalStatus').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasSocialInteraction').is(':checked')) {
+                        $('#socialInteractionField').addClass('active');
+                    } else {
+                        $('#socialInteractionField').removeClass('active');
+                        $('#SocialInteraction').val('');
+                        $('#SocialInteraction').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasSocialSupport').is(':checked')) {
+                        $('#socialSupportField').addClass('active');
+                    } else {
+                        $('#socialSupportField').removeClass('active');
+                        $('#SocialSupport').val('');
+                        $('#SocialSupport').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasSocialProblems').is(':checked')) {
+                        $('#socialProblemsField').addClass('active');
+                    } else {
+                        $('#socialProblemsField').removeClass('active');
+                        $('#SocialProblems').val('');
+                        $('#SocialProblems').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // وضعیت تحصیلی
+                    if ($('#HasAcademicHistory').is(':checked')) {
+                        $('#academicHistoryField').addClass('active');
+                    } else {
+                        $('#academicHistoryField').removeClass('active');
+                        $('#AcademicHistory').val('');
+                        $('#AcademicHistory').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    // سایر اطلاعات
+                    if ($('#HasSexualMaturity').is(':checked')) {
+                        $('#sexualMaturityField').addClass('active');
+                    } else {
+                        $('#sexualMaturityField').removeClass('active');
+                        $('#SexualMaturityStatus').val('');
+                        $('#SexualMaturityStatus').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasEducationalResources').is(':checked')) {
+                        $('#educationalResourcesField').addClass('active');
+                    } else {
+                        $('#educationalResourcesField').removeClass('active');
+                        $('#EducationalResources').val('');
+                        $('#EducationalResources').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasCognitiveAbilities').is(':checked')) {
+                        $('#cognitiveAbilitiesField').addClass('active');
+                    } else {
+                        $('#cognitiveAbilitiesField').removeClass('active');
+                        $('#CognitiveAbilities').val('');
+                        $('#CognitiveAbilities').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasAccessToTechnology').is(':checked')) {
+                        $('#accessToTechnologyField').addClass('active');
+                    } else {
+                        $('#accessToTechnologyField').removeClass('active');
+                        $('#AccessToTechnology').val('');
+                        $('#AccessToTechnology').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasTechnologyUsageHours').is(':checked')) {
+                        $('#technologyUsageHoursField').addClass('active');
+                    } else {
+                        $('#technologyUsageHoursField').removeClass('active');
+                        $('#TechnologyUsageHours').val('');
+                        $('#TechnologyUsageHours').closest('.mb-3').removeClass('has-error');
+                    }
+
+                    if ($('#HasPastSocialOrLegalProblems').is(':checked')) {
+                        $('#pastSocialOrLegalProblemsField').addClass('active');
+                    } else {
+                        $('#pastSocialOrLegalProblemsField').removeClass('active');
+                        $('#PastSocialOrLegalProblems').val('');
+                        $('#PastSocialOrLegalProblems').closest('.mb-3').removeClass('has-error');
+                    }
+                }
+
+                // رویداد تغییر برای تمام فیلدهای شرطی
+                $('input[type="checkbox"], select').change(toggleConditionalFields);
+
+                // اجرای اولیه برای تنظیم وضعیت فیلدها
+                toggleConditionalFields();
+
+                // مدیریت مراحل فرم
+                let currentStep = 1;
+                const totalSteps = 8;
+
+                // به‌روزرسانی نوار پیشرفت
+                function updateProgressBar() {
+                    const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+                    $('#progressBar').css('width', progress + '%');
+
+                    $('.step').each(function() {
+                        const step = parseInt($(this).data('step'));
+                        $(this).removeClass('active completed');
+
+                        if (step < currentStep) {
+                            $(this).addClass('completed');
+                        } else if (step === currentStep) {
+                            $(this).addClass('active');
+                        }
+                    });
+                }
+
+                // اعتبارسنجی مرحله فعلی
+                function validateStep(step) {
+                    let isValid = true;
+
+                    $(`#step${step} [required]`).each(function() {
+                        if (!$(this).val()) {
+                            $(this).closest('.mb-3').addClass('has-error');
+                            isValid = false;
+                        } else {
+                            $(this).closest('.mb-3').removeClass('has-error');
+                        }
+                    });
+
+                    // اعتبارسنجی فیلدهای شرطی
+                    $(`#step${step} .conditional-field.active input, #step${step} .conditional-field.active select, #step${step} .conditional-field.active textarea`).each(function() {
+                        if (!$(this).val()) {
+                            $(this).closest('.mb-3').addClass('has-error');
+                            isValid = false;
+                        } else {
+                            $(this).closest('.mb-3').removeClass('has-error');
+                        }
+                    });
+
+                    // اعتبارسنجی شغل پدر
+                    if (step === 1 && $('#IsFatherEmployed').val() === 'true' && !$('#FatherOccupation').val()) {
+                        $('#FatherOccupation').closest('.mb-3').addClass('has-error');
+                        isValid = false;
+                    }
+
+                    // اعتبارسنجی شغل مادر
+                    if (step === 1 && $('#IsMotherEmployed').val() === 'true' && !$('#MotherOccupation').val()) {
+                        $('#MotherOccupation').closest('.mb-3').addClass('has-error');
+                        isValid = false;
+                    }
+
+                    return isValid;
+                }
+
+                // تغییر مرحله
+                function goToStep(step) {
+                    if (step < 1 || step > totalSteps) return;
+
+                    // اعتبارسنجی مرحله فعلی قبل از رفتن به مرحله بعد
+                    if (step > currentStep && !validateStep(currentStep)) {
+                        return;
+                    }
+
+                    $(`#step${currentStep}`).removeClass('active');
+                    $(`#step${step}`).addClass('active');
+                    currentStep = step;
+                    updateProgressBar();
+                }
+
+                // رویداد کلیک برای دکمه‌های مرحله بعد
+                $('.next-step').click(function() {
+                    const nextStep = parseInt($(this).data('next'));
+                    goToStep(nextStep);
+                });
+
+                // رویداد کلیک برای دکمه‌های مرحله قبل
+                $('.prev-step').click(function() {
+                    const prevStep = parseInt($(this).data('prev'));
+                    goToStep(prevStep);
+                });
+
+                // ارسال فرم
+                $('#studentForm').submit(function(e) {
+                    // تبدیل درآمد به تومان
+                    const incomeMillion = $('#FamilyIncomeMillion').val();
+                    if (incomeMillion) {
+                        $('#FamilyIncomeTomans').val(parseFloat(incomeMillion) * 1000000);
+                    }
+
+                    // اعتبارسنجی تمام مراحل
+                    let allValid = true;
+                    for (let i = 1; i <= totalSteps; i++) {
+                        if (!validateStep(i)) {
+                            allValid = false;
+                            goToStep(i);
+                            break;
+                        }
+                    }
+
+                    if (!allValid) {
+                        e.preventDefault();
+                        alert('لطفا تمام فیلدهای الزامی را پر کنید.');
+                    }
+                });
+
+                // مقداردهی اولیه نوار پیشرفت
+                updateProgressBar();
+
+                // تابع عمومی برای تبدیل تاریخ شمسی به میلادی
+                function setupPersianDatePicker(persianInputId, gregorianInputId, triggerId) {
+                    $(`#${triggerId}`).click(function() {
+                        $(`#${persianInputId}`).focus();
+                    });
+
+                    $(`#${persianInputId}`).persianDatepicker({
+                        format: 'YYYY/MM/DD',
+                        onSelect: function(unixDate) {
+                            const gregorianDate = new Date(unixDate);
+                            const year = gregorianDate.getFullYear();
+                            const month = String(gregorianDate.getMonth() + 1).padStart(2, '0');
+                            const day = String(gregorianDate.getDate()).padStart(2, '0');
+                            $(`#${gregorianInputId}`).val(`${year}-${month}-${day}`);
+                        }
+                    });
+                }
+
+                // تابع عمومی برای تبدیل تاریخ میلادی به شمسی
+                function convertGregorianToPersian(gregorianInputId, persianInputId) {
+                    const gregorianDate = $(`#${gregorianInputId}`).val();
+                    if (gregorianDate) {
+                        try {
+                            const date = new Date(gregorianDate);
+                            if (!isNaN(date.getTime())) {
+                                const persianDate = new persianDate(date);
+                                $(`#${persianInputId}`).val(persianDate.format('YYYY/MM/DD'));
+                            }
+                        } catch (e) {
+                            console.log('خطا در تبدیل تاریخ:', e);
+                        }
+                    }
+                }
+
+                // راه‌اندازی تقویم برای تمام تاریخ‌ها
+                setupPersianDatePicker('DateOfBirthPersian', 'DateOfBirthGregorian', 'datePickerTrigger1');
+                setupPersianDatePicker('FatherDeceasedDatePersian', 'FatherDeceasedDateGregorian', 'datePickerTrigger2');
+                setupPersianDatePicker('MotherDeceasedDatePersian', 'MotherDeceasedDateGregorian', 'datePickerTrigger3');
+
+                // تبدیل مقادیر اولیه تاریخ‌ها از میلادی به شمسی
+                convertGregorianToPersian('DateOfBirthGregorian', 'DateOfBirthPersian');
+                convertGregorianToPersian('FatherDeceasedDateGregorian', 'FatherDeceasedDatePersian');
+                convertGregorianToPersian('MotherDeceasedDateGregorian', 'MotherDeceasedDatePersian');
+
+                // تبدیل مقدار اولیه درآمد تومان به میلیون تومان
+                const initialIncome = $('#FamilyIncomeTomans').val();
+                if (initialIncome) {
+                    $('#FamilyIncomeMillion').val(parseFloat(initialIncome) / 1000000);
+                }
+            });
+
+            // توابع جداگانه برای مدیریت شغل والدین
+            function toggleFatherOccupation() {
+                const isEmployed = $('#IsFatherEmployed').val() === 'true';
+                if (isEmployed) {
+                    $('#FatherOccupation').prop('disabled', false).removeClass('disabled-field');
+                } else {
+                    $('#FatherOccupation').prop('disabled', true).addClass('disabled-field').val('');
+                    $('#FatherOccupation').closest('.mb-3').removeClass('has-error');
+                }
+            }
+
+            function toggleMotherOccupation() {
+                const isEmployed = $('#IsMotherEmployed').val() === 'true';
+                if (isEmployed) {
+                    $('#MotherOccupation').prop('disabled', false).removeClass('disabled-field');
+                } else {
+                    $('#MotherOccupation').prop('disabled', true).addClass('disabled-field').val('');
+                    $('#MotherOccupation').closest('.mb-3').removeClass('has-error');
+                }
+            }
+
+        </script>
+    }
+
+</body>
+</html>

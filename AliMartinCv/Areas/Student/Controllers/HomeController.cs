@@ -29,5 +29,9 @@ namespace AliMartinCv.Areas.Student.Controllers
             return View(attendances);
         }
 
+        public async Task<IActionResult> StudentInformation()
+        {
+            return View();
+        }
     }
 }

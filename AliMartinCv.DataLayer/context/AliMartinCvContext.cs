@@ -21,6 +21,7 @@ namespace AliMartinCv.DataLayer.context
         public DbSet<School> Schools { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<StudentInformation> StudentsInformations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
