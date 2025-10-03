@@ -49,7 +49,7 @@ namespace AliMartinCv.Core.Sevices.Services
             }
         }
 
-        public Task<List<AttendanceRecord>> ShowClassAttendace(int classId)
+        public Task<List<AttendanceRecord>> ShowClassAttendance(int classId)
         {
             return _context.Students.Where(s => s.ClassId == classId)
                 .SelectMany(a => a.Attendances)
@@ -77,6 +77,23 @@ namespace AliMartinCv.Core.Sevices.Services
 
           _context.SaveChanges();
 
+        }
+
+        public async Task<List<AttendanceRecord>> ShowStudentAttendance(Guid studentId)
+        {
+            return await _context.Attendances
+                .Where(a => a.StudentId == studentId)
+                .Select(a=> new AttendanceRecord()
+                {
+                    Date = a.Date,
+                    IsPresent = a.IsPresent,
+                    Name = a.Student.Name,
+                    LastName = a.Student.LastName,
+                    Remarks = a.Remarks,
+                    StudentId = a.StudentId,
+                    Type = a.Type
+                })
+                .ToListAsync();
         }
     }
 }

@@ -7,7 +7,7 @@
 @model List<AttendanceRecord>
 
 @{
-    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    Layout = "/areas/student/views/shared/_StudentLayout.cshtml";
     ViewData["Title"] = "نمایش حضور و غیاب";
 
     var persianCalendar = new PersianCalendar();
@@ -19,13 +19,13 @@
 
     var dayIndexMap = new Dictionary<DayOfWeek, int>
     {
-        { DayOfWeek.Saturday, 0 }, // شنبه
-        { DayOfWeek.Sunday, 1 }, // یکشنبه
-        { DayOfWeek.Monday, 2 }, // دوشنبه
-        { DayOfWeek.Tuesday, 3 }, // سه‌شنبه
-        { DayOfWeek.Wednesday, 4 }, // چهارشنبه
-        { DayOfWeek.Thursday, 5 }, // پنج‌شنبه
-        { DayOfWeek.Friday, 6 } // جمعه
+        { DayOfWeek.Saturday, 0 },
+        { DayOfWeek.Sunday, 1 },
+        { DayOfWeek.Monday, 2 },
+        { DayOfWeek.Tuesday, 3 },
+        { DayOfWeek.Wednesday, 4 },
+        { DayOfWeek.Thursday, 5 },
+        { DayOfWeek.Friday, 6 }
     };
 
     // پیش‌پردازش داده‌ها
@@ -33,180 +33,183 @@
     var attendanceByStudent = Model.GroupBy(r => r.StudentId).ToDictionary(g => g.Key, g => g.ToList());
 }
 
-<style>
-    body {
-        background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* پس‌زمینه مدرن گرادیان */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .attendance-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0 10px;
-        margin-bottom: 20px;
-        background: rgba(255, 255, 255, 0.1); /* نیمه‌شفاف برای گلس مورفیسم */
-        backdrop-filter: blur(10px); /* بلور برای گلس مورفیسم */
-        border-radius: 15px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-        .attendance-table th, .attendance-table td {
-            padding: 15px;
-            text-align: center;
-            border: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* انیمیشن مدرن برای هاور */
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="پنل مدیریت مدرسه برای نظارت بر وضعیت دانش‌آموزان، نمرات و غیبت‌ها.">
+    <meta name="keywords" content="پنل مدیریت مدرسه, وضعیت دانش‌آموز, غیبت‌ها, نمرات, پیام معلم">
+    <meta name="author" content="Ali Martin">
+    <meta name="robots" content="index, follow"> <!-- برای SEO -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: 'Vazir', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* پس‌زمینه مدرن گرادیان */
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .attendance-table th {
-            background: rgba(255, 255, 255, 0.2);
-            color: #333;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        .attendance-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1); /* نیمه‌شفاف برای گلس مورفیسم */
+            backdrop-filter: blur(10px); /* بلور برای گلس مورفیسم */
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
-        .attendance-table td {
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
-        }
+            .attendance-table th, .attendance-table td {
+                padding: 15px;
+                text-align: center;
+                border: none;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
 
-        .attendance-table tr:hover td {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
+            .attendance-table th {
+                background: rgba(255, 255, 255, 0.2);
+                color: #333;
+                font-weight: 600;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
 
-    .present {
-        background-color: rgba(40, 167, 69, 0.8); /* سبز شفاف */
-        color: white;
-        animation: fadeInCell 0.5s ease-in-out forwards;
-    }
+            .attendance-table td {
+                font-size: 1.1rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 8px;
+                box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            }
 
-    .absent {
-        background-color: rgba(220, 53, 69, 0.8); /* قرمز شفاف */
-        color: white;
-        animation: fadeInCell 0.5s ease-in-out forwards;
-    }
+            .attendance-table tr:hover td {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
 
-    .missing {
-        background-color: rgba(255, 193, 7, 0.8); /* زرد شفاف */
-        color: black;
-        animation: fadeInCell 0.5s ease-in-out forwards;
-    }
-
-    .student-name {
-        font-weight: bold;
-        color: #343a40;
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 8px 0 0 8px;
-    }
-
-    .month-header {
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: bold;
-        background: rgba(241, 241, 241, 0.1);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .controls-container {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .year-display {
-        text-align: center;
-        font-size: 1.3rem;
-        margin-bottom: 20px;
-        color: #555;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .month-nav, .week-nav {
-        display: flex;
-        justify-content: space-between; /* دکمه‌ها در ابتدا و انتها */
-        margin: 15px 0;
-        padding: 0 20px;
-    }
-
-        .month-nav button, .week-nav button {
-            padding: 10px 20px;
-            background: rgba(0, 123, 255, 0.8);
+        .present {
+            background-color: rgba(40, 167, 69, 0.8); /* سبز شفاف */
             color: white;
-            border: none;
+            animation: fadeInCell 0.5s ease-in-out forwards;
+        }
+
+        .absent {
+            background-color: rgba(220, 53, 69, 0.8); /* قرمز شفاف */
+            color: white;
+            animation: fadeInCell 0.5s ease-in-out forwards;
+        }
+
+        .missing {
+            background-color: rgba(255, 193, 7, 0.8); /* زرد شفاف */
+            color: black;
+            animation: fadeInCell 0.5s ease-in-out forwards;
+        }
+
+        .student-name {
+            font-weight: bold;
+            color: #343a40;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px 0 0 8px;
+        }
+
+        .month-header {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: rgba(241, 241, 241, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .year-display {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #555;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
-            .month-nav button:hover, .week-nav button:hover {
-                background: rgba(0, 86, 179, 0.9);
-                transform: scale(1.05);
+        .month-nav, .week-nav {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding: 0 20px;
+        }
+
+            .month-nav button, .week-nav button {
+                padding: 10px 20px;
+                background: rgba(0, 123, 255, 0.8);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 1rem;
+                transition: background 0.3s ease, transform 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
             }
 
-            .month-nav button:disabled, .week-nav button:disabled {
-                background: rgba(204, 204, 204, 0.5);
-                cursor: not-allowed;
-                box-shadow: none;
-            }
+                .month-nav button:hover, .week-nav button:hover {
+                    background: rgba(0, 86, 179, 0.9);
+                    transform: scale(1.05);
+                }
 
-    .month-container {
-        display: none;
-        opacity: 0;
-        transition: opacity 0.5s ease; /* انیمیشن فید برای ماه */
-    }
-
-        .month-container.active {
-            display: block;
-            opacity: 1;
-        }
-
-    .week-header, .week-row {
-        display: none;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-
-        .week-header.active, .week-row.active {
-            display: table-cell;
-            opacity: 1;
-        }
-
-    /* انیمیشن فید این دونه به دونه برای سلول‌ها */
-    @@keyframes fadeInCell {
-        from {
+        .month-container {
+            display: none;
             opacity: 0;
-            transform: scale(0.8);
+            transition: opacity 0.5s ease;
         }
 
-        to {
-            opacity: 1;
-            transform: scale(1);
+            .month-container.active {
+                display: block;
+                opacity: 1;
+            }
+
+        .week-header, .week-row {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
-    }
 
-    /* اعمال delay بر اساس موقعیت سلول */
-    .attendance-table tbody tr td.week-row.active:nth-child(n+2) {
-        animation-delay: calc(0.1s * (var(--cell-index, 0)));
-    }
-    button {
-        background-color: rgba(106, 44, 212, 0.75) !important;
-    }
-</style>
+            .week-header.active, .week-row.active {
+                display: table-cell;
+                opacity: 1;
+            }
 
+        @@keyframes fadeInCell {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .attendance-table tbody tr td.week-row.active:nth-child(n+2) {
+            animation-delay: calc(0.1s * (var(--cell-index, 0)));
+        }
+    </style>
+</head>
 
 <div class="p-5">
     @if (Model == null || !Model.Any())
@@ -250,7 +253,6 @@
                 <table class="attendance-table">
                     <thead>
                         <tr>
-
                             @for (int week = 1; week <= totalWeeks; week++)
                             {
                                 <th colspan="7" class="week-header @(week == 1 ? "active" : "")" id="week-header-@monthIndex-@week">هفته @week</th>
@@ -320,6 +322,7 @@
         }
     }
 </div>
+
 <script>
     let currentMonth = 1;
     let currentWeeks = {};
@@ -392,9 +395,4 @@
     }
 
     showMonth(1);
-    @for (int monthIdx = 0; monthIdx < months.Count; monthIdx++)
-    {
-        var monthIndex = monthIdx + 1;
-        <text>currentWeeks[@monthIndex] = 1;</text>
-    }
 </script>

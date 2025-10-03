@@ -10,7 +10,9 @@ namespace AliMartinCv.Core.Sevices.Interfaces
     public interface IAttendance
     {
         Task<bool> CreateAttendance(CreateAttendanceViewModel attendances);
-        Task<List<AttendanceRecord>> ShowClassAttendace(int classId);
+        Task<List<AttendanceRecord>> ShowClassAttendance(int classId);
         void ReCheckAll();
+        Task<List<AttendanceRecord>> ShowStudentAttendance(Guid studentId);
+
     }
 }

@@ -42,7 +42,7 @@ namespace AliMartinCv.Areas.Admin.Controllers
         public async Task<IActionResult> ShowAttendances(int id)
         {
             _attendanceServices.ReCheckAll();
-            var attendances = await _attendanceServices.ShowClassAttendace(id);
+            var attendances = await _attendanceServices.ShowClassAttendance(id);
 
             return View(attendances);
         }
