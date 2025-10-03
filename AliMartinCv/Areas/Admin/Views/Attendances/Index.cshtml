@@ -155,17 +155,17 @@
                         </div>
                         <div class="card-body">
                             <div class="attendance-buttons">
-                                <!-- Hidden inputs for StudentId and Date -->
+                                
                                 <input type="hidden" name="AttendanceRecords[@i].StudentId" value="@student.StudentId" />
                                 <input type="hidden" name="AttendanceRecords[@i].Date" value="@(attendanceRecord?.Date.ToString("o") ?? DateTime.Now.ToString("o"))" />
 
-                                <!-- دکمه تیک برای حضور -->
+                                
                                 <label class="btn btn-success">
                                     <input type="radio" name="AttendanceRecords[@i].IsPresent"
                                            value="true" class="attendance-radio" @isPresentChecked />
                                     حاضر
                                 </label>
-                                <!-- دکمه ضربدر برای غیاب -->
+                                
                                 <label class="btn btn-danger">
                                     <input type="radio" name="AttendanceRecords[@i].IsPresent"
                                            value="false" class="attendance-radio" @isAbsentChecked />
@@ -180,7 +180,7 @@
                                           id="remarks-@student.StudentId" rows="3">@attendanceRecord?.Remarks</textarea>
                             </div>
 
-                            <!-- فیلد برای AttendanceType -->
+                            
                             <div class="attendance-type" id="type-container-@student.StudentId"
                                  style="display: @(attendanceRecord != null && !attendanceRecord.IsPresent ? "block" : "none");">
                                 <label for="type-@student.StudentId">نوع حضور:</label>

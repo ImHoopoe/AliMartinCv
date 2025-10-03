@@ -1,10 +1,36 @@
 ﻿@using AliMartinCv.DataLayer.Entities
 @using AliMartinCv.DataLayer.DTos
+@using AliMartinCv.Core.Convertors
+@using AliMartinCv.Core.Tools
+@using System.Globalization
+@using System.Collections.Generic
 @model List<AttendanceRecord>
 
 @{
     Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-    ViewData["Title"] = "Attendance Overview";
+    ViewData["Title"] = "نمایش حضور و غیاب";
+
+    var persianCalendar = new PersianCalendar();
+    var currentShamsiYear = DateTime.Now.GetShamsiYear();
+
+    var months = new List<string> { "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند", "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور" };
+    var shamsiMonthsMap = new int[] { 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6 };
+    var daysOfWeek = new List<string> { "شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه" };
+
+    var dayIndexMap = new Dictionary<DayOfWeek, int>
+    {
+        { DayOfWeek.Saturday, 0 }, // شنبه
+        { DayOfWeek.Sunday, 1 }, // یکشنبه
+        { DayOfWeek.Monday, 2 }, // دوشنبه
+        { DayOfWeek.Tuesday, 3 }, // سه‌شنبه
+        { DayOfWeek.Wednesday, 4 }, // چهارشنبه
+        { DayOfWeek.Thursday, 5 }, // پنج‌شنبه
+        { DayOfWeek.Friday, 6 } // جمعه
+    };
+
+    // پیش‌پردازش داده‌ها
+    var students = Model.GroupBy(s => s.StudentId).Select(g => g.First()).OrderBy(s => s.Name).ToList();
+    var attendanceByStudent = Model.GroupBy(r => r.StudentId).ToDictionary(g => g.Key, g => g.ToList());
 }
 
 <style>
@@ -54,6 +80,47 @@
         font-weight: bold;
         background-color: #f1f1f1;
     }
+
+    .month-nav, .week-nav {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+        .month-nav button, .week-nav button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+            .month-nav button:hover, .week-nav button:hover {
+                background-color: #0056b3;
+            }
+
+            .month-nav button:disabled, .week-nav button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+
+    .month-container {
+        display: none;
+    }
+
+        .month-container.active {
+            display: block;
+        }
+
+    .week-header, .week-row {
+        display: none;
+    }
+
+        .week-header.active, .week-row.active {
+            display: table-cell;
+        }
 </style>
 
 <h2>@ViewData["Title"]</h2>
@@ -64,74 +131,178 @@
 }
 else
 {
-    var months = new List<string> { "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند", "فروردین", "اردیبهشت", "خرداد" };
-    var daysOfWeek = new List<string> { "شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه" };
-    var totalWeeks = 4;
+    <div class="month-nav">
+        <button onclick="prevMonth()">ماه قبلی</button>
+        <button onclick="nextMonth()">ماه بعدی</button>
+    </div>
 
-    @foreach (var month in months)
+    @for (int monthIdx = 0; monthIdx < months.Count; monthIdx++)
     {
-        var monthIndex = months.IndexOf(month) + 1;
-        if (monthIndex < 1 || monthIndex > 12) continue;
+        var month = months[monthIdx];
+        var monthIndex = monthIdx + 1;
+        var shamsiMonth = shamsiMonthsMap[monthIdx];
+        var shamsiYear = currentShamsiYear;
+        if (shamsiMonth < 7)
+        {
+            shamsiYear += 1;
+        }
+        var daysInMonth = persianCalendar.GetDaysInMonth(shamsiYear, shamsiMonth);
+        var firstDate = persianCalendar.ToDateTime(shamsiYear, shamsiMonth, 1, 0, 0, 0, 0);
+        var firstDowIndex = dayIndexMap[firstDate.DayOfWeek];
+        var totalDays = daysInMonth + firstDowIndex;
+        var totalWeeks = (int)Math.Ceiling((double)totalDays / 7);
 
-        <h3 class="month-header">@month</h3>
-        <table class="attendance-table">
-            <thead>
-                <tr>
-                    <th>نام و نام خانوادگی</th>
-                    @for (int week = 1; week <= totalWeeks; week++)
-                    {
-                        <th colspan="7">هفته @week</th>
-                    }
-                </tr>
-                <tr>
-                    <th></th>
-                    @for (int week = 1; week <= totalWeeks; week++)
-                    {
-                        foreach (var day in daysOfWeek)
-                        {
-                            <th>@day</th>
-                        }
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var student in Model.GroupBy(s => s.StudentId).Select(group => group.First()))
-                {
+        <div class="month-container @(monthIdx == 0 ? "active" : "")" id="month-@monthIndex">
+            <h3 class="month-header">@month</h3>
+            <div class="week-nav">
+                <button onclick="prevWeek(@monthIndex)">هفته قبلی</button>
+                <button onclick="nextWeek(@monthIndex)">هفته بعدی</button>
+            </div>
+            <table class="attendance-table">
+                <thead>
                     <tr>
-                        <td class="student-name">@student.Name @student.LastName</td>
+                        <th>نام و نام خانوادگی</th>
+                        @for (int week = 1; week <= totalWeeks; week++)
+                        {
+                            <th colspan="7" class="week-header @(week == 1 ? "active" : "")" id="week-header-@monthIndex-@week">هفته @week</th>
+                        }
+                    </tr>
+                    <tr>
+                        <th></th>
                         @for (int week = 1; week <= totalWeeks; week++)
                         {
                             for (int dayIndex = 0; dayIndex < 7; dayIndex++)
                             {
-                                var dayOfMonth = (week - 1) * 7 + dayIndex + 1;
-
-                                if (dayOfMonth > 31)
+                                var dayOfMonthCalc = (week - 1) * 7 + dayIndex - firstDowIndex + 1;
+                                if (dayOfMonthCalc >= 1 && dayOfMonthCalc <= daysInMonth)
                                 {
-                                    <td class="missing">نامعتبر</td>
-                                    continue;
+                                    var dayName = daysOfWeek[dayIndex];
+                                    var dateStr = $"{shamsiYear}/{shamsiMonth:D2}/{dayOfMonthCalc:D2}";
+                                    <th class="week-header @(week == 1 ? "active" : "")" id="week-header-@monthIndex-@week-@dayIndex">@dayName (@dateStr)</th>
                                 }
-
-                                var attendanceForDay = Model
-                                .FirstOrDefault(r => r.StudentId == student.StudentId
-                                && r.Date != null
-                                && r.Date.Month == monthIndex
-                                && r.Date.Day == dayOfMonth);
-
-                                string cellClass = "missing";
-                                string cellText = "عدم حضور";
-
-                                if (attendanceForDay != null)
+                                else
                                 {
-                                    cellClass = attendanceForDay.IsPresent ? "present" : "absent";
-                                    cellText = attendanceForDay.IsPresent ? "حاضر" : "غایب";
+                                    <th class="week-header @(week == 1 ? "active" : "")" id="week-header-@monthIndex-@week-@dayIndex"></th>
                                 }
-
-                                <td class="@cellClass">@cellText</td>
                             }
                         }
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var student in students)
+                    {
+                        var records = attendanceByStudent.GetValueOrDefault(student.StudentId, new List<AttendanceRecord>());
+
+                        <tr>
+                            <td class="student-name">@student.Name @student.LastName</td>
+                            @for (int week = 1; week <= totalWeeks; week++)
+                            {
+                                for (int dayIndex = 0; dayIndex < 7; dayIndex++)
+                                {
+                                    var dayOfMonth = (week - 1) * 7 + dayIndex - firstDowIndex + 1;
+                                    if (dayOfMonth < 1 || dayOfMonth > daysInMonth)
+                                    {
+                                        <td class="week-row @(week == 1 ? "active" : "")" id="week-row-@monthIndex-@week-@dayIndex"></td>
+                                        continue;
+                                    }
+
+                                    var targetDate = persianCalendar.ToDateTime(shamsiYear, shamsiMonth, dayOfMonth, 0, 0, 0, 0);
+
+                                    var attendanceForDay = records.FirstOrDefault(r => r.Date != null && r.Date.Date == targetDate.Date);
+
+                                    if (attendanceForDay != null)
+                                    {
+                                        string cellText = attendanceForDay.IsPresent ? "✔️" : "❌";
+                                        string cellClass = attendanceForDay.IsPresent ? "present" : "absent";
+
+                                        <td class="week-row @(week == 1 ? "active" : "")" id="week-row-@monthIndex-@week-@dayIndex" class="@cellClass">@cellText</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="week-row @(week == 1 ? "active" : "")" id="week-row-@monthIndex-@week-@dayIndex" class="missing">-</td>
+                                    }
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 }
+
+<script>
+    let currentMonth = 1;
+    let currentWeeks = {};
+    let totalWeeksPerMonth = new Array(13);
+    @for (int monthIdx = 0; monthIdx < months.Count; monthIdx++)
+    {
+        var monthIndex = monthIdx + 1;
+        var shamsiMonth = shamsiMonthsMap[monthIdx];
+        var shamsiYear = currentShamsiYear;
+        if (shamsiMonth < 7) { shamsiYear += 1; }
+        var daysInMonth = persianCalendar.GetDaysInMonth(shamsiYear, shamsiMonth);
+        var firstDate = persianCalendar.ToDateTime(shamsiYear, shamsiMonth, 1, 0, 0, 0, 0);
+        var firstDowIndex = dayIndexMap[firstDate.DayOfWeek];
+        var totalDays = daysInMonth + firstDowIndex;
+        var totalWeeks = (int)Math.Ceiling((double)totalDays / 7);
+        <text>totalWeeksPerMonth[@monthIndex] = @totalWeeks;</text>
+    }
+
+    function showMonth(monthIndex) {
+        document.querySelectorAll('.month-container').forEach(container => {
+            container.classList.remove('active');
+        });
+        document.getElementById(`month-${monthIndex}`).classList.add('active');
+        currentMonth = monthIndex;
+
+        document.querySelector('button[onclick="prevMonth()"]').disabled = (monthIndex === 1);
+        document.querySelector('button[onclick="nextMonth()"]').disabled = (monthIndex === 12);
+    }
+
+    function prevMonth() {
+        if (currentMonth > 1) {
+            showMonth(currentMonth - 1);
+        }
+    }
+
+    function nextMonth() {
+        if (currentMonth < 12) {
+            showMonth(currentMonth + 1);
+        }
+    }
+
+    function showWeek(monthIndex, week) {
+        document.querySelectorAll(`#month-${monthIndex} .week-header, #month-${monthIndex} .week-row`).forEach(elem => {
+            elem.classList.remove('active');
+        });
+        document.querySelectorAll(`#month-${monthIndex} [id^="week-header-${monthIndex}-${week}"], #month-${monthIndex} [id^="week-row-${monthIndex}-${week}-"]`).forEach(elem => {
+            elem.classList.add('active');
+        });
+        currentWeeks[monthIndex] = week;
+
+        document.querySelector(`#month-${monthIndex} button[onclick="prevWeek(${monthIndex})"]`).disabled = (week === 1);
+        document.querySelector(`#month-${monthIndex} button[onclick="nextWeek(${monthIndex})"]`).disabled = (week === totalWeeksPerMonth[monthIndex]);
+    }
+
+    function prevWeek(monthIndex) {
+        let currentWeek = currentWeeks[monthIndex] || 1;
+        if (currentWeek > 1) {
+            showWeek(monthIndex, currentWeek - 1);
+        }
+    }
+
+    function nextWeek(monthIndex) {
+        let currentWeek = currentWeeks[monthIndex] || 1;
+        if (currentWeek < totalWeeksPerMonth[monthIndex]) {
+            showWeek(monthIndex, currentWeek + 1);
+        }
+    }
+
+    showMonth(1);
+    @for (int monthIdx = 0; monthIdx < months.Count; monthIdx++)
+    {
+        var monthIndex = monthIdx + 1;
+        <text>showWeek(@monthIndex, 1);</text>
+    }
+</script>
