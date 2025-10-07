@@ -17,8 +17,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Login";
         options.LogoutPath = "/Logout";
         options.AccessDeniedPath = "/AccessDenied";
-        options.ExpireTimeSpan = TimeSpan.FromHours(3);
+        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+        options.SlidingExpiration = true;  
+        options.Cookie.HttpOnly = true;   
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; 
     });
+
 
 builder.Services.AddAuthorization();
 #region Context
@@ -35,6 +39,7 @@ builder.Services.AddScoped<ISchool,SchoolServices>();
 builder.Services.AddScoped<IClass,ClassService>();
 builder.Services.AddScoped<IStudent,StudentServices>();
 builder.Services.AddScoped<IAttendance,AttendanceServices>();
+builder.Services.AddScoped<IParent,ParentServices>();
 
 #endregion
 
@@ -71,4 +76,13 @@ app.UseEndpoints(endpoints =>
         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 });
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
+
 app.Run();

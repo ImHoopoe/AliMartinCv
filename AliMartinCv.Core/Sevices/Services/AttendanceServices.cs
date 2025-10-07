@@ -95,5 +95,12 @@ namespace AliMartinCv.Core.Sevices.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task<int> GetStudentAttendancesCounts(Guid studentId)
+        {
+            return await _context.Attendances
+                .Where(a => a.StudentId == studentId && !a.IsPresent)
+                .CountAsync();
+        }
     }
 }

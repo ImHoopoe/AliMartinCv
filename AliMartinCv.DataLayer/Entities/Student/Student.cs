@@ -14,10 +14,13 @@ namespace AliMartinCv.DataLayer.Entities
         public string Name { get; set; }
         public string LastName { get; set; }
         public int ClassId { get; set; }
-
+        public Guid? ParentId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
         #region Relations
         public Class Class { get; set; }
         public IEnumerable<Attendance> Attendances { get; set; }
+        public Parent Parent { get; set; }
         #endregion
 
 

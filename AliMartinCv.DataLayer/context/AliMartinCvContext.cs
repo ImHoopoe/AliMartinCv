@@ -22,6 +22,7 @@ namespace AliMartinCv.DataLayer.context
         public DbSet<Class> Classes { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<StudentInformation> StudentsInformations { get; set; }
+        public DbSet<Parent> Parents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,7 +30,17 @@ namespace AliMartinCv.DataLayer.context
             option.IsDeleted == false);
             modelBuilder.Entity<Blog>().HasQueryFilter(option =>
                 option.BlogIsDeleted == false);
+            
+            
+
+            modelBuilder.Entity<Parent>()
+                .HasOne(p => p.Student)
+                .WithOne(s => s.Parent)
+                .HasForeignKey<Student>(s => s.ParentId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
+
+
     }
 }
 

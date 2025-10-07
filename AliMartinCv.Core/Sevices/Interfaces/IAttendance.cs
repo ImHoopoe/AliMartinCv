@@ -13,6 +13,7 @@ namespace AliMartinCv.Core.Sevices.Interfaces
         Task<List<AttendanceRecord>> ShowClassAttendance(int classId);
         void ReCheckAll();
         Task<List<AttendanceRecord>> ShowStudentAttendance(Guid studentId);
+        Task<int> GetStudentAttendancesCounts(Guid studentId);
 
     }
 }

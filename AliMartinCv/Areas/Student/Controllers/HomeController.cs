@@ -1,10 +1,12 @@
 ﻿using AliMartinCv.Core.Sevices.Interfaces;
 using AliMartinCv.DataLayer.DTos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AliMartinCv.Areas.Student.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = "Student,Admin")]
     public class HomeController : Controller
     {
         private readonly IAttendance _attendanceServices;

@@ -11,7 +11,7 @@ using AliMartinCv.DataLayer.DTos;
 
 namespace AliMartinCv.Core.Sevices.Services
 {
-    public class StudentServices :IStudent
+    public class StudentServices : IStudent
     {
         private readonly AliMartinCvContext _context;
 
@@ -113,6 +113,30 @@ namespace AliMartinCv.Core.Sevices.Services
             {
                 throw new Exception("در هنگام دریافت لیست دانش‌آموزان مشکلی پیش آمده است. لطفاً دوباره تلاش کنید.", ex);
             }
+        }
+
+        public async Task<bool> IsStudentExists(string UserName)
+        {
+           return await _context.Students.AnyAsync(s => s.UserName == UserName);
+        }
+
+        public async Task<Student> GetStudentByUserName(string UserName)
+        {
+            return await _context.Students.SingleOrDefaultAsync(s => s.UserName == UserName);
+        }
+
+        public async Task<int> GetStudentsCounts(Guid? studentId,Guid? parentId)
+        {
+            if (studentId!=null)
+            {
+                return await _context.Students.Where(s => s.StudentId == studentId).CountAsync();
+            }
+
+            if (parentId!=null)
+            {
+                return await _context.Students.Where(s => s.ParentId == parentId).CountAsync();
+            }
+            return await _context.Students.CountAsync();
         }
     }
 }

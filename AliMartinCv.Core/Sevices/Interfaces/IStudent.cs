@@ -15,5 +15,8 @@ namespace AliMartinCv.Core.Sevices.Interfaces
         Task DeleteStudent(Guid studentId);
         Task<Student> GetStudentById(Guid studentId, string searchText = null);
         Task<IEnumerable<Student>> GetAllStudents(int? id);
+        Task<bool> IsStudentExists(string UserName);
+        Task<Student> GetStudentByUserName(string UserName);
+        Task<int> GetStudentsCounts(Guid? studentId, Guid? parentId);
     }
 }
