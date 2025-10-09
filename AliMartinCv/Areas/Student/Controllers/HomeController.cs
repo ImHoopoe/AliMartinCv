@@ -32,21 +32,6 @@ namespace AliMartinCv.Areas.Student.Controllers
             return View(attendances);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> StudentInformation()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> StudentInformation(StudentInformationViewModel student)
-        {
-            if (!ModelState.IsValid)
-            {
-                
-            }
-
-            return View();
-        }
+        
     }
 }

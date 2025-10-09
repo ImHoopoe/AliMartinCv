@@ -138,5 +138,18 @@ namespace AliMartinCv.Core.Sevices.Services
             }
             return await _context.Students.CountAsync();
         }
+
+        public async Task<Guid> GetStudentIdByParentId(Guid parentId)
+        {
+            var parent = await _context.Parents
+                .SingleOrDefaultAsync(s => s.ParentId == parentId);
+
+            if (parent == null)
+                throw new Exception($"والدی با این آیدی یافت نشد ! {parentId}");
+
+            return parent.StudentId.Value;
+        }
+
+
     }
 }

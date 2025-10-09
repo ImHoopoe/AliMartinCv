@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AliMartinCv.DataLayer.DTos;
 using AliMartinCv.DataLayer.Entities;
 
 namespace AliMartinCv.Core.Sevices.Interfaces
@@ -11,6 +12,8 @@ namespace AliMartinCv.Core.Sevices.Interfaces
     {
         Task<bool> IsExistsParent(string UserName);
         Task<Parent> GetParentByUserName(string UserName);
-       
+        Task<bool> IsProfileCompleted(Guid studentId);
+        Task<bool> CompleteProfile(StudentInformationViewModel studentInformation);
+        Task<bool> CreateParent(List<Student> students);
     }
 }

@@ -18,5 +18,6 @@ namespace AliMartinCv.Core.Sevices.Interfaces
         Task<bool> IsStudentExists(string UserName);
         Task<Student> GetStudentByUserName(string UserName);
         Task<int> GetStudentsCounts(Guid? studentId, Guid? parentId);
+        Task<Guid> GetStudentIdByParentId(Guid ParentId);
     }
 }

@@ -38,6 +38,40 @@ namespace AliMartinCv.DataLayer.context
                 .WithOne(s => s.Parent)
                 .HasForeignKey<Student>(s => s.ParentId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<HomeWork>()
+                .HasOne(h => h.Class)
+                .WithMany(c => c.HomeWorks)
+                .HasForeignKey(h => h.ClassId)
+                .OnDelete(DeleteBehavior.Cascade); 
+
+            
+            modelBuilder.Entity<StudentHomeWork>()
+                .HasOne(sh => sh.HomeWork)
+                .WithMany(h => h.StudentHomeWorks)
+                .HasForeignKey(sh => sh.HomeWorkId)
+                .OnDelete(DeleteBehavior.Cascade); 
+
+            
+            modelBuilder.Entity<StudentHomeWork>()
+                .HasOne(sh => sh.Student)
+                .WithMany(s => s.StudentHomeWorks)
+                .HasForeignKey(sh => sh.StudentId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+           
+            modelBuilder.Entity<StudentHomeWork>()
+                .HasIndex(sh => new { sh.HomeWorkId, sh.StudentId })
+                .IsUnique();
+
+            
+            modelBuilder.Entity<HomeWork>()
+                .Property(h => h.HomeWorkTitle)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            modelBuilder.Entity<HomeWork>()
+                .Property(h => h.HomeWorkDescriptions)
+                .HasMaxLength(2000);
         }
 
 

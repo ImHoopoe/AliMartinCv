@@ -253,7 +253,7 @@
 
                     <form id="studentForm" method="post">
                         @Html.AntiForgeryToken()
-                        <input type="hidden" asp-for="StudentId" />
+                        <input type="hidden" asp-for="StudentId" value="@ViewBag.StudentId" />
 
                         <!-- Step 1: اطلاعات خانواده -->
                         <div class="form-step active" id="step1">

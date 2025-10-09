@@ -16,7 +16,7 @@ namespace AliMartinCv.DataLayer.Entities
         #region Relations
         public School School { get; set; }
         public IEnumerable<Student> Students { get; set; }
-
+        public ICollection<HomeWork> HomeWorks { get; set; }
         #endregion
     }
 }

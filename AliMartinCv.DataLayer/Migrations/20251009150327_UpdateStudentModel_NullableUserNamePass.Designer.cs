@@ -4,6 +4,7 @@ using AliMartinCv.DataLayer.context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliMartinCv.DataLayer.Migrations
 {
     [DbContext(typeof(AliMartinCvContext))]
-    partial class AliMartinCvContextModelSnapshot : ModelSnapshot
+    [Migration("20251009150327_UpdateStudentModel_NullableUserNamePass")]
+    partial class UpdateStudentModel_NullableUserNamePass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,39 +154,6 @@ namespace AliMartinCv.DataLayer.Migrations
                     b.ToTable("Classes");
                 });
 
-            modelBuilder.Entity("AliMartinCv.DataLayer.Entities.HomeWork", b =>
-                {
-                    b.Property<int>("HomeWorkId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HomeWorkId"));
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("EndTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("HomeWorkDescriptions")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<string>("HomeWorkTitle")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("HomeWorkType")
-                        .HasColumnType("int");
-
-                    b.HasKey("HomeWorkId");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("HomeWork");
-                });
-
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.Parent", b =>
                 {
                     b.Property<Guid>("ParentId")
@@ -264,34 +234,6 @@ namespace AliMartinCv.DataLayer.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("AliMartinCv.DataLayer.Entities.StudentHomeWork", b =>
-                {
-                    b.Property<int>("StudentHomeWorkId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentHomeWorkId"));
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HomeWorkId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("StudentHomeWorkId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("HomeWorkId", "StudentId")
-                        .IsUnique();
-
-                    b.ToTable("StudentHomeWork");
-                });
-
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.StudentInformation", b =>
                 {
                     b.Property<Guid>("StudentInformationId")
@@ -299,189 +241,214 @@ namespace AliMartinCv.DataLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AcademicHistory")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AccessToTechnology")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ChildOrder")
+                    b.Property<int>("ChildOrder")
                         .HasColumnType("int");
 
                     b.Property<string>("ChronicDiseases")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CognitiveAbilities")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CommonDiseases")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EducationalResources")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FamilyHealthStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("FamilyIncome")
+                    b.Property<decimal>("FamilyIncome")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("FamilyMemberCount")
+                    b.Property<int>("FamilyMemberCount")
                         .HasColumnType("int");
 
                     b.Property<string>("FamilyStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("FatherDeceasedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FatherOccupation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("HasAcademicHistory")
+                    b.Property<bool>("HasAcademicHistory")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasAcceleratedLearning")
+                    b.Property<bool>("HasAcceleratedLearning")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasAccessToTechnology")
+                    b.Property<bool>("HasAccessToTechnology")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasChronicDiseases")
+                    b.Property<bool>("HasChronicDiseases")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasCognitiveAbilities")
+                    b.Property<bool>("HasCognitiveAbilities")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasCommonDiseases")
+                    b.Property<bool>("HasCommonDiseases")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasEducationalResources")
+                    b.Property<bool>("HasEducationalResources")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasFamilyHealthStatus")
+                    b.Property<bool>("HasFamilyHealthStatus")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasHospitalizationHistory")
+                    b.Property<bool>("HasHospitalizationHistory")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasLateArrivals")
+                    b.Property<bool>("HasLateArrivals")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasMentalDisorders")
+                    b.Property<bool>("HasMentalDisorders")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasPastSocialOrLegalProblems")
+                    b.Property<bool>("HasPastSocialOrLegalProblems")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasPhysicalDisabilities")
+                    b.Property<bool>("HasPhysicalDisabilities")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasPsychologicalStatus")
+                    b.Property<bool>("HasPsychologicalStatus")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasRepeatedGrades")
+                    b.Property<bool>("HasRepeatedGrades")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasSexualMaturity")
+                    b.Property<bool>("HasSexualMaturity")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasSocialInteraction")
+                    b.Property<bool>("HasSocialInteraction")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasSocialProblems")
+                    b.Property<bool>("HasSocialProblems")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasSocialSupport")
+                    b.Property<bool>("HasSocialSupport")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasStudentHealthStatus")
+                    b.Property<bool>("HasStudentHealthStatus")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasSurgicalHistory")
+                    b.Property<bool>("HasSurgicalHistory")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasTechnologyUsageHours")
+                    b.Property<bool>("HasTechnologyUsageHours")
                         .HasColumnType("bit");
 
                     b.Property<string>("HousingType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsCompeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsDivorced")
+                    b.Property<bool>("IsDivorced")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsFatherDeceased")
+                    b.Property<bool>("IsFatherDeceased")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsFatherEmployed")
+                    b.Property<bool>("IsFatherEmployed")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsMotherDeceased")
+                    b.Property<bool>("IsMotherDeceased")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsMotherEmployed")
+                    b.Property<bool>("IsMotherEmployed")
                         .HasColumnType("bit");
 
                     b.Property<string>("Medications")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MentalDisorders")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("MotherDeceasedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MotherOccupation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ParentWithWhomLiving")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PastSocialOrLegalProblems")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhysicalDisabilities")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PsychologicalStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SexualMaturityStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SiblingsCount")
+                    b.Property<int>("SiblingsCount")
                         .HasColumnType("int");
 
                     b.Property<string>("SocialInteraction")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialProblems")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialSupport")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentHealthStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SurgicalHistory")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TechnologyUsageHours")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("UsesPrescriptionMedications")
+                    b.Property<bool>("UsesPrescriptionMedications")
                         .HasColumnType("bit");
 
                     b.HasKey("StudentInformationId");
@@ -535,17 +502,6 @@ namespace AliMartinCv.DataLayer.Migrations
                     b.Navigation("School");
                 });
 
-            modelBuilder.Entity("AliMartinCv.DataLayer.Entities.HomeWork", b =>
-                {
-                    b.HasOne("AliMartinCv.DataLayer.Entities.Class", "Class")
-                        .WithMany("HomeWorks")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-                });
-
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.Student", b =>
                 {
                     b.HasOne("AliMartinCv.DataLayer.Entities.Class", "Class")
@@ -564,25 +520,6 @@ namespace AliMartinCv.DataLayer.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("AliMartinCv.DataLayer.Entities.StudentHomeWork", b =>
-                {
-                    b.HasOne("AliMartinCv.DataLayer.Entities.HomeWork", "HomeWork")
-                        .WithMany("StudentHomeWorks")
-                        .HasForeignKey("HomeWorkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AliMartinCv.DataLayer.Entities.Student", "Student")
-                        .WithMany("StudentHomeWorks")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("HomeWork");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.BlogGroup", b =>
                 {
                     b.Navigation("Blogs");
@@ -594,14 +531,7 @@ namespace AliMartinCv.DataLayer.Migrations
 
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.Class", b =>
                 {
-                    b.Navigation("HomeWorks");
-
                     b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("AliMartinCv.DataLayer.Entities.HomeWork", b =>
-                {
-                    b.Navigation("StudentHomeWorks");
                 });
 
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.Parent", b =>
@@ -618,8 +548,6 @@ namespace AliMartinCv.DataLayer.Migrations
             modelBuilder.Entity("AliMartinCv.DataLayer.Entities.Student", b =>
                 {
                     b.Navigation("Attendances");
-
-                    b.Navigation("StudentHomeWorks");
                 });
 #pragma warning restore 612, 618
         }

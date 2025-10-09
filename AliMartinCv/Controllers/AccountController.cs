@@ -35,7 +35,7 @@ namespace AliMartinCv.Controllers
             
             returnUrl ??= "/admin/blogs/";
 
-            if (await AuthenticateUser(userName, password, "Admin", _adminUserName, _adminPassword,Guid.NewGuid()))
+            if (await AuthenticateUser(userName, password, "Admin", _adminUserName, _adminPassword,Guid.NewGuid(),null))
             {
                 return Redirect(returnUrl); 
             }
@@ -46,7 +46,7 @@ namespace AliMartinCv.Controllers
                 if (student.Password == password.HashPassword())
                 {
                     returnUrl = "/students/home/index";
-                    await SignInUser(userName, "Student",student.StudentId);
+                    await SignInUser(userName, "Student",student.StudentId, student.ParentId);
                     return Redirect(returnUrl); 
                 }
             }
@@ -54,10 +54,11 @@ namespace AliMartinCv.Controllers
             if (await _parentServices.IsExistsParent(userName))
             {
                 var parent = await _parentServices.GetParentByUserName(userName);
+                var student = await _studentServices.GetStudentIdByParentId(parent.ParentId);
                 if (parent.Password == password.HashPassword())
                 {
                     returnUrl = "/parents/home/index";
-                    await SignInUser(userName, "Parent",parent.ParentId);
+                    await SignInUser(userName, "Parent",parent.ParentId,parent.StudentId);
                     return Redirect(returnUrl); 
                 }
             }
@@ -67,23 +68,24 @@ namespace AliMartinCv.Controllers
         }
 
 
-        private async Task<bool> AuthenticateUser(string userName, string password, string role, string storedUserName, string storedPassword,Guid userId)
+        private async Task<bool> AuthenticateUser(string userName, string password, string role, string storedUserName, string storedPassword,Guid userId,Guid? studentId)
         {
             if (userName == storedUserName && password.HashPassword() == storedPassword.HashPassword())
             {
-                await SignInUser(userName, role,userId);
+                await SignInUser(userName, role,userId,studentId);
                 return true;
             }
             return false;
         }
 
-        private async Task SignInUser(string userName, string role,Guid userId)
+        private async Task SignInUser(string userName, string role,Guid userId,Guid? studentId)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, userName),
                 new Claim(ClaimTypes.Role, role),
                 new Claim(ClaimTypes.NameIdentifier,userId.ToString()),
+                new Claim(ClaimTypes.Anonymous,studentId.ToString()),
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -91,8 +93,14 @@ namespace AliMartinCv.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
-
-        [HttpGet("/Logout")]
+        [HttpGet("/CreateParent")]
+        public async Task <IActionResult> CreateParent()
+        {
+            var students =  await _studentServices.GetAllStudents(null);
+            await _parentServices.CreateParent(students.ToList());
+            return View();
+        }
+            [HttpGet("/Logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
