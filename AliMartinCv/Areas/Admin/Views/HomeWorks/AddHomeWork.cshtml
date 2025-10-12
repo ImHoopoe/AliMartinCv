@@ -1,0 +1,427 @@
+﻿@using AliMartinCv.DataLayer.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AliMartinCv.DataLayer.DTos.AddHomeWorkViewModel
+@{
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Vazir', 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        text-align: center;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #34495e;
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ecf0f1;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: #fafafa;
+        font-family: 'Vazir', 'Segoe UI', sans-serif;
+    }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .select-all-container {
+        margin-bottom: 15px;
+    }
+
+    .select-all-btn {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        margin-left: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.3s ease;
+    }
+
+        .select-all-btn:hover {
+            background: #7f8c8d;
+            transform: translateY(-1px);
+        }
+
+    .checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        margin-top: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #ecf0f1;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        background: white;
+        border-radius: 6px;
+        border: 1px solid #e0e0e0;
+    }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-left: 10px;
+            transform: scale(1.2);
+            accent-color: #3498db;
+        }
+
+        .checkbox-item label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-start;
+        margin-top: 35px;
+        padding-top: 20px;
+        border-top: 1px solid #ecf0f1;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Vazir', 'Segoe UI', sans-serif;
+    }
+
+    .btn-secondary {
+        background: #95a5a6;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
+        }
+
+    .btn:not(.btn-secondary) {
+        background: #3498db;
+        color: white;
+    }
+
+        .btn:not(.btn-secondary):hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+    .validation-error {
+        color: #e74c3c;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+        font-weight: 500;
+    }
+
+    /* استایل برای حالت‌های واکنش‌گرا */
+    @@media (max-width: 768px) {
+        .container
+
+    {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .checkbox-group {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    }
+
+    /* استایل برای اسکرول بار در checkbox-group */
+    .checkbox-group::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .checkbox-group::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    .checkbox-group::-webkit-scrollbar-thumb {
+        background: #bdc3c7;
+        border-radius: 3px;
+    }
+
+        .checkbox-group::-webkit-scrollbar-thumb:hover {
+            background: #95a5a6;
+        }
+
+    /* استایل برای placeholder */
+    ::placeholder {
+        color: #bdc3c7;
+        opacity: 1;
+    }
+
+    :-ms-input-placeholder {
+        color: #bdc3c7;
+    }
+
+    ::-ms-input-placeholder {
+        color: #bdc3c7;
+    }
+</style>
+<div class="container">
+    <h1>افزودن تکلیف جدید</h1>
+
+    <form method="post" action="/admin/HomeWorks/AddHomeWork" id="homeworkForm">
+        <div class="form-group">
+            <label>انتخاب کلاس‌ها</label>
+            <div class="select-all-container">
+                <button type="button" class="select-all-btn" id="selectAll">انتخاب همه</button>
+                <button type="button" class="select-all-btn" id="deselectAll">عدم انتخاب همه</button>
+            </div>
+            <div class="checkbox-group" id="classesCheckboxGroup">
+                @if (ViewData["Classes"] is IEnumerable<Class> classes && classes.Any())
+                {
+                    @foreach (var classItem in classes)
+                    {
+                        <div class="checkbox-item">
+                            <input type="checkbox"
+                                   id="class_@classItem.ClassId"
+                                   name="ClassId"
+                                   value="@classItem.ClassId" />
+                            <label for="class_@classItem.ClassId">@classItem.ClassName</label>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>هیچ کلاسی یافت نشد</p>
+                }
+            </div>
+            <span class="validation-error" id="classesError"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="HomeWorkTitle">عنوان تکلیف</label>
+            <input asp-for="HomeWorkTitle" type="text" id="HomeWorkTitle" required />
+            <span asp-validation-for="HomeWorkTitle" class="validation-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="HomeWorkDescriptions">توضیحات تکلیف</label>
+            <textarea asp-for="HomeWorkDescriptions" id="HomeWorkDescriptions"></textarea>
+            <span asp-validation-for="HomeWorkDescriptions" class="validation-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="PersianDate">تاریخ شمسی (مثال: 1403/10/15)</label>
+            <input type="text" id="PersianDate" class="form-control" placeholder="1403/10/15" required />
+
+            <label for="PersianTime" style="margin-top: 10px;">ساعت (مثال: 14:30)</label>
+            <input type="text" id="PersianTime" class="form-control" placeholder="14:30" required />
+
+            <!-- فیلد مخفی برای ذخیره تاریخ به صورت میلادی -->
+            <input type="hidden" asp-for="EndTime" id="EndTime" />
+            <span asp-validation-for="EndTime" class="validation-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="HomeWorkType">نوع تکلیف</label>
+            <select asp-for="HomeWorkType" id="HomeWorkType" required>
+                <option value="">-- لطفا نوع تکلیف را انتخاب کنید --</option>
+                <option value="0">تکلیف روزانه</option>
+                <option value="1">جریمه</option>
+                <option value="2">کاربرگ</option>
+                <option value="3">آدینه</option>
+            </select>
+            <span asp-validation-for="HomeWorkType" class="validation-error"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">انصراف</button>
+            <button type="submit" class="btn">ذخیره تکلیف</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // تابع برای تبدیل تاریخ شمسی به میلادی
+        function persianToGregorian(persianDate, time) {
+            // این یک تبدیل ساده است - برای استفاده واقعی بهتر است از کتابخانه‌های تبدیل تاریخ استفاده کنید
+            const [year, month, day] = persianDate.split('/').map(Number);
+            const [hours, minutes] = time.split(':').map(Number);
+
+            // تبدیل تقریبی (برای دقت بیشتر از کتابخانه استفاده کنید)
+            const gregorianDate = new Date();
+            gregorianDate.setFullYear(year + 621); // اضافه کردن 621 سال
+            gregorianDate.setMonth(month - 1);
+            gregorianDate.setDate(day);
+            gregorianDate.setHours(hours, minutes, 0, 0);
+
+            return gregorianDate.toISOString();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // انتخاب همه کلاس‌ها
+            document.getElementById('selectAll').addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="ClassId"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+            });
+
+            // عدم انتخاب همه کلاس‌ها
+            document.getElementById('deselectAll').addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="ClassId"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            });
+
+            // اعتبارسنجی فرم
+            const form = document.getElementById('homeworkForm');
+            form.addEventListener('submit', function(e) {
+                let isValid = true;
+
+                // اعتبارسنجی کلاس‌ها
+                const classCheckboxes = document.querySelectorAll('input[name="ClassId"]:checked');
+                const classesError = document.getElementById('classesError');
+                if (classCheckboxes.length === 0) {
+                    classesError.textContent = 'حداقل یک کلاس باید انتخاب شود';
+                    isValid = false;
+                } else {
+                    classesError.textContent = '';
+                }
+
+                // اعتبارسنجی عنوان
+                const title = document.getElementById('HomeWorkTitle');
+                if (!title.value.trim()) {
+                    showError(title, 'عنوان تکلیف الزامی است');
+                    isValid = false;
+                } else {
+                    hideError(title);
+                }
+
+                // اعتبارسنجی تاریخ شمسی
+                const persianDate = document.getElementById('PersianDate');
+                const persianTime = document.getElementById('PersianTime');
+                if (!persianDate.value.trim() || !persianTime.value.trim()) {
+                    showError(persianDate, 'تاریخ و زمان مهلت انجام الزامی است');
+                    isValid = false;
+                } else {
+                    // تبدیل تاریخ شمسی به میلادی
+                    try {
+                        const gregorianISO = persianToGregorian(persianDate.value, persianTime.value);
+                        document.getElementById('EndTime').value = gregorianISO;
+                        hideError(persianDate);
+                    } catch (error) {
+                        showError(persianDate, 'فرمت تاریخ یا زمان صحیح نیست');
+                        isValid = false;
+                    }
+                }
+
+                // اعتبارسنجی نوع تکلیف
+                const homeworkType = document.getElementById('HomeWorkType');
+                if (!homeworkType.value) {
+                    showError(homeworkType, 'لطفا نوع تکلیف را انتخاب کنید');
+                    isValid = false;
+                } else {
+                    hideError(homeworkType);
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+
+            function showError(input, message) {
+                const errorSpan = input.nextElementSibling;
+                if (errorSpan && errorSpan.classList.contains('validation-error')) {
+                    errorSpan.textContent = message;
+                }
+                input.style.borderColor = '#e74c3c';
+            }
+
+            function hideError(input) {
+                const errorSpan = input.nextElementSibling;
+                if (errorSpan && errorSpan.classList.contains('validation-error')) {
+                    errorSpan.textContent = '';
+                }
+                input.style.borderColor = '#ddd';
+            }
+
+            // تنظیم تاریخ پیش‌فرض (2 روز بعد به صورت شمسی)
+            const now = new Date();
+            now.setDate(now.getDate() + 2);
+
+            // تبدیل ساده به تاریخ شمسی (برای دقت بیشتر از کتابخانه استفاده کنید)
+            const persianYear = now.getFullYear() - 621;
+            const persianMonth = String(now.getMonth() + 1).padStart(2, '0');
+            const persianDay = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            document.getElementById('PersianDate').value = `${persianYear}/${persianMonth}/${persianDay}`;
+            document.getElementById('PersianTime').value = `${hours}:${minutes}`;
+            document.getElementById('EndTime').value = now.toISOString();
+        });
+    </script>
+}

@@ -40,6 +40,7 @@ builder.Services.AddScoped<IClass,ClassService>();
 builder.Services.AddScoped<IStudent,StudentServices>();
 builder.Services.AddScoped<IAttendance,AttendanceServices>();
 builder.Services.AddScoped<IParent,ParentServices>();
+builder.Services.AddScoped<IHomeWork,HomeWorkServices>();
 
 #endregion
 

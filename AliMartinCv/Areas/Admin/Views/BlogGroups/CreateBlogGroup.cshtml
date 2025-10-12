@@ -1,21 +1,143 @@
-﻿@model AliMartinCv.DataLayer.Entities.BlogGroup
+﻿@using AliMartinCv.DataLayer.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AliMartinCv.DataLayer.DTos.AddHomeWorkViewModel
 @{
-    ViewData["Title"] = "Create New Group";
+    ViewData["Title"] = "افزودن تکلیف جدید";
     Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-<form method="post">
-    <div class="card shadow mb-4">
-        <div class="p-5">
-            <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Create New Blog Groupe</h1>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">افزودن تکلیف جدید</h6>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-action="AddHomeWork">
+            <div class="form-group">
+                <label>انتخاب کلاس‌ها</label>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="selectAll">انتخاب همه</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="deselectAll">عدم انتخاب همه</button>
+                </div>
+                <div class="checkbox-group border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                    @if (ViewData["Classes"] is IEnumerable<dynamic> classes && classes.Any())
+                    {
+                        foreach (var classItem in classes)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="ClassId"
+                                       value="@classItem.ClassId"
+                                       id="class_@classItem.ClassId" />
+                                <label class="form-check-label" for="class_@classItem.ClassId">
+                                    @classItem.ClassName
+                                </label>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">هیچ کلاسی یافت نشد</p>
+                    }
+                </div>
+                <span class="text-danger" id="classesError"></span>
             </div>
 
             <div class="form-group">
-                <input asp-for="BlogGroupTitle" type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Group Name...">
+                <label asp-for="HomeWorkTitle">عنوان تکلیف</label>
+                <input asp-for="HomeWorkTitle" class="form-control" />
+                <span asp-validation-for="HomeWorkTitle" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-success btn-user btn-block">Add</button>
-            <hr>
 
-        </div>
+            <div class="form-group">
+                <label asp-for="HomeWorkDescriptions">توضیحات تکلیف</label>
+                <textarea asp-for="HomeWorkDescriptions" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="HomeWorkDescriptions" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndTime">مهلت انجام</label>
+                <input asp-for="EndTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="HomeWorkType">نوع تکلیف</label>
+                <select asp-for="HomeWorkType" asp-items="Html.GetEnumSelectList<HomeWorkType>()" class="form-control">
+                    <option value="">-- لطفا نوع تکلیف را انتخاب کنید --</option>
+                </select>
+                <span asp-validation-for="HomeWorkType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-success">ذخیره تکلیف</button>
+                <a href="/Admin/HomeWork" class="btn btn-secondary">انصراف</a>
+            </div>
+        </form>
     </div>
-</form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تنظیم حداقل تاریخ برای مهلت انجام به تاریخ امروز
+            const endTimeInput = document.getElementById('EndTime');
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+            endTimeInput.min = minDateTime;
+
+            // اگر مقدار EndTime خالی است، مقدار پیش‌فرض تنظیم کنید
+            if (!endTimeInput.value) {
+                // 2 روز بعد به عنوان پیش‌فرض
+                const twoDaysLater = new Date(now);
+                twoDaysLater.setDate(now.getDate() + 2);
+                const defaultYear = twoDaysLater.getFullYear();
+                const defaultMonth = String(twoDaysLater.getMonth() + 1).padStart(2, '0');
+                const defaultDay = String(twoDaysLater.getDate()).padStart(2, '0');
+                endTimeInput.value = `${defaultYear}-${defaultMonth}-${defaultDay}T${hours}:${minutes}`;
+            }
+
+            // انتخاب همه کلاس‌ها
+            document.getElementById('selectAll').addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="ClassId"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+            });
+
+            // عدم انتخاب همه کلاس‌ها
+            document.getElementById('deselectAll').addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="ClassId"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            });
+
+            // اعتبارسنجی فرم
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                let isValid = true;
+
+                // اعتبارسنجی کلاس‌ها
+                const classCheckboxes = document.querySelectorAll('input[name="ClassId"]:checked');
+                const classesError = document.getElementById('classesError');
+                if (classCheckboxes.length === 0) {
+                    classesError.textContent = 'حداقل یک کلاس باید انتخاب شود';
+                    isValid = false;
+                } else {
+                    classesError.textContent = '';
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

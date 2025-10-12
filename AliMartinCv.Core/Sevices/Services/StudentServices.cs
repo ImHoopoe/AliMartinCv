@@ -150,6 +150,14 @@ namespace AliMartinCv.Core.Sevices.Services
             return parent.StudentId.Value;
         }
 
+        public async Task<bool> IsStudentActivated(Guid studentId)
+        {
+            var student = await _context.Students.SingleOrDefaultAsync(s => s.StudentId == studentId);
+            if (student == null)
+                return false;
+
+            return student.IsActivated.HasValue && student.IsActivated.Value;
+        }
 
     }
 }

@@ -19,5 +19,6 @@ namespace AliMartinCv.Core.Sevices.Interfaces
         Task<Student> GetStudentByUserName(string UserName);
         Task<int> GetStudentsCounts(Guid? studentId, Guid? parentId);
         Task<Guid> GetStudentIdByParentId(Guid ParentId);
+        Task<bool> IsStudentActivated(Guid studentId);
     }
 }

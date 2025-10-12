@@ -43,11 +43,16 @@ namespace AliMartinCv.Controllers
             if (await _studentServices.IsStudentExists(userName))
             {
                 var student = await _studentServices.GetStudentByUserName(userName);
-                if (student.Password == password.HashPassword())
+                if (student.Password == password.HashPassword() && student.IsActivated.Value)
                 {
                     returnUrl = "/students/home/index";
                     await SignInUser(userName, "Student",student.StudentId, student.ParentId);
                     return Redirect(returnUrl); 
+                }
+                else
+                {
+                    ViewBag.Error = "اکانت شما توسط والدین فعال نشده است !.";
+                    return View(userName);
                 }
             }
 
