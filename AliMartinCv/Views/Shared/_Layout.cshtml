@@ -56,28 +56,578 @@
 
         @RenderBody()
 
-        <!-- Footer with Animated Wave -->
-        <footer class="footer">
-            <svg class="wave" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f5f7fa"></path>
-                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f5f7fa"></path>
-                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f5f7fa"></path>
-            </svg>
-            <div class="container text-center">
-                <div class="row justify-content-center">
-                    <div class="col-auto">
-                        <p class="mb-4 text-center">© @DateTime.Now.Year Ali Martin. All rights reserved.</p>
+
+    <footer class="footer">
+        <!-- Galactic Background for Footer -->
+        <div class="footer-galaxy">
+            <div class="footer-stars"></div>
+            <div class="footer-stars2"></div>
+            <div class="footer-nebula"></div>
+            <div class="footer-shooting-star"></div>
+        </div>
+
+        
+
+        <div class="container text-center position-relative z-2">
+            <div class="footer-content">
+                <!-- Brand Logo -->
+                <div class="footer-brand mb-4">
+                    <h3 class="brand-name">Ali Martin</h3>
+                    <p class="brand-tagline">Full Stack Developer & Instructor</p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="footer-links mb-5">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <a href="#home" class="footer-link">Home</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#about" class="footer-link">About</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#skills" class="footer-link">Skills</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#experience" class="footer-link">Experience</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#portfolio" class="footer-link">Portfolio</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#blogs" class="footer-link">Blog</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#contact" class="footer-link">Contact</a>
+                        </div>
                     </div>
                 </div>
-                <div class="social-icons">
-                    <a href="https://github.com/ImHoopoe"><i class="fab fa-github text-white"></i></a>
-                <a href="https://www.linkedin.com/in/ali-martin-imhoopoe"><i class="fab fa-linkedin text-white"></i></a>
-                <a href="https://x.com/imHoopoe"><i class="fab fa-twitter text-white"></i></a>
-                <a href="https://www.instagram.com/alimartintheprogrammer/"><i class="fab fa-instagram text-white"></i></a>
-                </div>
-            </div>
-        </footer>
 
+                <!-- Social Icons -->
+                <div class="social-icons-wrapper mb-5">
+                    <h5 class="social-title mb-4">Connect With Me</h5>
+                    <div class="social-icons">
+                        <a href="https://github.com/ImHoopoe" class="social-icon" target="_blank" aria-label="GitHub">
+                            <div class="icon-wrapper">
+                                <i class="fab fa-github"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ali-martin-imhoopoe" class="social-icon" target="_blank" aria-label="LinkedIn">
+                            <div class="icon-wrapper">
+                                <i class="fab fa-linkedin-in"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                        </a>
+                        <a href="https://x.com/imHoopoe" class="social-icon" target="_blank" aria-label="Twitter">
+                            <div class="icon-wrapper">
+                                <i class="fab fa-twitter"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/alimartintheprogrammer/" class="social-icon" target="_blank" aria-label="Instagram">
+                            <div class="icon-wrapper">
+                                <i class="fab fa-instagram"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                        </a>
+                        <a href="mailto:alimartin8203@gmail.com" class="social-icon" aria-label="Email">
+                            <div class="icon-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-contact mb-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt contact-icon"></i>
+                                <span>Tehran, Iran</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope contact-icon"></i>
+                                <span>alimartin8203@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="contact-item">
+                                <i class="fas fa-phone contact-icon"></i>
+                                <span>+98 921 602 6354</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    <p class="mb-3">© @DateTime.Now.Year Ali Martin. All rights reserved.</p>
+                    <p class="small text-muted">Made with <i class="fas fa-heart text-danger"></i> and ASP.NET Core</p>
+                </div>
+
+                <!-- Back to Top Button -->
+                <button class="footer-back-to-top" id="footerBackToTop" aria-label="Back to top">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .footer {
+            position: relative;
+            background: linear-gradient(135deg, #0a0a2e 0%, #1a1a4a 100%);
+            color: white;
+            padding-top: 120px;
+            overflow: hidden;
+            min-height: 500px;
+            border-top: 1px solid rgba(78, 84, 200, 0.3);
+        }
+
+        /* Galactic Background */
+        .footer-galaxy {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .footer-stars, .footer-stars2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+            .footer-stars::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.8), transparent), radial-gradient(1px 1px at 20% 50%, rgba(255, 255, 255, 0.6), transparent), radial-gradient(1px 1px at 30% 80%, rgba(255, 255, 255, 0.7), transparent), radial-gradient(1px 1px at 40% 30%, rgba(255, 255, 255, 0.5), transparent), radial-gradient(1px 1px at 60% 60%, rgba(255, 255, 255, 0.9), transparent), radial-gradient(1px 1px at 70% 40%, rgba(255, 255, 255, 0.6), transparent), radial-gradient(1px 1px at 80% 70%, rgba(255, 255, 255, 0.7), transparent), radial-gradient(1px 1px at 90% 10%, rgba(255, 255, 255, 0.5), transparent);
+                background-repeat: repeat;
+                background-size: 200px 200px;
+                animation: footer-stars 100s linear infinite;
+            }
+
+            .footer-stars2::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: radial-gradient(1px 1px at 15% 40%, rgba(143, 148, 251, 0.5), transparent), radial-gradient(1px 1px at 35% 70%, rgba(78, 84, 200, 0.6), transparent), radial-gradient(1px 1px at 55% 20%, rgba(143, 148, 251, 0.4), transparent), radial-gradient(1px 1px at 75% 90%, rgba(78, 84, 200, 0.5), transparent);
+                background-repeat: repeat;
+                background-size: 300px 300px;
+                animation: footer-stars 150s linear infinite reverse;
+                opacity: 0.5;
+            }
+
+        @@keyframes footer-stars {
+            from
+
+        {
+            transform: translateY(0);
+        }
+
+        to {
+            transform: translateY(-200px);
+        }
+
+        }
+
+        .footer-nebula {
+            position: absolute;
+            bottom: 20%;
+            right: 10%;
+            width: 300px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(78, 84, 200, 0.1) 0%, transparent 70%);
+            filter: blur(30px);
+            animation: footer-nebula 20s ease-in-out infinite;
+        }
+
+        @@keyframes footer-nebula {
+            0%, 100%
+
+        {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.3;
+        }
+
+        50% {
+            transform: translate(-20px, 20px) scale(1.1);
+            opacity: 0.5;
+        }
+
+        }
+
+        .footer-shooting-star {
+            position: absolute;
+            top: 20%;
+            left: -100px;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: footer-shooting-star 20s linear infinite;
+        }
+
+        @@keyframes footer-shooting-star {
+            0%
+
+        {
+            transform: translateX(-100px) translateY(0) scale(1);
+            opacity: 0;
+        }
+
+        10% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(calc(100vw + 100px)) translateY(100px) scale(0);
+            opacity: 0;
+        }
+
+        }
+
+        
+
+        @@keyframes waveMove {
+            0%
+
+        {
+            transform: translateX(0) scaleY(1);
+        }
+
+        50% {
+            transform: translateX(-25%) scaleY(0.95);
+        }
+
+        100% {
+            transform: translateX(-50%) scaleY(1);
+        }
+
+        }
+
+        /* Footer Content */
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            padding-bottom: 60px;
+        }
+
+        /* Brand */
+        .footer-brand .brand-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-tagline {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        /* Links */
+        .footer-links .row {
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .footer-link::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                transition: 0.5s;
+            }
+
+            .footer-link:hover {
+                color: white;
+                background: rgba(78, 84, 200, 0.2);
+                transform: translateY(-2px);
+            }
+
+                .footer-link:hover::before {
+                    left: 100%;
+                }
+
+        /* Social Icons */
+        .social-title {
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            text-decoration: none;
+            position: relative;
+        }
+
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .icon-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(78, 84, 200, 0.3), rgba(143, 148, 251, 0.3));
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-icon:hover .icon-wrapper {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(78, 84, 200, 0.4);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .social-icon:hover .icon-glow {
+            opacity: 1;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Contact Info */
+        .footer-contact {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+        }
+
+            .contact-item:hover {
+                color: white;
+                background: rgba(78, 84, 200, 0.1);
+                transform: translateY(-2px);
+            }
+
+        .contact-icon {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            color: var(--secondary-color);
+            transform: scale(1.2);
+        }
+
+        /* Copyright */
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+            .copyright .fa-heart {
+                animation: heartbeat 1.5s infinite;
+            }
+
+        @@keyframes heartbeat {
+            0%, 100%
+
+        {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        }
+
+        /* Back to Top Button */
+        .footer-back-to-top {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(78, 84, 200, 0.4);
+            z-index: 3;
+        }
+
+            .footer-back-to-top:hover {
+                transform: translateY(-5px) scale(1.1);
+                box-shadow: 0 10px 30px rgba(78, 84, 200, 0.6);
+            }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .footer
+
+        {
+            padding-top: 100px;
+        }
+        
+
+        .footer-brand .brand-name {
+            font-size: 2rem;
+        }
+
+        .footer-links .row {
+            gap: 1rem;
+        }
+
+        .footer-link {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            gap: 1rem;
+        }
+
+        .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+
+        .contact-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+        }
+
+        .footer-back-to-top {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        }
+
+        @@media (max-width: 576px) {
+            .footer-links .row
+
+        {
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-link {
+            padding: 0.3rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .social-icons {
+            gap: 0.75rem;
+        }
+
+        .icon-wrapper {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopBtn = document.getElementById('footerBackToTop');
+
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.style.opacity = '1';
+                    backToTopBtn.style.visibility = 'visible';
+                } else {
+                    backToTopBtn.style.opacity = '0';
+                    backToTopBtn.style.visibility = 'hidden';
+                }
+            });
+        });
+    </script>
         <!-- Portfolio Modal -->
         <div class="modal fade" id="portfolioModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">

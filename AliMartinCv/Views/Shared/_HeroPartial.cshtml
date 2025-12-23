@@ -1,19 +1,756 @@
 ﻿<section id="home" class="hero-section d-flex align-items-center" data-observe>
-    <div class="container">
+    <!-- Galactic Background Elements -->
+    <div class="galactic-background">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+        <div class="nebula"></div>
+        <div class="pulsar"></div>
+        <div class="shooting-stars"></div>
+    </div>
+
+    <div class="container position-relative z-2">
         <div class="row align-items-center">
             <div class="col-lg-6 hero-content">
-                <h1 class="hero-title animate__animated animate__fadeInDown">Hi, I'm <span class="text-warning">Ali Martin</span></h1>
-                <p class="hero-subtitle animate__animated animate__fadeInDown animate__delay-1s" style="height: 30px;">
+                <div class="hero-title-container">
+                    <h1 class="hero-title animate__animated animate__fadeInDown">
+                        Hi, I'm <span class="text-gradient">Ali Martin</span>
+                    </h1>
+                    <div class="title-decoration"></div>
+                </div>
+
+                <p class="hero-subtitle animate__animated animate__fadeInDown animate__delay-1s">
                     <span id="typed-text"></span>
+                    <span class="cursor">|</span>
                 </p>
-                <div class="animate__animated animate__fadeInUp animate__delay-2s">
-                    <a href="#contact" class="btn btn-custom me-3">Hire Me</a>
-                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#portfolioModal">View Portfolio</button>
+
+                <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
+                    @* <a href="#contact" class="btn btn-glow me-3">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Hire Me
+                    </a> *@
+                    <button class="btn btn-outline-glow" data-bs-toggle="modal" data-bs-target="#portfolioModal">
+                        <i class="fas fa-eye me-2"></i>
+                        View Portfolio
+                    </button>
+                </div>
+
+                <div class="hero-stats mt-5 animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="d-flex gap-4">
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Projects Done</div>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Teaching Hours</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="col-lg-6 d-none d-lg-block animate__animated animate__fadeInRight animate__delay-1s">
-                <img src="/img/AliMartin.png" alt="AliMartin-Profile" class="img-fluid glass-card" style="width: 80%;">
+                <div class="hero-image-container">
+                    <div class="hero-image-wrapper">
+                        <img src="/img/AliMartin.png" alt="Ali Martin - Full Stack Developer" class="hero-image">
+                        <div class="image-glow"></div>
+                        <div class="floating-orb orb-1"></div>
+                        <div class="floating-orb orb-2"></div>
+                        <div class="floating-orb orb-3"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator animate__animated animate__fadeIn animate__delay-4s">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+        <div class="arrows">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
 </section>
+
+<style>
+    .hero-section {
+        position: relative;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0a0a2e 0%, #1a1a4a 100%);
+        overflow: hidden;
+        padding-top: 80px;
+    }
+
+    /* Galactic Background */
+    .galactic-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    .stars, .stars2, .stars3 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+
+        .stars::before, .stars2::before, .stars3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, #fff, transparent), radial-gradient(2px 2px at 50px 160px, #ddd, transparent), radial-gradient(2px 2px at 90px 40px, #fff, transparent), radial-gradient(2px 2px at 130px 80px, #fff, transparent), radial-gradient(2px 2px at 160px 120px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        .stars::before {
+            animation: stars 50s linear infinite;
+        }
+
+        .stars2::before {
+            background-size: 300px 300px;
+            animation: stars 100s linear infinite;
+            opacity: 0.5;
+        }
+
+        .stars3::before {
+            background-size: 400px 400px;
+            animation: stars 150s linear infinite;
+            opacity: 0.3;
+        }
+
+    @@keyframes stars {
+        from
+
+    {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-200px);
+    }
+
+    }
+
+    .nebula {
+        position: absolute;
+        top: 30%;
+        left: 20%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(78, 84, 200, 0.1) 0%, transparent 70%);
+        filter: blur(40px);
+        animation: float 20s ease-in-out infinite;
+    }
+
+    .pulsar {
+        position: absolute;
+        top: 60%;
+        right: 15%;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(143, 148, 251, 0.15) 0%, transparent 70%);
+        filter: blur(30px);
+        animation: pulse 4s ease-in-out infinite;
+    }
+
+    @@keyframes float {
+        0%, 100%
+
+    {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-30px, 30px) scale(1.1);
+    }
+
+    }
+
+    @@keyframes pulse {
+        0%, 100%
+
+    {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+
+    }
+
+    .shooting-stars {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+        .shooting-stars::before,
+        .shooting-stars::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .shooting-stars::before {
+            animation: shooting-star 10s linear infinite;
+        }
+
+        .shooting-stars::after {
+            animation: shooting-star 15s linear infinite 5s;
+        }
+
+    @@keyframes shooting-star {
+        0%
+
+    {
+        transform: translateX(-100px) translateY(-100px) scale(1);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px)) scale(0);
+        opacity: 0;
+    }
+
+    }
+
+    /* Hero Content */
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title-container {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 4px 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .title-decoration {
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        border-radius: 2px;
+        margin-top: 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .title-decoration::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: shine 3s infinite;
+        }
+
+    @@keyframes shine {
+        0%
+
+    {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1.25rem, 2vw, 1.75rem);
+        font-weight: 300;
+        margin-bottom: 2.5rem;
+        opacity: 0.9;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        color: #dddddd;
+    }
+
+    .cursor {
+        animation: blink 1s infinite;
+        color: var(--primary-color);
+        margin-left: 2px;
+    }
+
+    @@keyframes blink {
+        0%, 100%
+
+    {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    }
+
+    /* Buttons */
+    .hero-buttons {
+        display: flex!important;
+        gap: 1rem!important;
+        flex-wrap: wrap!important;
+    }
+    .hero-buttons .btn-outline-glow {
+        position: relative;
+        z-index: 100;
+    }
+
+    .btn-glow {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border: none;
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(78, 84, 200, 0.4);
+    }
+
+        .btn-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(78, 84, 200, 0.6);
+            color: white;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+    .btn-outline-glow {
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-outline-glow:hover {
+            background: rgba(78, 84, 200, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(78, 84, 200, 0.3);
+            color: white;
+        }
+
+    /* Stats */
+    .hero-stats {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 2rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 0.25rem;
+    }
+
+    .stat-divider {
+        width: 1px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hero Image */
+    .hero-image-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-image-wrapper {
+        position: relative;
+        width: 400px;
+        height: 400px;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 0 60px rgba(78, 84, 200, 0.4), inset 0 0 60px rgba(255, 255, 255, 0.1);
+        animation: float-image 6s ease-in-out infinite;
+    }
+
+    @@keyframes float-image {
+        0%, 100%
+
+    {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    }
+
+    .image-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 110%;
+        height: 110%;
+        background: radial-gradient(circle, rgba(78, 84, 200, 0.2) 0%, transparent 70%);
+        filter: blur(20px);
+        border-radius: 50%;
+        animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    @@keyframes pulse-glow {
+        0%, 100%
+
+    {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    }
+
+    .floating-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(15px);
+        z-index: 1;
+    }
+
+    .orb-1 {
+        width: 80px;
+        height: 80px;
+        background: rgba(78, 84, 200, 0.3);
+        top: 10%;
+        right: 10%;
+        animation: orbit-1 20s linear infinite;
+    }
+
+    .orb-2 {
+        width: 60px;
+        height: 60px;
+        background: rgba(143, 148, 251, 0.2);
+        bottom: 20%;
+        left: 5%;
+        animation: orbit-2 25s linear infinite reverse;
+    }
+
+    .orb-3 {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        top: 50%;
+        right: 5%;
+        animation: orbit-3 15s linear infinite;
+    }
+
+    @@keyframes orbit-1 {
+        0%
+
+    {
+        transform: rotate(0deg) translateX(150px) rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg) translateX(150px) rotate(-360deg);
+    }
+
+    }
+
+    @@keyframes orbit-2 {
+        0%
+
+    {
+        transform: rotate(0deg) translateX(100px) rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg) translateX(100px) rotate(-360deg);
+    }
+
+    }
+
+    @@keyframes orbit-3 {
+        0%
+
+    {
+        transform: rotate(0deg) translateX(80px) rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg) translateX(80px) rotate(-360deg);
+    }
+
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mouse {
+        width: 30px;
+        height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .wheel {
+        width: 4px;
+        height: 10px;
+        background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+        border-radius: 2px;
+        animation: scroll-wheel 2s infinite;
+    }
+
+    @@keyframes scroll-wheel {
+        0%
+
+    {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    }
+
+    .arrows {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .arrows span {
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+            border-right: 2px solid rgba(255, 255, 255, 0.5);
+            transform: rotate(45deg);
+            margin: -5px;
+            animation: scroll-arrow 2s infinite;
+        }
+
+            .arrows span:nth-child(2) {
+                animation-delay: -0.2s;
+            }
+
+            .arrows span:nth-child(3) {
+                animation-delay: -0.4s;
+            }
+
+    @@keyframes scroll-arrow {
+        0%
+
+    {
+        opacity: 0;
+        transform: rotate(45deg) translate(-10px, -10px);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(10px, 10px);
+    }
+
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .hero-image-wrapper
+
+    {
+        width: 300px;
+        height: 300px;
+    }
+
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .stat-divider {
+        display: none;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .hero-section
+
+    {
+        text-align: center;
+        padding-top: 100px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .hero-image-wrapper {
+        width: 250px;
+        height: 250px;
+        margin: 2rem auto 0;
+    }
+
+    .hero-stats .d-flex {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .stat-divider {
+        display: block;
+        width: 100px;
+        height: 1px;
+        margin: 0 auto;
+    }
+
+    }
+
+    @@media (max-width: 576px) {
+        .hero-buttons
+
+    {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-glow,
+    .btn-outline-glow {
+        width: 100%;
+        max-width: 250px;
+        margin-bottom: 1rem;
+    }
+
+    .hero-image-wrapper {
+        width: 200px;
+        height: 200px;
+    }
+
+    }
+</style>

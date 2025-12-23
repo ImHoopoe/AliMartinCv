@@ -1,53 +1,1035 @@
 ﻿@model List<AliMartinCv.Core.DTOS.BlogViewModels.ShowBlogsViewModel>
 
-<section id="blogs" class="blogs-section section py-5 p-5 mt-2" data-observe aria-labelledby="blogs-title">
-    <div class="container">
-        <h2 id="blogs-title" class="text-center section-title mb-4">Latest Blog Posts</h2>
+<!-- Galactic Background -->
+<div class="blogs-galaxy">
+    <div class="blogs-stars"></div>
+    <div class="blogs-stars2"></div>
+    <div class="blogs-nebula"></div>
+    <div class="blogs-nebula2"></div>
+    <div class="blogs-comet"></div>
+</div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            @foreach (var blog in Model)
+<section id="blogs" class="blogs-section section py-5" data-observe>
+    <div class="container position-relative z-2">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Latest Articles</h2>
+            @if (!string.IsNullOrEmpty(ViewBag.Category))
             {
-                <div class="col">
-                    <article class="glass-card p-3 blog-item h-100 d-flex flex-column">
-                        <img src="/Blog/Thumbs/@blog.BlogThumbnail"
-                             class="img-fluid rounded mb-3 w-100"
-                             alt="@blog.BlogTitle thumbnail"
-                             loading="lazy">
-
-                        <h5 class="card-title text-truncate">@blog.BlogTitle</h5>
-                        <p class="card-text text-truncate">@blog.BlogShortDescription</p>
-
-                        <!-- بخش زمان انتشار و بازدید -->
-                        <div class="blog-meta d-flex justify-content-between align-items-center mb-3 text-muted small">
-                            <span>
-                                <i class="far fa-calendar-alt me-1" aria-hidden="true"></i>
-                                @blog.BlogPublishDate.ToString("MMM dd, yyyy")
-                            </span>
-                            <span>
-                                <i class="far fa-eye me-1" aria-hidden="true"></i>
-                                @blog.Visit Views
-                            </span>
-                        </div>
-
-                        <a href="/blogs/Blog/@blog.BlogTitle.Replace(" ", "-")"
-                           class="btn btn-sm btn-outline-primary mt-auto"
-                           aria-label="Read more about @blog.BlogTitle">
-                            Read More
-                        </a>
-                    </article>
-                </div>
+                <p class="section-subtitle mx-auto">Category: @ViewBag.Category</p>
+            }
+            else
+            {
+                <p class="section-subtitle mx-auto">Insights, tutorials, and thoughts on modern web development</p>
             }
         </div>
 
-        <div class="row justify-content-start mt-5">
-            <div class="col-auto">
-                <a href="/blogs"
-                   class="btn btn-primary btn-lg d-inline-flex align-items-center"
-                   aria-label="View all blog posts">
-                    All Blogs
-                    <i class="fas fa-arrow-right ms-2 text-white" aria-hidden="true"></i>
+        @if (Model.Any())
+        {
+            <!-- Category Filter -->
+            <div class="cosmic-filter mb-5">
+                <div class="filter-orbits">
+                    <div class="orbit orbit-1"></div>
+                    <div class="orbit orbit-2"></div>
+                    <div class="orbit orbit-3"></div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    <a href="/blogs" class="cosmic-filter-btn @(string.IsNullOrEmpty(ViewBag.Category) ? "active" : "")" data-filter="all">
+                        <span class="filter-icon">🌌</span> All Posts
+                    </a>
+                    <a href="/blogs?category=technology" class="cosmic-filter-btn @(ViewBag.Category == "technology" ? "active" : "")" data-filter="technology">
+                        <span class="filter-icon">🚀</span> Technology
+                    </a>
+                    <a href="/blogs?category=webdev" class="cosmic-filter-btn @(ViewBag.Category == "webdev" ? "active" : "")" data-filter="webdev">
+                        <span class="filter-icon">🌐</span> Web Dev
+                    </a>
+                    <a href="/blogs?category=programming" class="cosmic-filter-btn @(ViewBag.Category == "programming" ? "active" : "")" data-filter="programming">
+                        <span class="filter-icon">💻</span> Programming
+                    </a>
+                    <a href="/blogs?category=aspnet" class="cosmic-filter-btn @(ViewBag.Category == "aspnet" ? "active" : "")" data-filter="aspnet">
+                        <span class="filter-icon">⚡</span> ASP.NET
+                    </a>
+                </div>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                @foreach (var blog in Model)
+                {
+                    var category = !string.IsNullOrEmpty(blog.BlogSubGroupTitle) ? blog.BlogSubGroupTitle : "Technology";
+                    var readingTime = blog.BlogDescription?.Length > 0 ? $"{(blog.BlogDescription.Length / 1500)} min read" : "5 min read";
+                    var slug = blog.BlogSubGroupTitle == "null"; blog.BlogTitle?.ToLower().Replace(" ", "-").Replace(".", "").Replace(",", "");
+
+                    <div class="col" data-category="@category.ToLower()">
+                        <article class="cosmic-blog-card h-100">
+                            <div class="blog-card-inner">
+                                <!-- Card Background -->
+                                <div class="card-bg-glow"></div>
+
+                                <!-- Blog Image -->
+                                <div class="blog-image-wrapper">
+                                    @if (!string.IsNullOrEmpty(blog.BlogThumbnail))
+                                    {
+                                        <img src="/Blog/Thumbs/@blog.BlogThumbnail"
+                                             class="blog-image cosmic-image"
+                                             alt="@blog.BlogTitle"
+                                             loading="lazy">
+                                        <div class="image-hover-glow"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="blog-image-placeholder">
+                                            <i class="fas fa-newspaper"></i>
+                                            <div class="placeholder-glow"></div>
+                                        </div>
+                                    }
+
+                                    <!-- Category Badge -->
+                                    <div class="cosmic-category">
+                                        <span class="category-icon">📝</span>
+                                        <span class="category-text">@category</span>
+                                    </div>
+
+                                    <!-- Time Indicator -->
+                                    <div class="time-indicator">
+                                        <div class="time-dot"></div>
+                                        <span>@blog.BlogPublishDate.ToString("MMM dd")</span>
+                                    </div>
+                                </div>
+
+                                <!-- Blog Content -->
+                                <div class="blog-content p-4">
+                                    <!-- Meta Information -->
+                                    <div class="blog-meta d-flex align-items-center justify-content-between mb-3">
+                                        <div class="meta-left">
+                                            <span class="meta-item">
+                                                <i class="fas fa-calendar-star"></i>
+                                                @blog.BlogPublishDate.ToString("MMM dd, yyyy")
+                                            </span>
+                                            <span class="meta-divider">•</span>
+                                            <span class="meta-item">
+                                                <i class="fas fa-hourglass-half"></i>
+                                                @readingTime
+                                            </span>
+                                        </div>
+                                        <span class="meta-item">
+                                            <i class="fas fa-eye"></i>
+                                            @blog.Visit
+                                        </span>
+                                    </div>
+
+                                    <!-- Title -->
+                                    <h3 class="blog-title h5 mb-3">
+                                        <span class="title-glow">@blog.BlogTitle</span>
+                                    </h3>
+
+                                    <!-- Description -->
+                                    <p class="blog-excerpt mb-4">@blog.BlogShortDescription</p>
+
+                                    <!-- Read More Button -->
+                                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                                        <a href="/blogs/Blog/@slug" class="cosmic-read-more">
+                                            <span class="read-text">Read More</span>
+                                            <span class="read-icon">
+                                                <i class="fas fa-rocket"></i>
+                                            </span>
+                                        </a>
+                                        <div class="blog-stats">
+                                            <span class="stat-item">
+                                                <i class="fas fa-fire"></i>
+                                                <span class="stat-count">@blog.Visit</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card Footer Particles -->
+                                <div class="card-particles">
+                                    <div class="particle"></div>
+                                    <div class="particle"></div>
+                                    <div class="particle"></div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                }
+            </div>
+
+            <!-- View All Button -->
+            <div class="text-center mt-5 pt-5">
+                <a href="/blogs" class="cosmic-btn">
+                    <span class="btn-glow"></span>
+                    <span class="btn-text">
+                        Explore All Articles
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </span>
+                    <span class="btn-stars">✨</span>
                 </a>
             </div>
-        </div>
+        }
+        else
+        {
+            <!-- No Articles Found -->
+            <div class="text-center py-5">
+                <div class="cosmic-empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-newspaper"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3 class="mt-4">No Articles Found</h3>
+                    <p class="text-muted mb-4">The cosmos is still writing...</p>
+                    <a href="/blogs" class="cosmic-btn-sm">
+                        Back to All Posts
+                    </a>
+                </div>
+            </div>
+        }
     </div>
 </section>
+
+<style>
+    .blogs-section {
+        position: relative;
+        background: linear-gradient(135deg, #0a0a2e 0%, #1a1a4a 100%);
+        overflow: hidden;
+        min-height: 100vh;
+    }
+
+    /* Galactic Background */
+    .blogs-galaxy {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    .blogs-stars, .blogs-stars2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+
+        .blogs-stars::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.8), transparent), radial-gradient(1px 1px at 20% 50%, rgba(255, 255, 255, 0.6), transparent), radial-gradient(1px 1px at 30% 80%, rgba(255, 255, 255, 0.7), transparent), radial-gradient(1px 1px at 40% 30%, rgba(255, 255, 255, 0.5), transparent), radial-gradient(1px 1px at 50% 60%, rgba(255, 255, 255, 0.9), transparent), radial-gradient(1px 1px at 60% 10%, rgba(255, 255, 255, 0.6), transparent), radial-gradient(1px 1px at 70% 40%, rgba(255, 255, 255, 0.7), transparent), radial-gradient(1px 1px at 80% 90%, rgba(255, 255, 255, 0.5), transparent), radial-gradient(1px 1px at 90% 70%, rgba(255, 255, 255, 0.6), transparent);
+            background-repeat: repeat;
+            background-size: 300px 300px;
+            animation: blog-stars-float 120s linear infinite;
+        }
+
+        .blogs-stars2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(1px 1px at 15% 40%, rgba(143, 148, 251, 0.4), transparent), radial-gradient(1px 1px at 35% 70%, rgba(78, 84, 200, 0.5), transparent), radial-gradient(1px 1px at 55% 20%, rgba(143, 148, 251, 0.3), transparent), radial-gradient(1px 1px at 75% 90%, rgba(78, 84, 200, 0.4), transparent), radial-gradient(1px 1px at 95% 50%, rgba(143, 148, 251, 0.5), transparent);
+            background-repeat: repeat;
+            background-size: 400px 400px;
+            animation: blog-stars-float 180s linear infinite reverse;
+            opacity: 0.5;
+        }
+
+    @@keyframes blog-stars-float {
+        from
+
+    {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-400px);
+    }
+
+    }
+
+    .blogs-nebula, .blogs-nebula2 {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(50px);
+        animation-duration: 40s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+    }
+
+    .blogs-nebula {
+        top: 10%;
+        left: 5%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(78, 84, 200, 0.1) 0%, transparent 70%);
+        animation-name: blog-nebula-drift-1;
+    }
+
+    .blogs-nebula2 {
+        bottom: 10%;
+        right: 10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(143, 148, 251, 0.08) 0%, transparent 70%);
+        animation-name: blog-nebula-drift-2;
+    }
+
+    @@keyframes blog-nebula-drift-1 {
+        0%, 100%
+
+    {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.2;
+    }
+
+    50% {
+        transform: translate(-50px, 30px) scale(1.3);
+        opacity: 0.4;
+    }
+
+    }
+
+    @@keyframes blog-nebula-drift-2 {
+        0%, 100%
+
+    {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.15;
+    }
+
+    50% {
+        transform: translate(40px, -20px) scale(1.2);
+        opacity: 0.3;
+    }
+
+    }
+
+    .blogs-comet {
+        position: absolute;
+        top: 30%;
+        right: -100px;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+        animation: blog-comet 25s linear infinite;
+    }
+
+    @@keyframes blog-comet {
+        0%
+
+    {
+        transform: translateX(-100px) translateY(0) scale(1);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 200px)) translateY(200px) scale(0);
+        opacity: 0;
+    }
+
+    }
+
+    /* Section Title */
+    .section-title {
+        background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-weight: 700;
+        text-shadow: 0 4px 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .section-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.25rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Cosmic Filter */
+    .cosmic-filter {
+        position: relative;
+        padding: 2rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 3rem;
+    }
+
+    .filter-orbits {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .orbit {
+        position: absolute;
+        border: 1px solid rgba(78, 84, 200, 0.3);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .orbit-1 {
+        width: 100%;
+        height: 100%;
+        animation: orbit-spin 20s linear infinite;
+    }
+
+    .orbit-2 {
+        width: 80%;
+        height: 80%;
+        animation: orbit-spin 25s linear infinite reverse;
+    }
+
+    .orbit-3 {
+        width: 60%;
+        height: 60%;
+        animation: orbit-spin 30s linear infinite;
+    }
+
+    @@keyframes orbit-spin {
+        from
+
+    {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+
+    }
+
+    .cosmic-filter-btn {
+        padding: 0.75rem 1.5rem;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.7);
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.4s ease;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .cosmic-filter-btn:hover,
+        .cosmic-filter-btn.active {
+            background: linear-gradient(135deg, rgba(78, 84, 200, 0.3), rgba(143, 148, 251, 0.3));
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(78, 84, 200, 0.3);
+        }
+
+        .cosmic-filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 10px 30px rgba(78, 84, 200, 0.5);
+        }
+
+    .filter-icon {
+        font-size: 1.2rem;
+    }
+
+    /* Cosmic Blog Card */
+    .cosmic-blog-card {
+        position: relative;
+        perspective: 1000px;
+        height: 100%;
+    }
+
+    .blog-card-inner {
+        position: relative;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .cosmic-blog-card:hover .blog-card-inner {
+        transform: translateY(-15px) rotateX(5deg);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 60px rgba(78, 84, 200, 0.3);
+        border-color: rgba(78, 84, 200, 0.5);
+    }
+
+    .card-bg-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 0%, rgba(78, 84, 200, 0.1), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .cosmic-blog-card:hover .card-bg-glow {
+        opacity: 1;
+    }
+
+    /* Blog Image */
+    .blog-image-wrapper {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .cosmic-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+
+    .cosmic-blog-card:hover .cosmic-image {
+        transform: scale(1.1);
+    }
+
+    .image-hover-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent, rgba(78, 84, 200, 0.2));
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .cosmic-blog-card:hover .image-hover-glow {
+        opacity: 1;
+    }
+
+    .blog-image-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(78, 84, 200, 0.3), rgba(143, 148, 251, 0.3));
+        color: white;
+        font-size: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .placeholder-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: placeholder-shine 2s infinite;
+    }
+
+    @@keyframes placeholder-shine {
+        0%
+
+    {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+
+    }
+
+    /* Cosmic Category */
+    .cosmic-category {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        color: var(--primary-color);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+    }
+
+    .category-icon {
+        font-size: 0.9rem;
+    }
+
+    /* Time Indicator */
+    .time-indicator {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        backdrop-filter: blur(5px);
+        z-index: 2;
+    }
+
+    .time-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0%, 100%
+
+    {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+
+    }
+
+    /* Blog Content */
+    .blog-content {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 200px);
+        padding: 1.5rem;
+    }
+
+    .blog-meta {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.85rem;
+    }
+
+    .meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .meta-divider {
+        color: rgba(255, 255, 255, 0.3);
+        margin: 0 0.5rem;
+    }
+
+    .blog-title {
+        font-weight: 600;
+        line-height: 1.4;
+        color: white;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 3em;
+    }
+
+    .title-glow {
+        background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .blog-excerpt {
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex: 1;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Read More Button */
+    .cosmic-read-more {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        background: rgba(78, 84, 200, 0.1);
+        border: 1px solid rgba(78, 84, 200, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .cosmic-read-more:hover {
+            background: rgba(78, 84, 200, 0.2);
+            color: var(--secondary-color);
+            transform: translateX(5px);
+            border-color: var(--secondary-color);
+        }
+
+    .read-icon {
+        transition: transform 0.3s ease;
+    }
+
+    .cosmic-read-more:hover .read-icon {
+        transform: translateX(5px);
+    }
+
+    /* Blog Stats */
+    .blog-stats {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .stat-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+    }
+
+    .stat-count {
+        font-weight: 600;
+    }
+
+    /* Card Particles */
+    .card-particles {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+    }
+
+    .cosmic-blog-card:hover .particle:nth-child(1) {
+        animation: particle-float 3s 0.1s infinite;
+    }
+
+    .cosmic-blog-card:hover .particle:nth-child(2) {
+        animation: particle-float 3s 0.3s infinite;
+    }
+
+    .cosmic-blog-card:hover .particle:nth-child(3) {
+        animation: particle-float 3s 0.5s infinite;
+    }
+
+    @@keyframes particle-float {
+        0%
+
+    {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--tx), var(--ty));
+        opacity: 0;
+    }
+
+    }
+
+    /* Cosmic Button */
+    .cosmic-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 1.25rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        box-shadow: 0 15px 35px rgba(78, 84, 200, 0.4);
+    }
+
+        .cosmic-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(78, 84, 200, 0.6);
+            color: white;
+        }
+
+    .btn-glow {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: 0.5s;
+    }
+
+    .cosmic-btn:hover .btn-glow {
+        left: 100%;
+    }
+
+    .btn-stars {
+        font-size: 1.2rem;
+    }
+
+    /* Empty State */
+    .cosmic-empty-state {
+        padding: 4rem 2rem;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .empty-state-icon {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .empty-state-icon i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            z-index: 2;
+        }
+
+    .icon-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(78, 84, 200, 0.3), transparent 70%);
+        border-radius: 50%;
+        animation: empty-state-pulse 2s infinite;
+    }
+
+    @@keyframes empty-state-pulse {
+        0%, 100%
+
+    {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+
+    }
+
+    .cosmic-btn-sm {
+        display: inline-block;
+        background: rgba(78, 84, 200, 0.2);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        border: 1px solid rgba(78, 84, 200, 0.4);
+        transition: all 0.3s ease;
+    }
+
+        .cosmic-btn-sm:hover {
+            background: rgba(78, 84, 200, 0.4);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+    /* Responsive Design */
+    @@media (max-width: 992px) {
+        .cosmic-filter {
+            padding: 1.5rem;
+        }
+
+        .blog-image-wrapper {
+            height: 180px;
+        }
+
+        .blog-content {
+            padding: 1.25rem;
+            height: calc(100% - 180px);
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .cosmic-filter {
+            padding: 1rem;
+        }
+
+        .cosmic-filter-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .blog-image-wrapper {
+            height: 160px;
+        }
+
+        .blog-content {
+            padding: 1rem;
+            height: calc(100% - 160px);
+        }
+
+        .cosmic-btn {
+            padding: 1rem 2rem;
+            font-size: 0.95rem;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .cosmic-filter {
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cosmic-filter-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .row-cols-md-2 {
+            grid-template-columns: 1fr !important;
+        }
+
+        .blog-excerpt {
+            -webkit-line-clamp: 2;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Particle animation
+        const blogCards = document.querySelectorAll('.cosmic-blog-card');
+
+        blogCards.forEach(card => {
+            const particles = card.querySelectorAll('.particle');
+
+            particles.forEach((particle, index) => {
+                const tx = Math.random() * 100 - 50;
+                const ty = Math.random() * -100 - 50;
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+            });
+
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.cosmic-filter-btn');
+            const currentCategory = '@ViewBag.Category' || 'all';
+
+            filterButtons.forEach(button => {
+                if (button.getAttribute('data-filter') === currentCategory) {
+                    button.classList.add('active');
+                }
+
+                button.addEventListener('click', function(e) {
+                    if (!this.getAttribute('href') || this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        const filter = this.getAttribute('data-filter');
+
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+
+                        blogCards.forEach(card => {
+                            const category = card.closest('.col').getAttribute('data-category');
+                            if (filter === 'all' || category === filter) {
+                                card.closest('.col').style.display = 'block';
+                                setTimeout(() => {
+                                    card.closest('.col').style.opacity = '1';
+                                    card.closest('.col').style.transform = 'translateY(0)';
+                                }, 100);
+                            } else {
+                                card.closest('.col').style.opacity = '0';
+                                card.closest('.col').style.transform = 'translateY(20px)';
+                                setTimeout(() => {
+                                    card.closest('.col').style.display = 'none';
+                                }, 300);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add scroll animation for cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.col[data-category]').forEach(col => {
+            col.style.opacity = '0';
+            col.style.transform = 'translateY(30px)';
+            col.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(col);
+        });
+    });
+</script>
