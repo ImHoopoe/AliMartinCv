@@ -45,45 +45,61 @@
     </div>
 </section>
 
+<div class="modal fade" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: rgba(10, 10, 46, 0.95); border: 1px solid #4e54c8; backdrop-filter: blur(15px); border-radius: 20px;">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <h5 class="modal-title text-white" id="portfolioModalLabel">
+                    <i class="fas fa-file-pdf me-2 text-primary"></i>My Professional Resume
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-5">
+                <div class="resume-icon-wrap mb-4">
+                    <i class="fas fa-cloud-download-alt fa-4x" style="color: #8f94fb; filter: drop-shadow(0 0 10px rgba(143,148,251,0.5));"></i>
+                </div>
+                <h4 class="text-white mb-3">Download or View Online</h4>
+                <p class="text-white-50 mb-4 px-3">Choose how you'd like to receive my CV. The file is in PDF format and includes my latest projects and skills.</p>
+
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center px-4">
+                    <a href="/resume.pdf" target="_blank" class="btn-space-primary w-100">
+                        <i class="fas fa-eye me-2"></i>View Online
+                    </a>
+                    <a href="/resume.pdf" download="Ali-Martin-CV.pdf" class="btn-space-outline w-100">
+                        <i class="fas fa-download me-2"></i>Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
-    /* تنظیمات اختصاصی تم کهکشانی علی مارتین */
+    /* حفظ دیزاین قبلی + افزودن استایل‌های لازم برای دکمه‌های مودال */
     .hero-section {
         position: relative;
         min-height: 100vh;
-        background: #0a0a2e; /* رنگ پایه سایت شما */
+        background: #0a0a2e;
         overflow: hidden;
         padding: 120px 0 60px;
         display: flex;
         align-items: center;
     }
 
-    /* موتور کهکشان - بهینه شده برای موبایل */
     .galaxy-engine {
         position: absolute;
         inset: 0;
         z-index: 1;
-        pointer-events: none; /* جلوگیری از بلاک کردن کلیک دکمه‌ها */
+        pointer-events: none;
         background: radial-gradient(circle at 50% 50%, #16164d 0%, #0a0a2e 100%);
     }
 
-    .layer-stars, .layer-stars-bright {
+    .layer-stars {
         position: absolute;
         inset: 0;
-        background-repeat: repeat;
-        background-size: 200px 200px;
-    }
-
-    .layer-stars {
         background-image: radial-gradient(1px 1px at 20px 30px, #eee, transparent), radial-gradient(1px 1px at 150px 80px, #fff, transparent);
         opacity: 0.3;
         animation: starSlide 150s linear infinite;
-    }
-
-    .layer-nebula {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 80% 20%, rgba(78, 84, 200, 0.15), transparent 40%), radial-gradient(circle at 20% 80%, rgba(143, 148, 251, 0.1), transparent 40%);
     }
 
     @@keyframes starSlide {
@@ -96,10 +112,9 @@
         }
     }
 
-    /* محتوا */
     .hero-container {
         position: relative;
-        z-index: 10; /* قرارگیری بالای کهکشان */
+        z-index: 10;
     }
 
     .gradient-text {
@@ -129,7 +144,6 @@
         line-height: 1.8;
     }
 
-    /* استایل دکمه‌ها - تضمین کلیک */
     .hero-btns {
         display: flex;
         gap: 15px;
@@ -145,6 +159,7 @@
         text-decoration: none;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         cursor: pointer;
     }
 
@@ -168,58 +183,21 @@
             border-color: #8f94fb;
         }
 
-    /* تصویر پروفایل کهکشانی */
-    .profile-card {
-        position: relative;
-        display: inline-block;
-    }
-
     .profile-main {
         width: min(400px, 85vw);
         border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
         animation: morphing 10s ease-in-out infinite;
         border: 4px solid rgba(255,255,255,0.1);
-        position: relative;
         z-index: 5;
     }
 
     @@keyframes morphing {
-        0% {
+        0%, 100% {
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
         }
 
         50% {
             border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
-        }
-
-        100% {
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-        }
-    }
-
-    /* موبایل بهینه شده */
-    @@media (max-width: 991px) {
-        .hero-section {
-            text-align: center;
-            padding-top: 100px;
-        }
-
-        .hero-description {
-            margin: 0 auto 30px;
-        }
-
-        .hero-btns {
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .btn-space-primary, .btn-space-outline {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .hero-img-part {
-            margin-top: 50px;
         }
     }
 
@@ -232,10 +210,30 @@
             opacity: 0;
         }
     }
+
+    @@media (max-width: 991px) {
+        .hero-section {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .hero-description {
+            margin: 0 auto 30px;
+        }
+
+        .hero-btns {
+            flex-direction: column;
+        }
+
+        .profile-card {
+            padding-top: 2rem;
+        }
+    }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Typing Effect
         const textTarget = document.getElementById('typed-text');
         const jobs = ["Full Stack Developer", "Coding Instructor", ".NET Specialist", "AI Enthusiast"];
         let jobIdx = 0, charIdx = 0, isDeleting = false;
