@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AliMartinCv.Controllers
 {
-    [ProfileStatusChecker("/parents/Home/StudentInformation")]
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

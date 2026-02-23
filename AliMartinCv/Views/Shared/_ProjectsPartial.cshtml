@@ -1,35 +1,259 @@
-﻿<section id="portfolio" class="portfolio-section section" data-observe>
-    <div class="container">
-        <h2 class="text-center section-title">My Projects</h2>
-        <div id="portfolioCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="0" class="active"></button>
+﻿<section id="portfolio" class="portfolio-section" style="margin-top: 0; padding: 80px 0 0 0; background: #0a0a2e;">
+    <div class="container position-relative">
+        <div class="text-center mb-5">
+            <h2 class="section-title-cosmic animate__animated animate__fadeInDown" style="color: white; font-weight: 800; font-size: 2.5rem;">My Projects</h2>
+            <div style="width: 60px; height: 3px; background: #8f94fb; margin: 15px auto;"></div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-5 col-md-6">
+                <div class="glass-project-card">
+                    <div class="project-preview">
+                        <img src="/img/Samro.jpg" alt="Samro" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="project-status">Active</div>
+                        <div class="hover-tools">
+                            <a href="https://samro.ir" target="_blank" class="tool-link"><i class="fas fa-link"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-details-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h3 style="color: white; font-size: 1.4rem; font-weight: 700;">Samro</h3>
+                            <span class="tech-stack-label">.NET Core</span>
+                        </div>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Sports Event Management System</p>
+
+                        <div class="project-footer-actions">
+                            <a href="https://samro.ir" target="_blank" class="btn-visit">Visit Site</a>
+                            <button class="btn-details-trigger" data-bs-toggle="modal" data-bs-target="#modalSamro">
+                                Details <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
+
+            <div class="col-lg-5 col-md-6">
+                <div class="glass-project-card">
+                    <div class="project-preview">
+                        <img src="/img/Avid3d.jpg" alt="Avid3D" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="project-status" style="background: #00f2fe; color: #0a0a2e;">New</div>
+                        <div class="hover-tools">
+                            <a href="https://avid3d.ir" target="_blank" class="tool-link"><i class="fas fa-link"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-details-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h3 style="color: white; font-size: 1.4rem; font-weight: 700;">Avid3D</h3>
+                            <span class="tech-stack-label">UI/UX Design</span>
+                        </div>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">3D Services & Design Platform</p>
+
+                        <div class="project-footer-actions">
+                            <a href="https://avid3d.ir" target="_blank" class="btn-visit">Visit Site</a>
+                            <button class="btn-details-trigger" data-bs-toggle="modal" data-bs-target="#modalAvid3d">
+                                Details <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalSamro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content cosmic-modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-white">Project Details: Samro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-white">
                     <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="portfolio-item">
-                                <img src="/img/Samro.jpg" class="portfolio-img img-fluid" alt="Project 1">
-                                <div class="portfolio-overlay">
-                                    <h3>Samro</h3>
-                                    <p>Sports Event Management System</p>
-                                    <button class="btn btn-light mt-2" data-bs-toggle="modal" data-bs-target="#projectModal1">View Details</button>
-                                </div>
+                        <div class="col-md-6"><img src="/img/Samro.jpg" class="img-fluid rounded-4 shadow" alt=""></div>
+                        <div class="col-md-6">
+                            <h4 style="color: #8f94fb;">Overview</h4>
+                            <p>A comprehensive system for managing sports events, ticketing, and player registration.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary">ASP.NET</span>
+                                <span class="badge bg-info text-dark">SQL Server</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAvid3d" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content cosmic-modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-white">Project Details: Avid3D</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-white">
+                    <div class="row">
+                        <div class="col-md-6"><img src="/img/Avid3d.jpg" class="img-fluid rounded-4 shadow" alt=""></div>
+                        <div class="col-md-6">
+                            <h4 style="color: #8f94fb;">Overview</h4>
+                            <p>Interactive platform for 3D modeling services and creative digital designs.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary">Blazor</span>
+                                <span class="badge bg-warning text-dark">Three.js</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+
+<style>
+    .glass-project-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        padding: 15px;
+        transition: 0.4s;
+        position: relative;
+    }
+
+        .glass-project-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #8f94fb;
+            transform: translateY(-10px);
+        }
+
+    .project-preview {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        height: 220px;
+    }
+
+    .project-status {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: #4e54c8;
+        color: white;
+        padding: 4px 15px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: bold;
+        z-index: 5;
+    }
+
+    .tech-stack-label {
+        font-size: 11px;
+        color: #8f94fb;
+        border: 1px solid rgba(143, 148, 251, 0.3);
+        padding: 2px 10px;
+        border-radius: 50px;
+    }
+
+    .project-footer-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .btn-visit {
+        flex: 2;
+        background: white;
+        color: #0a0a2e;
+        text-decoration: none;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: 0.3s;
+    }
+
+        .btn-visit:hover {
+            background: #8f94fb;
+            color: white;
+        }
+
+    .btn-details-trigger {
+        flex: 1;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        border-radius: 15px;
+        padding: 10px;
+        font-size: 0.85rem;
+        transition: 0.3s;
+    }
+
+        .btn-details-trigger:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: white;
+        }
+
+    .hover-tools {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 10, 46, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: 0.3s;
+        backdrop-filter: blur(3px);
+    }
+
+    .glass-project-card:hover .hover-tools {
+        opacity: 1;
+    }
+
+    .tool-link {
+        width: 40px;
+        height: 40px;
+        background: white;
+        color: #0a0a2e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .cosmic-modal-content {
+        background: #0f0f3d;
+        border: 1px solid rgba(143,148,251,0.3);
+        border-radius: 30px;
+    }
+
+    .modern-blog-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+
+        .modern-blog-card:hover {
+            border-color: #8f94fb;
+            transform: translateY(-5px);
+        }
+
+    .pill-btn {
+        border: none;
+        background: transparent;
+        color: rgba(255,255,255,0.6);
+        padding: 8px 25px;
+        border-radius: 50px;
+        transition: 0.3s;
+        font-size: 0.9rem;
+    }
+
+        .pill-btn.active {
+            background: #8f94fb;
+            color: white;
+        }
+</style>

@@ -1,30 +1,138 @@
-﻿<section class="counter-section section" data-observe>
+﻿<section id="counters" class="counter-section" style="margin-top: 0; padding: 70px 0; background: #0a0a2e; position: relative; border-top: 1px solid rgba(255,255,255,0.05);">
     <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3 col-6 mb-5 mb-md-0">
-                <div class="counter-item">
-                    <div class="counter-number" data-count="23">0</div>
+        <div class="row text-center g-4">
+
+            <div class="col-md-3 col-6">
+                <div class="counter-item-cosmic">
+                    <div class="counter-icon"><i class="fas fa-layer-group"></i></div>
+                    <div class="counter-number" data-target="23">0</div>
                     <div class="counter-text">Projects Completed</div>
                 </div>
             </div>
-            <div class="col-md-3 col-6 mb-5 mb-md-0">
-                <div class="counter-item">
-                    <div class="counter-number" data-count="6700">6236</div>
+
+            <div class="col-md-3 col-6">
+                <div class="counter-item-cosmic">
+                    <div class="counter-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="counter-number" data-target="6700">0</div>
                     <div class="counter-text">Happy Students</div>
                 </div>
             </div>
+
             <div class="col-md-3 col-6">
-                <div class="counter-item">
-                    <div class="counter-number" data-count="6">0</div>
+                <div class="counter-item-cosmic">
+                    <div class="counter-icon"><i class="fas fa-code-branch"></i></div>
+                    <div class="counter-number" data-target="6">0</div>
                     <div class="counter-text">Years Experience</div>
                 </div>
             </div>
+
             <div class="col-md-3 col-6">
-                <div class="counter-item">
-                    <div class="counter-number" data-count="15">0</div>
+                <div class="counter-item-cosmic">
+                    <div class="counter-icon"><i class="fas fa-medal"></i></div>
+                    <div class="counter-number" data-target="15">0</div>
                     <div class="counter-text">Awards Won</div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
+
+<style>
+    /* استایل بصری و چسبندگی */
+    .counter-section {
+        border-bottom: none;
+    }
+
+    .counter-item-cosmic {
+        padding: 35px 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 25px;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(10px);
+    }
+
+        .counter-item-cosmic:hover {
+            transform: translateY(-10px);
+            border-color: #8f94fb;
+            background: rgba(143, 148, 251, 0.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+    .counter-icon {
+        font-size: 2.2rem;
+        color: #8f94fb;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 10px rgba(143, 148, 251, 0.3));
+    }
+
+    .counter-number {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 5px;
+        display: block;
+        text-shadow: 0 0 20px rgba(143, 148, 251, 0.4);
+    }
+
+    .counter-text {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    /* جلوگیری از پرش چیدمان در موبایل */
+    @@media (max-width: 768px) {
+        .counter-number {
+            font-size: 2rem;
+        }
+
+        .counter-item-cosmic {
+            padding: 25px 10px;
+        }
+    }
+</style>
+
+<script>
+    // اسکریپت شمارشگر هوشمند و دقیق
+    document.addEventListener('DOMContentLoaded', () => {
+        const counters = document.querySelectorAll('.counter-number');
+
+        const runCounter = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; // کل زمان انیمیشن به میلی ثانیه (2 ثانیه)
+                const stepTime = 20; // سرعت آپدیت (هر 20 میلی ثانیه)
+                const totalSteps = duration / stepTime;
+                const increment = target / totalSteps;
+
+                let currentCount = 0;
+
+                const timer = setInterval(() => {
+                    currentCount += increment;
+                    if (currentCount >= target) {
+                        counter.innerText = target.toLocaleString(); // فرمت کردن عدد (مثل 6,700)
+                        clearInterval(timer);
+                    } else {
+                        counter.innerText = Math.floor(currentCount).toLocaleString();
+                    }
+                }, stepTime);
+            });
+        };
+
+        // اجرای انیمیشن فقط وقتی سکشن دیده می‌شود
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    runCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        observer.observe(document.querySelector('.counter-section'));
+    });
+</script>

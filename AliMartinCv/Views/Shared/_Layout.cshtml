@@ -4,711 +4,232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ali Martin</title>
-    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts - Poppins (modern font) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="/css/site.css">
-
-</head>
-
-<body data-bs-spy="scroll" data-bs-target=".navbar">
-
-    <div id="loader">
-        <img src="/favicon.ico" alt="Loading…">
-    </div>
-  
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="/">Ali Martin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#skills">Skills</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#experience">Experience</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#portfolio">Portfolio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        @RenderBody()
-
-
-    <footer class="footer">
-        <!-- Galactic Background for Footer -->
-        <div class="footer-galaxy">
-            <div class="footer-stars"></div>
-            <div class="footer-stars2"></div>
-            <div class="footer-nebula"></div>
-            <div class="footer-shooting-star"></div>
-        </div>
-
-        
-
-        <div class="container text-center position-relative z-2">
-            <div class="footer-content">
-                <!-- Brand Logo -->
-                <div class="footer-brand mb-4">
-                    <h3 class="brand-name">Ali Martin</h3>
-                    <p class="brand-tagline">Full Stack Developer & Instructor</p>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="footer-links mb-5">
-                    <div class="row justify-content-center">
-                        <div class="col-auto">
-                            <a href="#home" class="footer-link">Home</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#about" class="footer-link">About</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#skills" class="footer-link">Skills</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#experience" class="footer-link">Experience</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#portfolio" class="footer-link">Portfolio</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#blogs" class="footer-link">Blog</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#contact" class="footer-link">Contact</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Social Icons -->
-                <div class="social-icons-wrapper mb-5">
-                    <h5 class="social-title mb-4">Connect With Me</h5>
-                    <div class="social-icons">
-                        <a href="https://github.com/ImHoopoe" class="social-icon" target="_blank" aria-label="GitHub">
-                            <div class="icon-wrapper">
-                                <i class="fab fa-github"></i>
-                                <div class="icon-glow"></div>
-                            </div>
-                        </a>
-                        <a href="https://www.linkedin.com/in/ali-martin-imhoopoe" class="social-icon" target="_blank" aria-label="LinkedIn">
-                            <div class="icon-wrapper">
-                                <i class="fab fa-linkedin-in"></i>
-                                <div class="icon-glow"></div>
-                            </div>
-                        </a>
-                        <a href="https://x.com/imHoopoe" class="social-icon" target="_blank" aria-label="Twitter">
-                            <div class="icon-wrapper">
-                                <i class="fab fa-twitter"></i>
-                                <div class="icon-glow"></div>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/alimartintheprogrammer/" class="social-icon" target="_blank" aria-label="Instagram">
-                            <div class="icon-wrapper">
-                                <i class="fab fa-instagram"></i>
-                                <div class="icon-glow"></div>
-                            </div>
-                        </a>
-                        <a href="mailto:alimartin8203@gmail.com" class="social-icon" aria-label="Email">
-                            <div class="icon-wrapper">
-                                <i class="fas fa-envelope"></i>
-                                <div class="icon-glow"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="footer-contact mb-5">
-                    <div class="row justify-content-center">
-                        <div class="col-md-4 mb-3">
-                            <div class="contact-item">
-                                <i class="fas fa-map-marker-alt contact-icon"></i>
-                                <span>Tehran, Iran</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope contact-icon"></i>
-                                <span>alimartin8203@gmail.com</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="contact-item">
-                                <i class="fas fa-phone contact-icon"></i>
-                                <span>+98 921 602 6354</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Copyright -->
-                <div class="copyright">
-                    <p class="mb-3">© @DateTime.Now.Year Ali Martin. All rights reserved.</p>
-                    <p class="small text-muted">Made with <i class="fas fa-heart text-danger"></i> and ASP.NET Core</p>
-                </div>
-
-                <!-- Back to Top Button -->
-                <button class="footer-back-to-top" id="footerBackToTop" aria-label="Back to top">
-                    <i class="fas fa-chevron-up"></i>
-                </button>
-            </div>
-        </div>
-    </footer>
 
     <style>
-        .footer {
-            position: relative;
-            background: linear-gradient(135deg, #0a0a2e 0%, #1a1a4a 100%);
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --dark: #0a0a2e;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
             color: white;
-            padding-top: 120px;
-            overflow: hidden;
-            min-height: 500px;
-            border-top: 1px solid rgba(78, 84, 200, 0.3);
+            overflow-x: hidden;
         }
 
-        /* Galactic Background */
-        .footer-galaxy {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        .footer-stars, .footer-stars2 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
         }
 
-            .footer-stars::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.8), transparent), radial-gradient(1px 1px at 20% 50%, rgba(255, 255, 255, 0.6), transparent), radial-gradient(1px 1px at 30% 80%, rgba(255, 255, 255, 0.7), transparent), radial-gradient(1px 1px at 40% 30%, rgba(255, 255, 255, 0.5), transparent), radial-gradient(1px 1px at 60% 60%, rgba(255, 255, 255, 0.9), transparent), radial-gradient(1px 1px at 70% 40%, rgba(255, 255, 255, 0.6), transparent), radial-gradient(1px 1px at 80% 70%, rgba(255, 255, 255, 0.7), transparent), radial-gradient(1px 1px at 90% 10%, rgba(255, 255, 255, 0.5), transparent);
-                background-repeat: repeat;
-                background-size: 200px 200px;
-                animation: footer-stars 100s linear infinite;
-            }
-
-            .footer-stars2::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: radial-gradient(1px 1px at 15% 40%, rgba(143, 148, 251, 0.5), transparent), radial-gradient(1px 1px at 35% 70%, rgba(78, 84, 200, 0.6), transparent), radial-gradient(1px 1px at 55% 20%, rgba(143, 148, 251, 0.4), transparent), radial-gradient(1px 1px at 75% 90%, rgba(78, 84, 200, 0.5), transparent);
-                background-repeat: repeat;
-                background-size: 300px 300px;
-                animation: footer-stars 150s linear infinite reverse;
-                opacity: 0.5;
-            }
-
-        @@keyframes footer-stars {
-            from
-
-        {
-            transform: translateY(0);
-        }
-
-        to {
-            transform: translateY(-200px);
-        }
-
-        }
-
-        .footer-nebula {
-            position: absolute;
-            bottom: 20%;
-            right: 10%;
-            width: 300px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(78, 84, 200, 0.1) 0%, transparent 70%);
-            filter: blur(30px);
-            animation: footer-nebula 20s ease-in-out infinite;
-        }
-
-        @@keyframes footer-nebula {
-            0%, 100%
-
-        {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.3;
-        }
-
-        50% {
-            transform: translate(-20px, 20px) scale(1.1);
-            opacity: 0.5;
-        }
-
-        }
-
-        .footer-shooting-star {
-            position: absolute;
-            top: 20%;
-            left: -100px;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
-            animation: footer-shooting-star 20s linear infinite;
-        }
-
-        @@keyframes footer-shooting-star {
-            0%
-
-        {
-            transform: translateX(-100px) translateY(0) scale(1);
-            opacity: 0;
-        }
-
-        10% {
-            opacity: 1;
-        }
-
-        90% {
-            opacity: 1;
-        }
-
-        100% {
-            transform: translateX(calc(100vw + 100px)) translateY(100px) scale(0);
-            opacity: 0;
-        }
-
-        }
-
-        
-
-        @@keyframes waveMove {
-            0%
-
-        {
-            transform: translateX(0) scaleY(1);
-        }
-
-        50% {
-            transform: translateX(-25%) scaleY(0.95);
-        }
-
-        100% {
-            transform: translateX(-50%) scaleY(1);
-        }
-
-        }
-
-        /* Footer Content */
-        .footer-content {
-            position: relative;
-            z-index: 2;
-            padding-bottom: 60px;
-        }
-
-        /* Brand */
-        .footer-brand .brand-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .brand-tagline {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
-        }
-
-        /* Links */
-        .footer-links .row {
-            gap: 1.5rem;
-        }
-
-        .footer-link {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .footer-link::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-                transition: 0.5s;
-            }
-
-            .footer-link:hover {
-                color: white;
-                background: rgba(78, 84, 200, 0.2);
-                transform: translateY(-2px);
-            }
-
-                .footer-link:hover::before {
-                    left: 100%;
-                }
-
-        /* Social Icons */
-        .social-title {
-            color: white;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .social-icon {
-            text-decoration: none;
-            position: relative;
-        }
-
-        .icon-wrapper {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .icon-glow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(78, 84, 200, 0.3), rgba(143, 148, 251, 0.3));
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .social-icon:hover .icon-wrapper {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 30px rgba(78, 84, 200, 0.4);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .social-icon:hover .icon-glow {
-            opacity: 1;
-            animation: pulse 1.5s infinite;
-        }
-
-        /* Contact Info */
-        .footer-contact {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem 0;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
-            padding: 0.75rem 1.5rem;
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
             border-radius: 10px;
         }
 
-            .contact-item:hover {
-                color: white;
-                background: rgba(78, 84, 200, 0.1);
-                transform: translateY(-2px);
+        .navbar {
+            padding: 20px 0;
+            transition: 0.4s ease;
+            z-index: 1000;
+        }
+
+            .navbar.scrolled {
+                background: rgba(10, 10, 46, 0.75) !important;
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                padding: 12px 0;
+                border-bottom: 1px solid var(--glass-border);
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             }
 
-        .contact-icon {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #fff 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .contact-item:hover .contact-icon {
-            color: var(--secondary-color);
-            transform: scale(1.2);
+        .nav-link {
+            color: rgba(255,255,255,0.7) !important;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: 0.3s;
         }
 
-        /* Copyright */
-        .copyright {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            margin-top: 2rem;
-        }
-
-            .copyright .fa-heart {
-                animation: heartbeat 1.5s infinite;
+            .nav-link:hover, .nav-link.active {
+                color: #fff !important;
             }
 
-        @@keyframes heartbeat {
-            0%, 100%
-
-        {
-            transform: scale(1);
+        .nav-btn-cv {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            color: #fff !important;
+            padding: 8px 22px !important;
+            border-radius: 50px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(78, 84, 200, 0.4);
+            border: none !important;
         }
 
-        50% {
-            transform: scale(1.2);
+        .navbar-toggler {
+            border: 1px solid var(--glass-border) !important;
+            background: var(--glass) !important;
+            padding: 8px !important;
+            border-radius: 8px;
+            transition: 0.3s;
         }
 
-        }
-
-        /* Back to Top Button */
-        .footer-back-to-top {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 20px rgba(78, 84, 200, 0.4);
-            z-index: 3;
-        }
-
-            .footer-back-to-top:hover {
-                transform: translateY(-5px) scale(1.1);
-                box-shadow: 0 10px 30px rgba(78, 84, 200, 0.6);
+            .navbar-toggler:focus {
+                box-shadow: 0 0 0 3px rgba(143, 148, 251, 0.4) !important;
             }
 
-        /* Responsive */
-        @@media (max-width: 768px) {
-            .footer
+            .navbar-toggler i {
+                color: #fff !important;
+                font-size: 1.4rem;
+                display: block;
+            }
 
-        {
-            padding-top: 100px;
+        @@media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(15, 15, 55, 0.95) !important;
+                backdrop-filter: blur(25px) !important;
+                -webkit-backdrop-filter: blur(25px) !important;
+                position: absolute;
+                top: 100%;
+                left: 15px;
+                right: 15px;
+                border-radius: 20px;
+                padding: 25px;
+                margin-top: 15px;
+                border: 1px solid var(--glass-border) !important;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.6) !important;
+            }
+
+            .navbar-nav {
+                align-items: center !important;
+            }
+
+            .nav-item {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-link {
+                padding: 15px 0 !important;
+                margin: 0 !important;
+                border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+                font-size: 1.1rem;
+            }
+
+            .nav-item:last-child .nav-link {
+                border-bottom: none !important;
+            }
+
+            .nav-btn-cv {
+                margin-top: 20px !important;
+                padding: 12px 35px !important;
+                display: inline-flex !important;
+                align-items: center;
+                gap: 8px;
+            }
         }
-        
 
-        .footer-brand .brand-name {
-            font-size: 2rem;
+        main {
+            min-height: 100vh;
+            padding-top: 80px;
         }
 
-        .footer-links .row {
-            gap: 1rem;
-        }
-
-        .footer-link {
-            padding: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .social-icons {
-            gap: 1rem;
-        }
-
-        .icon-wrapper {
-            width: 50px;
-            height: 50px;
-            font-size: 1.2rem;
-        }
-
-        .contact-item {
-            flex-direction: column;
+        footer {
+            background: rgba(5, 5, 20, 0.8);
+            padding: 40px 0;
+            border-top: 1px solid var(--glass-border);
             text-align: center;
-            gap: 0.5rem;
         }
 
-        .footer-back-to-top {
-            width: 40px;
-            height: 40px;
-            font-size: 1rem;
-            bottom: 20px;
-            right: 20px;
-        }
+        @@keyframes footer-stars-anim {
+            from {
+                transform: translateY(0);
+            }
 
-        }
-
-        @@media (max-width: 576px) {
-            .footer-links .row
-
-        {
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .footer-link {
-            padding: 0.3rem 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        .social-icons {
-            gap: 0.75rem;
-        }
-
-        .icon-wrapper {
-            width: 40px;
-            height: 40px;
-            font-size: 1rem;
-        }
-
+            to {
+                transform: translateY(-50%);
+            }
         }
     </style>
+</head>
+<body>
+
+    <nav b-gvfiv2hach="" class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a b-gvfiv2hach="" class="navbar-brand" href="/">Ali Martin</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div b-gvfiv2hach="" class="collapse navbar-collapse" id="navbarNav">
+                <ul b-gvfiv2hach="" class="navbar-nav ms-auto align-items-center">
+                    <li b-gvfiv2hach="" class="nav-item"><a b-gvfiv2hach="" class="nav-link" href="#home">Home</a></li>
+                    <li b-gvfiv2hach="" class="nav-item"><a b-gvfiv2hach="" class="nav-link" href="#about">About</a></li>
+                    <li b-gvfiv2hach="" class="nav-item"><a b-gvfiv2hach="" class="nav-link" href="#skills">Skills</a></li>
+                    <li b-gvfiv2hach="" class="nav-item"><a b-gvfiv2hach="" class="nav-link" href="#experience">Experience</a></li>
+                    <li b-gvfiv2hach="" class="nav-item"><a b-gvfiv2hach="" class="nav-link" href="#portfolio">Portfolio</a></li>
+                    <li b-gvfiv2hach="" class="nav-item"><a b-gvfiv2hach="" class="nav-link" href="#contact">Contact</a></li>
+                    <li b-gvfiv2hach="" class="nav-item">
+                        <a b-gvfiv2hach="" class="nav-link nav-btn-cv" href="#" data-bs-toggle="modal" data-bs-target="#portfolioModal">
+                            <i b-gvfiv2hach="" class="fas fa-cloud-arrow-down me-1"></i> CV
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">© @DateTime.Now.Year Ali Martin. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const backToTopBtn = document.getElementById('footerBackToTop');
+        const nav = document.getElementById('mainNav');
+        const menu = document.getElementById('navbarNav');
+        const bsCollapse = menu ? new bootstrap.Collapse(menu, {toggle: false}) : null;
 
-            backToTopBtn.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
 
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTopBtn.style.opacity = '1';
-                    backToTopBtn.style.visibility = 'visible';
-                } else {
-                    backToTopBtn.style.opacity = '0';
-                    backToTopBtn.style.visibility = 'hidden';
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href.startsWith('#')) {
+                    if (window.innerWidth < 992 && bsCollapse) {
+                        bsCollapse.hide();
+                    }
                 }
             });
         });
     </script>
-        <!-- Portfolio Modal -->
-        <div class="modal fade" id="portfolioModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Ali Martin</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p>Download Portfolio File</p>
-
-                        <a href="/Files/AliMartinCv.pdf"
-                           class="btn btn-outline-primary"
-                           download="AliMartinCv.pdf">
-                            <i class="fas fa-download me-2"></i>Download Portfolio
-                        </a>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a href="#portfolio" class="btn btn-primary">View Full Portfolio</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Project Modals -->
-        <div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Super Application</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <img src="/img/SamroLogo.png" class="img-fluid rounded mb-4" alt="Project">
-                        <p>
-                            The Sports Event Management System is a digital platform designed for organizing and managing sports events and competitions.
-
-                            It enables registration, scheduling, and result tracking for organizers and participants.
-
-                            Its goal is to streamline processes and enhance efficiency in hosting sports events.
-                        </p>
-                        <h6>Technologies Used:</h6>
-                        <ul>
-                            <li>Asp.net</li>
-                            <li>Signal Js</li>
-                            <li>Bootstrap 5.2</li>
-                            <li>Sql Server</li>
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a href="#" class="btn btn-primary">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="fab-container" id="fabContainer">
-            <div class="fab-options" id="fabOptions"></div>
-            <button class="fab-main" id="fabMain">＋</button>
-        </div>
-   
 </body>
-
-
-<!-- Bootstrap 5.3 JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Counter Animation -->
-<!-- Bootstrap 5.3 JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Custom Scripts -->
-<partial name="Scripts" />
-<script>
-    // وقتی صفحه کامل بارگذاری شد:
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('loader');
-      loader.parentNode.removeChild(loader);
-      
-    });
-</script>
 </html>
-

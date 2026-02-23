@@ -1,42 +1,185 @@
-﻿<section id="about" class="about-section" data-observe>
-    <div class="container">
-        <h2 class="text-center section-title">About Me</h2>
-        <div class="row">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <div class="glass-card p-4 h-100">
-                    <h3 class="mb-4">Who am I?</h3>
-                    <p>I'm a dedicated Full Stack Developer and Software Programming Instructor with over 5 years of experience building scalable web applications using C#, .NET, and ASP.NET Core. My front-end knowledge spans HTML, CSS, Bootstrap, Tailwind, and jQuery.</p>
-                    <p>With 5000+ hours of teaching experience, I blend technical depth with a passion for mentoring. I develop clean, maintainable code and also enjoy creating educational content that empowers aspiring developers to succeed.</p>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <p><strong>Name:</strong> Ali Martin</p>
-                            <p><strong>Email:</strong> ali.martin.dev@gmail.com</p>
+﻿<section id="about" class="about-section py-5">
+    <div class="container position-relative z-content">
+        <div class="text-center mb-5">
+            <h2 class="section-title-cosmic animate__animated animate__fadeIn">About Me</h2>
+            <div class="title-line-center"></div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="glass-card-cosmic p-4 h-100 animate__animated animate__fadeInLeft">
+                    <div class="card-glow-top"></div>
+                    <h3 class="about-heading mb-4">
+                        <i class="fas fa-user-astronaut me-2 text-gradient-icon"></i>Who am I?
+                    </h3>
+                    <p class="about-text">I'm a dedicated Full Stack Developer and Software Programming Instructor with over 5 years of experience building scalable web applications using C#, .NET, and ASP.NET Core. My front-end knowledge spans HTML, CSS, Bootstrap, Tailwind, and jQuery.</p>
+                    <p class="about-text">With 5000+ hours of teaching experience, I blend technical depth with a passion for mentoring. I develop clean, maintainable code and also enjoy creating educational content that empowers aspiring developers to succeed.</p>
+
+                    <div class="info-grid-new mt-4">
+                        <div class="info-item">
+                            <span class="info-label">Name:</span>
+                            <span class="info-value">Ali Martin</span>
                         </div>
-                        <div class="col-6">
-                            <p><strong>Experience:</strong> 5+ Years</p>
-                            <p><strong>Location:</strong> Tehran, Iran</p>
+                        <div class="info-item">
+                            <span class="info-label">Experience:</span>
+                            <span class="info-value">5+ Years</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value text-break">ali.martin.dev@gmail.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Location:</span>
+                            <span class="info-value">Tehran, Iran</span>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="col-lg-6">
-                <div class="glass-card p-4 h-100">
-                    <h3 class="mb-4">My Ability</h3>
-                    <p>I bring a unique combination of technical skills and creative vision to every project:</p>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Full Stack Development (C#, .NET, ASP.NET Core)</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Front-end Development (HTML, CSS, jQuery, Bootstrap, Tailwind)</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Database Management (SQL Server)</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Teaching & Mentoring (5000+ hours experience)</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Curriculum Development & Educational Design</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Python Application Development (with Kivy)</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> UI/UX Fundamentals & Cross-browser Compatibility</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Leadership in Software Projects & Regional Competitions</li>
-                    </ul>
 
+            <div class="col-lg-6">
+                <div class="glass-card-cosmic p-4 h-100 animate__animated animate__fadeInRight">
+                    <div class="card-glow-top"></div>
+                    <h3 class="about-heading mb-4">
+                        <i class="fas fa-bolt me-2 text-gradient-icon"></i>My Ability
+                    </h3>
+                    <p class="about-text">I bring a unique combination of technical skills and creative vision to every project:</p>
+                    <ul class="ability-list">
+                        <li><i class="fas fa-star"></i> <span>Full Stack Development (C#, .NET, ASP.NET Core)</span></li>
+                        <li><i class="fas fa-star"></i> <span>Front-end (HTML, CSS, jQuery, Bootstrap, Tailwind)</span></li>
+                        <li><i class="fas fa-star"></i> <span>Database Management (SQL Server)</span></li>
+                        <li><i class="fas fa-star"></i> <span>Teaching & Mentoring (5000+ hours)</span></li>
+                        <li><i class="fas fa-star"></i> <span>Curriculum Development & Educational Design</span></li>
+                        <li><i class="fas fa-star"></i> <span>Python Development (with Kivy)</span></li>
+                        <li><i class="fas fa-star"></i> <span>UI/UX Fundamentals & Compatibility</span></li>
+                        <li><i class="fas fa-star"></i> <span>Leadership in Software Projects</span></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+    .about-section {
+        position: relative;
+        background: #0a0a2e;
+        padding: 80px 0;
+    }
+
+    .section-title-cosmic {
+        font-size: clamp(2.2rem, 5vw, 2.8rem);
+        font-weight: 800;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .title-line-center {
+        width: 70px;
+        height: 4px;
+        background: linear-gradient(90deg, #4e54c8, #8f94fb);
+        margin: 0 auto;
+        border-radius: 2px;
+    }
+
+    .glass-card-cosmic {
+        position: relative;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+        .glass-card-cosmic:hover {
+            transform: translateY(-5px);
+            border-color: rgba(143, 148, 251, 0.3);
+        }
+
+    .card-glow-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #8f94fb, transparent);
+    }
+
+    .about-heading {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+    .text-gradient-icon {
+        background: linear-gradient(135deg, #4e54c8, #8f94fb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .about-text {
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.8;
+        font-size: 0.95rem;
+    }
+
+    .info-grid-new {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-label {
+        color: #8f94fb;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+
+    .info-value {
+        color: white;
+        font-size: 0.9rem;
+    }
+
+    .ability-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .ability-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+            .ability-list li i {
+                color: #8f94fb;
+                margin-top: 4px;
+                font-size: 0.8rem;
+            }
+
+    @@media (max-width: 991px) {
+        .info-grid-new {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .glass-card-cosmic {
+            padding: 30px !important;
+        }
+
+        .section-title-cosmic {
+            font-size: 2.2rem;
+        }
+    }
+</style>
